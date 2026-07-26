@@ -115,6 +115,21 @@
     margin-top: 0.3rem;
     font-variant-numeric: tabular-nums;
   }
+  .toc-tools {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.65rem 1.2rem 0;
+  }
+  .toc-tools button {
+    border: 1px solid var(--line);
+    background: none;
+    color: var(--muted);
+    border-radius: 5px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.73rem;
+    cursor: pointer;
+  }
+  .toc-tools button:hover { border-color: var(--accent); color: var(--accent); }
   #toc { padding: 0.6rem 0.6rem 0; }
   #toc details { margin: 0 0 0.15rem; }
   #toc summary {
@@ -515,6 +530,10 @@
       <h1>Subdivision Map Act</h1>
       <div class="range">Title 7, Division 2 &middot; &sect;&sect; 66410&ndash;66499.41</div>
     </div>
+    <div class="toc-tools">
+      <button id="expand-all">Expand all</button>
+      <button id="collapse-all">Collapse all</button>
+    </div>
     <div id="toc"></div>
   </nav>
   <div id="scrim"></div>
@@ -895,6 +914,14 @@ document.addEventListener("click", e => {
     t.classList.add("on");
     setTimeout(() => t.classList.remove("on"), 1600);
   });
+});
+
+/* Expand / collapse the whole TOC */
+$("expand-all").addEventListener("click", () => {
+  document.querySelectorAll("#toc details").forEach(d => { d.open = true; });
+});
+$("collapse-all").addEventListener("click", () => {
+  document.querySelectorAll("#toc details").forEach(d => { d.open = false; });
 });
 
 /* Sidebar (mobile) */
