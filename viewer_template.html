@@ -471,6 +471,28 @@
     text-align: center;
   }
 
+  /* Transient "where am I" pill shown while scrolling */
+  #scroll-pos {
+    position: fixed;
+    top: 4.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 21;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    padding: 0.35rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  #scroll-pos.on { opacity: 0.92; }
+  @media print { #scroll-pos { display: none !important; } }
+
   /* Fast-scroll scrubber (touch devices / small screens) */
   #scrubber, #scrub-label { display: none; }
   @media (max-width: 900px), (pointer: coarse) {
@@ -672,6 +694,7 @@
     </div>
   </div>
 </div>
+<div id="scroll-pos" aria-hidden="true"></div>
 <div id="scrubber" role="slider" aria-label="Fast scroll" aria-orientation="vertical"></div>
 <div id="scrub-label"></div>
 <button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
@@ -988,11 +1011,41 @@ function quickScrollTo(el) {
   animateScroll(el.getBoundingClientRect().top + window.scrollY - 80);
 }
 
+/* Position index: document offset + "Ch. 6 · Art. 2 · § 66499.24" label
+   for every section. Built lazily, invalidated when layout can change. */
+let posIndex = null;
+function ensurePosIndex() {
+  if (posIndex) return posIndex;
+  const chS = h => {
+    const m = /CHAPTER\s+([\d.]+)/.exec(h || "");
+    return m ? "Ch. " + m[1] : "";
+  };
+  const arS = h => {
+    const m = /ARTICLE\s+([\d.]+)/.exec(h || "");
+    return m ? " · Art. " + m[1] : "";
+  };
+  posIndex = Array.from(document.querySelectorAll("#doc-body .sec"), (el, i) => ({
+    top: el.getBoundingClientRect().top + window.scrollY,
+    label: chS(SECS[i].chap) + arS(SECS[i].art) + " · § " + SECS[i].num,
+  }));
+  return posIndex;
+}
+addEventListener("resize", () => { posIndex = null; });
+function labelAtY(y) {
+  const idx = ensurePosIndex();
+  if (idx.length === 0 || y < idx[0].top) return "";
+  let cur = idx[0];
+  for (const s of idx) {
+    if (s.top <= y) cur = s; else break;
+  }
+  return cur.label;
+}
+
 /* Fast-scroll scrubber: drag the right-edge handle to fly through the Act;
    a bubble shows the section passing under the top of the screen. */
 const scrub = $("scrubber"), scrubLabel = $("scrub-label");
 const SCRUB_TOP = 80, SCRUB_BOT = 90;
-let scrubbing = false, secPos = null;
+let scrubbing = false;
 
 function scrubTrack() {
   return innerHeight - SCRUB_TOP - SCRUB_BOT - scrub.offsetHeight;
@@ -1016,29 +1069,14 @@ scrub.addEventListener("pointerdown", e => {
   scrub.setPointerCapture(e.pointerId);
   scrubbing = true;
   scrub.classList.add("drag");
-  const chShort = h => {
-    const m = /CHAPTER\s+([\d.]+)/.exec(h);
-    return m ? "Ch. " + m[1] : "";
-  };
-  secPos = Array.from(document.querySelectorAll("#doc-body .sec"), (el, i) => ({
-    top: el.getBoundingClientRect().top + window.scrollY,
-    label: chShort(SECS[i].chap) + " · § " + SECS[i].num,
-  }));
-  scrubLabel.textContent = secAtY(window.scrollY + SCRUB_TOP);
+  scrubLabel.textContent = labelAtY(window.scrollY + SCRUB_TOP);
 });
-function secAtY(y) {
-  let cur = secPos[0];
-  for (const s of secPos) {
-    if (s.top <= y) cur = s; else break;
-  }
-  return cur ? cur.label : "";
-}
 scrub.addEventListener("pointermove", e => {
   if (!scrubbing) return;
   const f = Math.min(1, Math.max(0,
     (e.clientY - SCRUB_TOP - scrub.offsetHeight / 2) / scrubTrack()));
   window.scrollTo(0, f * maxScroll());
-  scrubLabel.textContent = secAtY(f * maxScroll() + SCRUB_TOP);
+  scrubLabel.textContent = labelAtY(f * maxScroll() + SCRUB_TOP);
 });
 function endScrub() {
   scrubbing = false;
@@ -1047,6 +1085,23 @@ function endScrub() {
 }
 scrub.addEventListener("pointerup", endScrub);
 scrub.addEventListener("pointercancel", endScrub);
+
+/* Transient position pill while scrolling; the scrubber's own bubble
+   takes over during scrubbing. Hidden while still in the intro. */
+const scrollPos = $("scroll-pos");
+let posTimer = null;
+addEventListener("scroll", () => {
+  if (scrubbing) return;
+  const label = labelAtY(window.scrollY + 90);
+  if (!label) {
+    scrollPos.classList.remove("on");
+    return;
+  }
+  scrollPos.textContent = label;
+  scrollPos.classList.add("on");
+  clearTimeout(posTimer);
+  posTimer = setTimeout(() => scrollPos.classList.remove("on"), 800);
+}, { passive: true });
 
 /* Back-to-top button appears once the intro is out of view */
 const topBtn = $("top-btn");
