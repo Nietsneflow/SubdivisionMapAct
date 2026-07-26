@@ -961,6 +961,22 @@ $("m-clear").addEventListener("click", () => {
   qEl.dispatchEvent(new Event("input"));
 });
 
+/* Clicking a section's § heading reveals its place in the TOC —
+   handy after finding a spot via the browser's own Ctrl+F */
+$("doc-body").addEventListener("click", e => {
+  const a = e.target.closest(".sec-num a");
+  if (!a) return;
+  e.preventDefault();
+  const id = a.getAttribute("href").slice(1);
+  const el = $(id);
+  if (!el) return;
+  history.replaceState(null, "", "#" + id);
+  syncToc(id.slice(4));
+  quickScrollTo(el);
+  el.classList.remove("flash");
+  requestAnimationFrame(() => el.classList.add("flash"));
+});
+
 document.addEventListener("click", e => {
   const btn = e.target.closest("[data-copy]");
   if (!btn) return;
