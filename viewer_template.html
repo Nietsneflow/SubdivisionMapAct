@@ -1,0 +1,939 @@
+<title>Subdivision Map Act</title>
+<style>
+  :root {
+    --bg: #F4F5F3;
+    --panel: #FBFBFA;
+    --ink: #212B34;
+    --muted: #67737E;
+    --faint: #8B959E;
+    --accent: #2A5F97;
+    --accent-soft: #2A5F9714;
+    --line: #DCE1E5;
+    --mark: #F6E08E;
+    --mark-ink: #3A2F00;
+    --mark-current: #EFB93B;
+    --shadow: 0 8px 28px rgba(24, 38, 52, 0.13);
+    --warn-bg: #FBF1D3;
+    --warn-ink: #6B4E00;
+    --warn-line: #E5CC85;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131920;
+      --panel: #1A222B;
+      --ink: #D8E0E7;
+      --muted: #93A0AB;
+      --faint: #6E7B86;
+      --accent: #82B2E0;
+      --accent-soft: #82B2E01F;
+      --line: #2A3540;
+      --mark: #6A5514;
+      --mark-ink: #F4E8C0;
+      --mark-current: #A8831E;
+      --shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    --warn-bg: #3A2F10;
+    --warn-ink: #EED9A0;
+    --warn-line: #5C4A1A;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F5F3;
+    --panel: #FBFBFA;
+    --ink: #212B34;
+    --muted: #67737E;
+    --faint: #8B959E;
+    --accent: #2A5F97;
+    --accent-soft: #2A5F9714;
+    --line: #DCE1E5;
+    --mark: #F6E08E;
+    --mark-ink: #3A2F00;
+    --mark-current: #EFB93B;
+    --shadow: 0 8px 28px rgba(24, 38, 52, 0.13);
+    --warn-bg: #FBF1D3;
+    --warn-ink: #6B4E00;
+    --warn-line: #E5CC85;
+  }
+  :root[data-theme="dark"] {
+    --bg: #131920;
+    --panel: #1A222B;
+    --ink: #D8E0E7;
+    --muted: #93A0AB;
+    --faint: #6E7B86;
+    --accent: #82B2E0;
+    --accent-soft: #82B2E01F;
+    --line: #2A3540;
+    --mark: #6A5514;
+    --mark-ink: #F4E8C0;
+    --mark-current: #A8831E;
+    --shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    --warn-bg: #3A2F10;
+    --warn-ink: #EED9A0;
+    --warn-line: #5C4A1A;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); }
+
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ---------- Sidebar ---------- */
+  #sidebar {
+    width: 340px;
+    flex: 0 0 340px;
+    border-right: 1px solid var(--line);
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 0 0 2rem;
+  }
+  .side-head {
+    padding: 1.1rem 1.2rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .side-head .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 0.25rem;
+  }
+  .side-head h1 {
+    font: 700 1.15rem/1.25 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 0;
+  }
+  .side-head .range {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+  #toc { padding: 0.6rem 0.6rem 0; }
+  #toc details { margin: 0 0 0.15rem; }
+  #toc summary {
+    cursor: pointer;
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.86rem;
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  #toc summary::-webkit-details-marker { display: none; }
+  #toc summary:hover { background: var(--accent-soft); }
+  #toc summary .tw {
+    color: var(--faint);
+    font-size: 0.7rem;
+    transition: transform 0.12s;
+    flex: 0 0 auto;
+  }
+  #toc details[open] > summary .tw { transform: rotate(90deg); }
+  #toc details.art { margin: 0; }
+  #toc details.art > summary {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.35rem 0.6rem 0.35rem 1.3rem;
+  }
+  #toc details.art .toc-sec { padding-left: 2.1rem; }
+  .toc-sec {
+    display: flex;
+    gap: 0.55rem;
+    padding: 0.22rem 0.6rem 0.22rem 1.4rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.82rem;
+    border-radius: 5px;
+    line-height: 1.35;
+  }
+  .toc-sec:hover { background: var(--accent-soft); }
+  .toc-sec .n {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    flex: 0 0 auto;
+  }
+  .toc-sec .t {
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ---------- Main column ---------- */
+  #main { flex: 1; min-width: 0; }
+  #topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 0.7rem 0.9rem 0.7rem 1.4rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  #menu-btn {
+    display: none;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    border-radius: 6px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .searchwrap {
+    position: relative;
+    margin-left: auto;
+    flex: 0 0 340px;
+    width: 340px;
+  }
+  .hint { flex: 1; }
+  #q {
+    width: 100%;
+    padding: 0.55rem 2.2rem 0.55rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.95rem;
+  }
+  #q:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  #q::placeholder { color: var(--faint); }
+  #clear-q {
+    position: absolute;
+    right: 0.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: none;
+    color: var(--faint);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem 0.45rem;
+    display: none;
+  }
+  .hint { font-size: 0.75rem; color: var(--faint); white-space: nowrap; }
+
+  /* ---------- Match bar ---------- */
+  #matchbar {
+    position: sticky;
+    top: 3.35rem;
+    z-index: 19;
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 1.4rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--shadow);
+    font-size: 0.83rem;
+    color: var(--muted);
+    width: fit-content;
+    max-width: calc(100% - 2.8rem);
+  }
+  #matchbar.on { display: flex; }
+  #matchbar button {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 5px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.83rem;
+    cursor: pointer;
+  }
+  #matchbar button:hover { border-color: var(--accent); color: var(--accent); }
+  #matchcount { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Reader ---------- */
+  #content { display: flex; align-items: flex-start; }
+  #reader {
+    flex: 1;
+    min-width: 0;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 1.6rem 1.6rem 5rem;
+  }
+  .doc-intro {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.6rem;
+  }
+  #stale-banner { display: none; }
+  #stale-banner.on {
+    display: block;
+    background: var(--warn-bg);
+    color: var(--warn-ink);
+    border: 1px solid var(--warn-line);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+  }
+  #stale-banner a { color: inherit; font-weight: 600; }
+  .doc-intro h1 {
+    font: 700 1.9rem/1.2 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+  }
+  .doc-intro p { color: var(--muted); font-size: 0.87rem; margin: 0.25rem 0; }
+  .chap-h {
+    font: 700 1.28rem/1.3 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 2.6rem 0 0.3rem;
+    padding-top: 1.2rem;
+    border-top: 2px solid var(--line);
+    scroll-margin-top: 5rem;
+  }
+  .art-h {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 1.8rem 0 0.2rem;
+    scroll-margin-top: 5rem;
+  }
+  .sec {
+    padding: 1.05rem 0 0.2rem;
+    scroll-margin-top: 5rem;
+  }
+  .sec.flash { animation: flash 1.6s ease-out 1; }
+  @keyframes flash {
+    0%, 40% { background: var(--accent-soft); }
+    100% { background: transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sec.flash { animation: none; }
+    * { scroll-behavior: auto !important; }
+  }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .sec-num {
+    font: 700 1.02rem/1.3 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .sec-num a { text-decoration: none; color: inherit; }
+  .sec-num a:hover { text-decoration: underline; }
+  .sec-tools {
+    margin-left: auto;
+    display: flex;
+    gap: 0.7rem;
+    font-size: 0.72rem;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+  .sec:hover .sec-tools, .sec:focus-within .sec-tools { opacity: 1; }
+  .sec-tools a, .sec-tools button {
+    color: var(--muted);
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .sec-tools a:hover, .sec-tools button:hover { color: var(--accent); text-decoration: underline; }
+  .sec-body {
+    font: 1rem/1.62 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin-top: 0.35rem;
+  }
+  .sec-body p { margin: 0 0 0.55rem; }
+  .sec-hist {
+    font-size: 0.76rem;
+    color: var(--faint);
+    font-style: italic;
+    margin: 0.45rem 0 0;
+  }
+  mark {
+    background: var(--mark);
+    color: var(--mark-ink);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+  mark.cur {
+    background: var(--mark-current);
+    color: #1F1500;
+    outline: 2px solid var(--mark-current);
+  }
+
+  /* ---------- Results rail ---------- */
+  #results {
+    display: none;
+    flex: 0 0 340px;
+    width: 340px;
+    position: sticky;
+    top: 3.4rem;
+    max-height: calc(100vh - 3.4rem);
+    overflow-y: auto;
+    border-left: 1px solid var(--line);
+    background: var(--panel);
+    padding: 0.9rem 0.9rem 2rem;
+  }
+  body.searching #results { display: block; }
+  .res-meta { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0 1.2rem; }
+  .res-chap {
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 1.5rem 0 0.4rem;
+  }
+  .res {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 0.55rem;
+    cursor: pointer;
+    color: var(--ink);
+    font: inherit;
+  }
+  .res:hover { border-color: var(--accent); }
+  .res.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .res .rn {
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.92rem;
+  }
+  .res .rc { color: var(--faint); font-size: 0.75rem; margin-left: 0.5rem; }
+  .res .snip {
+    font: 0.88rem/1.5 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+  .res .snip b { font-weight: 400; color: var(--ink); }
+  .noresults {
+    color: var(--muted);
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  #toast {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 50;
+  }
+  #toast.on { opacity: 1; }
+
+  /* On narrower screens the results rail becomes a slide-over panel */
+  #m-back { display: none; }
+  @media (max-width: 1150px) {
+    #results {
+      position: fixed;
+      top: 3.4rem;
+      right: 0;
+      bottom: 0;
+      width: min(400px, 100vw);
+      max-height: none;
+      box-shadow: var(--shadow);
+      z-index: 24;
+    }
+    body.searching #results { display: none; }
+    body.searching.results-open #results { display: block; }
+    #m-back { display: inline-block; }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 900px) {
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 30;
+      transform: translateX(-100%);
+      transition: transform 0.18s ease;
+      box-shadow: var(--shadow);
+      width: min(340px, 88vw);
+    }
+    #sidebar.open { transform: translateX(0); }
+    #menu-btn { display: block; }
+    #scrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 20, 0.45);
+      z-index: 25;
+    }
+    #scrim.on { display: block; }
+    .hint { display: none; }
+    .searchwrap { flex: 1; width: auto; margin-left: 0; }
+  }
+
+  @media print {
+    #sidebar, #topbar, #matchbar, .sec-tools, #scrim { display: none !important; }
+    body { background: #fff; color: #000; }
+    #reader { max-width: none; padding: 0; }
+  }
+</style>
+
+<div class="layout">
+  <nav id="sidebar" aria-label="Table of contents">
+    <div class="side-head">
+      <p class="eyebrow">California Government Code</p>
+      <h1>Subdivision Map Act</h1>
+      <div class="range">Title 7, Division 2 &middot; &sect;&sect; 66410&ndash;66499.41</div>
+    </div>
+    <div id="toc"></div>
+  </nav>
+  <div id="scrim"></div>
+
+  <div id="main">
+    <div id="topbar">
+      <button id="menu-btn" aria-label="Open table of contents">&#9776; Contents</button>
+      <span class="hint">Press <b>/</b> to search &middot; quotes for exact phrase &middot; a section number jumps to it</span>
+      <div class="searchwrap">
+        <input id="q" type="search" autocomplete="off" spellcheck="false"
+               placeholder='Search the Act &mdash; e.g. "lot line adjustment"' />
+        <button id="clear-q" aria-label="Clear search">&#10005;</button>
+      </div>
+    </div>
+
+    <div id="matchbar">
+      <span id="matchcount"></span>
+      <button id="m-prev" title="Previous match (Shift+Enter in search)">&#8593; Prev</button>
+      <button id="m-next" title="Next match (Enter in search)">&#8595; Next</button>
+      <button id="m-back">Show results</button>
+      <button id="m-clear">Clear</button>
+    </div>
+
+    <div id="content">
+      <main id="reader">
+        <div id="stale-banner" role="alert"></div>
+        <div class="doc-intro">
+          <h1>Subdivision Map Act</h1>
+          <p id="doc-cite"></p>
+          <p id="doc-src"></p>
+        </div>
+        <div id="doc-body"></div>
+      </main>
+      <aside id="results" role="region" aria-label="Search results"></aside>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+const DATA = __DATA_JSON__;
+
+/* ---------- Build flat section list & render ---------- */
+const SECS = [];
+const escHtml = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const officialUrl = n =>
+  "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=" + n + ".";
+
+function firstWords(text, max) {
+  let s = text.split("\n")[0];
+  if (s.length <= max) return s;
+  s = s.slice(0, max);
+  return s.slice(0, s.lastIndexOf(" ")) + "…";
+}
+
+(function render() {
+  document.getElementById("doc-cite").textContent = DATA.citation;
+  document.getElementById("doc-src").innerHTML =
+    'Text mirrored verbatim from the <a href="' + DATA.source +
+    '" target="_blank" rel="noopener">official Legislative Information site</a>, retrieved ' +
+    DATA.scraped + '. Each section links to its official page.';
+
+  let toc = "", body = "";
+  DATA.chapters.forEach((ch, ci) => {
+    const chId = "ch" + ci;
+    toc += '<details class="chap"' + (ci === 0 ? " open" : "") +
+           '><summary><span class="tw">&#9654;</span><span>' +
+           escHtml(ch.heading) + "</span></summary>";
+    body += '<h2 class="chap-h" id="' + chId + '">' + escHtml(ch.heading) + "</h2>";
+    ch.articles.forEach(art => {
+      if (art.heading) {
+        toc += '<details class="art" open><summary><span class="tw">&#9654;</span><span>' +
+               escHtml(art.heading.replace(/\s*\[.*\]$/, "")) + "</span></summary>";
+        body += '<h3 class="art-h">' + escHtml(art.heading) + "</h3>";
+      }
+      art.sections.forEach(sec => {
+        const id = "sec-" + sec.num;
+        toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
+               '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
+        const paras = sec.text.split("\n").map(p => "<p>" + escHtml(p) + "</p>").join("");
+        body +=
+          '<article class="sec" id="' + id + '">' +
+          '<div class="sec-head"><h4 class="sec-num"><a href="#' + id + '">&sect; ' + sec.num + "</a></h4>" +
+          '<div class="sec-tools">' +
+          '<button data-copy="' + sec.num + '">Copy text</button>' +
+          '<a href="' + officialUrl(sec.num) + '" target="_blank" rel="noopener">Official text &#8599;</a>' +
+          "</div></div>" +
+          '<div class="sec-body">' + paras + "</div>" +
+          '<p class="sec-hist">(' + escHtml(sec.history) + ")</p>" +
+          "</article>";
+        SECS.push({
+          num: sec.num,
+          text: sec.text,
+          lower: (sec.num + " " + sec.text).toLowerCase(),
+          chap: ch.heading,
+          art: art.heading,
+        });
+      });
+      if (art.heading) toc += "</details>";
+    });
+    toc += "</details>";
+  });
+  document.getElementById("toc").innerHTML = toc;
+  document.getElementById("doc-body").innerHTML = body;
+})();
+
+/* ---------- Query parsing & search ---------- */
+function parseQuery(q) {
+  const tokens = [];
+  const re = /"([^"]+)"|(\S+)/g;
+  let m;
+  while ((m = re.exec(q)) !== null) {
+    const t = (m[1] || m[2]).toLowerCase();
+    if (t.length > 0) tokens.push(t);
+  }
+  return tokens;
+}
+const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const tokensRegex = tokens =>
+  new RegExp(tokens.map(escRe).join("|"), "gi");
+
+function search(tokens) {
+  return SECS.filter(s => tokens.every(t => s.lower.includes(t)));
+}
+
+function countHits(sec, tokens) {
+  let n = 0;
+  for (const t of tokens) {
+    let i = -1;
+    while ((i = sec.lower.indexOf(t, i + 1)) !== -1) n++;
+  }
+  return n;
+}
+
+function snippets(sec, tokens, maxSnips) {
+  const lower = sec.text.toLowerCase();
+  const spots = [];
+  for (const t of tokens) {
+    const i = lower.indexOf(t);
+    if (i !== -1) spots.push(i);
+  }
+  spots.sort((a, b) => a - b);
+  const out = [];
+  let lastEnd = -1;
+  for (const i of spots) {
+    if (out.length >= maxSnips) break;
+    if (i < lastEnd) continue;
+    const start = Math.max(0, i - 70);
+    const end = Math.min(sec.text.length, i + 120);
+    lastEnd = end;
+    let frag = sec.text.slice(start, end).replace(/\n/g, " ");
+    frag = (start > 0 ? "…" : "") + frag + (end < sec.text.length ? "…" : "");
+    out.push(escHtml(frag).replace(tokensRegex(tokens), m => "<b><mark>" + m + "</mark></b>"));
+  }
+  return out;
+}
+
+/* ---------- Views ---------- */
+const $ = id => document.getElementById(id);
+const readerEl = $("reader"), resultsEl = $("results"),
+      matchbar = $("matchbar"), qEl = $("q");
+let curTokens = [], marks = [], curMark = -1;
+
+function showResults(tokens) {
+  clearMarks();
+  matchbar.classList.remove("on");
+  const hits = search(tokens);
+  let html = "";
+  if (hits.length === 0) {
+    html = '<div class="noresults">No sections match ' +
+      tokens.map(t => "<b>" + escHtml(t) + "</b>").join(" + ") +
+      ".<br/>Try fewer or shorter words &mdash; the search finds sections containing <i>all</i> terms.</div>";
+  } else {
+    html = '<p class="res-meta">' + hits.length + " of " + SECS.length +
+           " sections contain " + tokens.map(t => "<b>" + escHtml(t) + "</b>").join(" + ") +
+           " &middot; in statute order</p>";
+    let lastChap = null;
+    for (const s of hits) {
+      if (s.chap !== lastChap) {
+        lastChap = s.chap;
+        html += '<div class="res-chap">' + escHtml(s.chap) + "</div>";
+      }
+      html += '<button class="res" data-num="' + s.num + '"><span class="rn">&sect; ' + s.num +
+              '</span><span class="rc">' + countHits(s, tokens) + " match" +
+              (countHits(s, tokens) === 1 ? "" : "es") +
+              (s.art ? " &middot; " + escHtml(s.art.replace(/\s*\[.*\]$/, "")) : "") + "</span>" +
+              snippets(s, tokens, 2).map(x => '<div class="snip">' + x + "</div>").join("") +
+              "</button>";
+    }
+  }
+  resultsEl.innerHTML = html;
+  document.body.classList.add("searching", "results-open");
+}
+
+function closeSearch() {
+  document.body.classList.remove("searching", "results-open");
+  resultsEl.innerHTML = "";
+}
+
+/* ---------- In-document highlighting ---------- */
+function clearMarks() {
+  for (const m of marks) {
+    const parent = m.parentNode;
+    if (!parent) continue;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  }
+  marks = [];
+  curMark = -1;
+}
+
+function highlightDoc(tokens) {
+  clearMarks();
+  const re = tokensRegex(tokens);
+  const walker = document.createTreeWalker($("doc-body"), NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  for (const node of nodes) {
+    const text = node.nodeValue;
+    re.lastIndex = 0;
+    if (!re.test(text)) continue;
+    re.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let last = 0, m;
+    while ((m = re.exec(text)) !== null) {
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      const mk = document.createElement("mark");
+      mk.textContent = m[0];
+      frag.appendChild(mk);
+      marks.push(mk);
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  }
+  $("matchcount").textContent = marks.length + " match" + (marks.length === 1 ? "" : "es");
+  matchbar.classList.toggle("on", marks.length > 0);
+}
+
+function gotoMark(i) {
+  if (marks.length === 0) return;
+  if (curMark >= 0) marks[curMark].classList.remove("cur");
+  curMark = ((i % marks.length) + marks.length) % marks.length;
+  const mk = marks[curMark];
+  mk.classList.add("cur");
+  mk.scrollIntoView({ block: "center", behavior: "smooth" });
+  $("matchcount").textContent = (curMark + 1) + " / " + marks.length + " matches";
+}
+
+function jumpToSection(num, withHighlights) {
+  document.body.classList.remove("results-open");
+  const prev = resultsEl.querySelector(".res.active");
+  if (prev) prev.classList.remove("active");
+  const cur = resultsEl.querySelector('.res[data-num="' + num + '"]');
+  if (cur) cur.classList.add("active");
+  if (withHighlights && curTokens.length > 0) highlightDoc(curTokens);
+  const el = $("sec-" + num);
+  if (!el) return;
+  history.replaceState(null, "", "#sec-" + num);
+  el.scrollIntoView({ block: "start" });
+  el.classList.remove("flash");
+  requestAnimationFrame(() => el.classList.add("flash"));
+  if (marks.length > 0) {
+    const idx = marks.findIndex(m => el.contains(m));
+    if (idx !== -1) gotoMark(idx);
+  }
+}
+
+/* ---------- Events ---------- */
+let debounce = null;
+qEl.addEventListener("input", () => {
+  $("clear-q").style.display = qEl.value ? "block" : "none";
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    const q = qEl.value.trim();
+    if (q.length < 2) {
+      curTokens = [];
+      clearMarks();
+      matchbar.classList.remove("on");
+      closeSearch();
+      return;
+    }
+    curTokens = parseQuery(q);
+    if (/^\d{5}(\.\d+)?$/.test(q) && $("sec-" + q)) {
+      closeSearch();
+      jumpToSection(q, false);
+      return;
+    }
+    showResults(curTokens);
+  }, 160);
+});
+qEl.addEventListener("keydown", e => {
+  if (e.key === "Enter" && marks.length > 0) {
+    gotoMark(curMark + (e.shiftKey ? -1 : 1));
+  }
+  if (e.key === "Escape") {
+    qEl.value = "";
+    qEl.dispatchEvent(new Event("input"));
+    qEl.blur();
+  }
+});
+/* Re-open the results panel when returning to the search box with an
+   active query (matters on narrow screens where picking a result hides it) */
+qEl.addEventListener("focus", () => {
+  if (curTokens.length > 0 && document.body.classList.contains("searching")) {
+    document.body.classList.add("results-open");
+  }
+});
+
+/* Quick eased scroll (fixed duration regardless of distance) */
+function quickScrollTo(el) {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.scrollIntoView({ block: "start" });
+    return;
+  }
+  const target = el.getBoundingClientRect().top + window.scrollY - 80;
+  const start = window.scrollY, dist = target - start, dur = 220;
+  let t0 = null;
+  function step(ts) {
+    if (t0 === null) t0 = ts;
+    const p = Math.min(1, (ts - t0) / dur);
+    window.scrollTo(0, start + dist * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* Smooth scroll + flash for table-of-contents clicks */
+$("toc").addEventListener("click", e => {
+  const link = e.target.closest(".toc-sec");
+  if (!link) return;
+  e.preventDefault();
+  const id = link.getAttribute("href").slice(1);
+  const el = $(id);
+  if (!el) return;
+  history.replaceState(null, "", "#" + id);
+  quickScrollTo(el);
+  el.classList.remove("flash");
+  requestAnimationFrame(() => el.classList.add("flash"));
+});
+
+$("clear-q").addEventListener("click", () => {
+  qEl.value = "";
+  qEl.dispatchEvent(new Event("input"));
+  qEl.focus();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== qEl &&
+      !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+    e.preventDefault();
+    qEl.focus();
+    qEl.select();
+  }
+});
+
+resultsEl.addEventListener("click", e => {
+  const btn = e.target.closest(".res");
+  if (btn) jumpToSection(btn.dataset.num, true);
+});
+$("m-next").addEventListener("click", () => gotoMark(curMark + 1));
+$("m-prev").addEventListener("click", () => gotoMark(curMark - 1));
+$("m-back").addEventListener("click", () => {
+  if (curTokens.length) document.body.classList.add("results-open");
+});
+$("m-clear").addEventListener("click", () => {
+  qEl.value = "";
+  qEl.dispatchEvent(new Event("input"));
+});
+
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-copy]");
+  if (!btn) return;
+  const sec = SECS.find(s => s.num === btn.dataset.copy);
+  if (!sec) return;
+  navigator.clipboard.writeText("Cal. Gov. Code § " + sec.num + ".\n\n" + sec.text).then(() => {
+    const t = $("toast");
+    t.textContent = "Copied § " + sec.num + " to clipboard";
+    t.classList.add("on");
+    setTimeout(() => t.classList.remove("on"), 1600);
+  });
+});
+
+/* Sidebar (mobile) */
+const sidebar = $("sidebar"), scrim = $("scrim");
+$("menu-btn").addEventListener("click", () => {
+  sidebar.classList.add("open");
+  scrim.classList.add("on");
+});
+scrim.addEventListener("click", () => {
+  sidebar.classList.remove("open");
+  scrim.classList.remove("on");
+});
+sidebar.addEventListener("click", e => {
+  if (e.target.closest(".toc-sec")) {
+    sidebar.classList.remove("open");
+    scrim.classList.remove("on");
+  }
+});
+
+/* Staleness notice: California statute amendments take effect January 1
+   (rare urgency bills aside), so warn once a Jan 1 has passed since retrieval. */
+(function () {
+  const scraped = new Date(DATA.scraped + "T00:00:00");
+  if (isNaN(scraped)) return;
+  const cutoff = new Date(scraped.getFullYear() + 1, 0, 1);
+  if (new Date() < cutoff) return;
+  const b = $("stale-banner");
+  b.innerHTML = "&#9888; This copy of the Act was retrieved <b>" + DATA.scraped +
+    "</b>. Amendments effective January 1, " + cutoff.getFullYear() +
+    (new Date().getFullYear() > cutoff.getFullYear() ? " and later" : "") +
+    " are not reflected here. For recent changes, check the " +
+    '<a href="' + DATA.source + '" target="_blank" rel="noopener">official current text</a>' +
+    " &mdash; or ask for this page to be refreshed from the source.";
+  b.classList.add("on");
+})();
+
+/* Deep link on load */
+if (location.hash.startsWith("#sec-")) {
+  const el = $(location.hash.slice(1));
+  if (el) requestAnimationFrame(() => el.scrollIntoView({ block: "start" }));
+}
+</script>
