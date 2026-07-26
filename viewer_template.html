@@ -71,6 +71,20 @@
     --warn-line: #5C4A1A;
   }
 
+  #theme-btn {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    border-radius: 6px;
+    width: 2.15rem;
+    height: 2.15rem;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  #theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
@@ -522,6 +536,17 @@
     #reader { max-width: none; padding: 0; }
   }
 </style>
+<script>
+/* Apply a saved theme choice before the page paints */
+(function () {
+  try {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark" || saved === "light") {
+      document.documentElement.dataset.theme = saved;
+    }
+  } catch (e) { /* storage may be unavailable; fall back to OS preference */ }
+})();
+</script>
 
 <div class="layout">
   <nav id="sidebar" aria-label="Table of contents">
@@ -541,6 +566,7 @@
   <div id="main">
     <div id="topbar">
       <button id="menu-btn" aria-label="Open table of contents">&#9776; Contents</button>
+      <button id="theme-btn" aria-label="Toggle dark mode" title="Toggle dark mode"></button>
       <span class="hint">Press <b>/</b> to search &middot; quotes for exact phrase &middot; a section number jumps to it</span>
       <div class="searchwrap">
         <input id="q" type="search" autocomplete="off" spellcheck="false"
@@ -915,6 +941,27 @@ document.addEventListener("click", e => {
     setTimeout(() => t.classList.remove("on"), 1600);
   });
 });
+
+/* Theme toggle: overrides the OS preference and persists the choice */
+const themeBtn = $("theme-btn");
+function currentTheme() {
+  return document.documentElement.dataset.theme ||
+    (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+}
+function paintThemeBtn() {
+  const dark = currentTheme() === "dark";
+  themeBtn.textContent = dark ? "☀" : "☾";
+  themeBtn.title = dark ? "Switch to light theme" : "Switch to dark theme";
+  themeBtn.setAttribute("aria-label", themeBtn.title);
+}
+themeBtn.addEventListener("click", () => {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (e) {}
+  paintThemeBtn();
+});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paintThemeBtn);
+paintThemeBtn();
 
 /* Expand / collapse the whole TOC */
 $("expand-all").addEventListener("click", () => {
