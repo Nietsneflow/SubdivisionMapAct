@@ -192,6 +192,8 @@
     line-height: 1.35;
   }
   .toc-sec:hover { background: var(--accent-soft); }
+  .toc-sec.current { background: var(--accent-soft); }
+  .toc-sec.current .t { color: var(--ink); }
   .toc-sec .n {
     color: var(--accent);
     font-variant-numeric: tabular-nums;
@@ -817,8 +819,29 @@ function gotoMark(i) {
   $("matchcount").textContent = (curMark + 1) + " / " + marks.length + " matches";
 }
 
+/* Reveal a section's location in the TOC: fold everything else, expand the
+   chapter/article containing it, highlight it, and scroll it into view. */
+function syncToc(num) {
+  const link = document.querySelector('#toc .toc-sec[href="#sec-' + num + '"]');
+  if (!link) return;
+  document.querySelectorAll("#toc details").forEach(d => { d.open = false; });
+  let p = link.parentElement;
+  while (p && p.id !== "toc") {
+    if (p.tagName === "DETAILS") p.open = true;
+    p = p.parentElement;
+  }
+  markTocCurrent(link);
+  sidebar.scrollTop = Math.max(0, link.offsetTop - sidebar.clientHeight / 2);
+}
+function markTocCurrent(link) {
+  const prev = document.querySelector("#toc .toc-sec.current");
+  if (prev) prev.classList.remove("current");
+  link.classList.add("current");
+}
+
 function jumpToSection(num, withHighlights) {
   document.body.classList.remove("results-open");
+  syncToc(num);
   const prev = resultsEl.querySelector(".res.active");
   if (prev) prev.classList.remove("active");
   const cur = resultsEl.querySelector('.res[data-num="' + num + '"]');
@@ -904,6 +927,7 @@ $("toc").addEventListener("click", e => {
   const el = $(id);
   if (!el) return;
   history.replaceState(null, "", "#" + id);
+  markTocCurrent(link);
   quickScrollTo(el);
   el.classList.remove("flash");
   requestAnimationFrame(() => el.classList.add("flash"));
@@ -1016,7 +1040,10 @@ sidebar.addEventListener("click", e => {
 /* Deep link on load */
 if (location.hash.startsWith("#sec-")) {
   const el = $(location.hash.slice(1));
-  if (el) requestAnimationFrame(() => el.scrollIntoView({ block: "start" }));
+  if (el) {
+    syncToc(location.hash.slice(5));
+    requestAnimationFrame(() => el.scrollIntoView({ block: "start" }));
+  }
 }
 </script>
 
