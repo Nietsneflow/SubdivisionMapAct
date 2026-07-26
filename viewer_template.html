@@ -471,6 +471,52 @@
     text-align: center;
   }
 
+  /* Fast-scroll scrubber (touch devices / small screens) */
+  #scrubber, #scrub-label { display: none; }
+  @media (max-width: 900px), (pointer: coarse) {
+    #scrubber {
+      display: block;
+      position: fixed;
+      right: 0;
+      z-index: 22;
+      width: 1.1rem;
+      height: 3rem;
+      border: 1px solid var(--line);
+      border-right: 0;
+      border-radius: 8px 0 0 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      opacity: 0.6;
+      touch-action: none;
+      cursor: grab;
+    }
+    #scrubber::after {
+      content: "";
+      position: absolute;
+      inset: 0.6rem 0.4rem;
+      border-left: 2px solid var(--faint);
+      border-right: 2px solid var(--faint);
+    }
+    #scrubber.drag { opacity: 1; cursor: grabbing; }
+    #scrub-label {
+      position: fixed;
+      right: 1.6rem;
+      z-index: 22;
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 8px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      pointer-events: none;
+      transform: translateY(-25%);
+    }
+    #scrubber.drag ~ #scrub-label { display: block; }
+  }
+  @media print { #scrubber, #scrub-label { display: none !important; } }
+
   #top-btn {
     position: fixed;
     right: 1.2rem;
@@ -625,6 +671,8 @@
     </div>
   </div>
 </div>
+<div id="scrubber" role="slider" aria-label="Fast scroll" aria-orientation="vertical"></div>
+<div id="scrub-label"></div>
 <button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
 <div id="toast" role="status"></div>
 
@@ -938,6 +986,66 @@ function animateScroll(target) {
 function quickScrollTo(el) {
   animateScroll(el.getBoundingClientRect().top + window.scrollY - 80);
 }
+
+/* Fast-scroll scrubber: drag the right-edge handle to fly through the Act;
+   a bubble shows the section passing under the top of the screen. */
+const scrub = $("scrubber"), scrubLabel = $("scrub-label");
+const SCRUB_TOP = 80, SCRUB_BOT = 90;
+let scrubbing = false, secPos = null;
+
+function scrubTrack() {
+  return innerHeight - SCRUB_TOP - SCRUB_BOT - scrub.offsetHeight;
+}
+function maxScroll() {
+  return document.documentElement.scrollHeight - innerHeight;
+}
+function placeScrub() {
+  if (scrub.offsetParent === null) return;
+  const f = maxScroll() > 0 ? window.scrollY / maxScroll() : 0;
+  const y = SCRUB_TOP + f * scrubTrack();
+  scrub.style.top = y + "px";
+  scrubLabel.style.top = y + "px";
+}
+addEventListener("scroll", placeScrub, { passive: true });
+addEventListener("resize", placeScrub);
+placeScrub();
+
+scrub.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  scrub.setPointerCapture(e.pointerId);
+  scrubbing = true;
+  scrub.classList.add("drag");
+  const chShort = h => {
+    const m = /CHAPTER\s+([\d.]+)/.exec(h);
+    return m ? "Ch. " + m[1] : "";
+  };
+  secPos = Array.from(document.querySelectorAll("#doc-body .sec"), (el, i) => ({
+    top: el.getBoundingClientRect().top + window.scrollY,
+    label: chShort(SECS[i].chap) + " · § " + SECS[i].num,
+  }));
+  scrubLabel.textContent = secAtY(window.scrollY + SCRUB_TOP);
+});
+function secAtY(y) {
+  let cur = secPos[0];
+  for (const s of secPos) {
+    if (s.top <= y) cur = s; else break;
+  }
+  return cur ? cur.label : "";
+}
+scrub.addEventListener("pointermove", e => {
+  if (!scrubbing) return;
+  const f = Math.min(1, Math.max(0,
+    (e.clientY - SCRUB_TOP - scrub.offsetHeight / 2) / scrubTrack()));
+  window.scrollTo(0, f * maxScroll());
+  scrubLabel.textContent = secAtY(f * maxScroll() + SCRUB_TOP);
+});
+function endScrub() {
+  scrubbing = false;
+  scrub.classList.remove("drag");
+  scrubLabel.textContent = "";
+}
+scrub.addEventListener("pointerup", endScrub);
+scrub.addEventListener("pointercancel", endScrub);
 
 /* Back-to-top button appears once the intro is out of view */
 const topBtn = $("top-btn");
