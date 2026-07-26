@@ -477,6 +477,32 @@
     text-align: center;
   }
 
+  #top-btn {
+    position: fixed;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    z-index: 15;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--muted);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  #top-btn.on { opacity: 1; pointer-events: auto; }
+  #top-btn:hover { color: var(--accent); border-color: var(--accent); }
+  @media (min-width: 1151px) {
+    body.searching #top-btn { right: calc(340px + 1.2rem); }
+  }
+  @media print { #top-btn { display: none !important; } }
+
   #toast {
     position: fixed;
     bottom: 1.2rem;
@@ -607,6 +633,7 @@
     </div>
   </div>
 </div>
+<button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
 <div id="toast" role="status"></div>
 
 <script>
@@ -901,12 +928,11 @@ qEl.addEventListener("focus", () => {
 });
 
 /* Quick eased scroll (fixed duration regardless of distance) */
-function quickScrollTo(el) {
+function animateScroll(target) {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    el.scrollIntoView({ block: "start" });
+    window.scrollTo(0, target);
     return;
   }
-  const target = el.getBoundingClientRect().top + window.scrollY - 80;
   const start = window.scrollY, dist = target - start, dur = 220;
   let t0 = null;
   function step(ts) {
@@ -917,6 +943,16 @@ function quickScrollTo(el) {
   }
   requestAnimationFrame(step);
 }
+function quickScrollTo(el) {
+  animateScroll(el.getBoundingClientRect().top + window.scrollY - 80);
+}
+
+/* Back-to-top button appears once the intro is out of view */
+const topBtn = $("top-btn");
+addEventListener("scroll", () => {
+  topBtn.classList.toggle("on", window.scrollY > 500);
+}, { passive: true });
+topBtn.addEventListener("click", () => animateScroll(0));
 
 /* Smooth scroll + flash for table-of-contents clicks */
 $("toc").addEventListener("click", e => {
