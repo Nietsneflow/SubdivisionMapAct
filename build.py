@@ -11,6 +11,18 @@ with open("viewer_template.html", encoding="utf-8") as f:
     template = f.read()
 
 out = template.replace("__DATA_JSON__", payload)
+
+# Wrap in a full document (the template's <title>/<style> belong in <head>).
+head_end = out.index("</style>") + len("</style>")
+out = (
+    '<!doctype html>\n<html lang="en">\n<head>\n'
+    '<meta charset="utf-8"/>\n'
+    '<meta name="viewport" content="width=device-width, initial-scale=1"/>\n'
+    '<meta name="description" content="Searchable full text of the California '
+    'Subdivision Map Act (Gov. Code §§ 66410-66499.41)"/>\n'
+    + out[:head_end] + "\n</head>\n<body>"
+    + out[head_end:] + "\n</body>\n</html>\n"
+)
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(out)
 
