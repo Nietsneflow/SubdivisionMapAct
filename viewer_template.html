@@ -471,73 +471,48 @@
     text-align: center;
   }
 
-  /* Transient "where am I" pill shown while scrolling */
-  #scroll-pos {
+  /* Fast-scroll scrubber with position bubble (all screen sizes) */
+  #scrubber {
     position: fixed;
-    top: 4.1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 21;
+    right: 0;
+    top: 80px;
+    z-index: 22;
+    width: 1.1rem;
+    height: 3rem;
+    border: 1px solid var(--line);
+    border-right: 0;
+    border-radius: 8px 0 0 8px;
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    opacity: 0.6;
+    touch-action: none;
+    cursor: grab;
+  }
+  #scrubber::after {
+    content: "";
+    position: absolute;
+    inset: 0.6rem 0.4rem;
+    border-left: 2px solid var(--faint);
+    border-right: 2px solid var(--faint);
+  }
+  #scrubber.drag { opacity: 1; cursor: grabbing; }
+  #scrub-label {
+    display: none;
+    position: fixed;
+    right: 1.6rem;
+    z-index: 22;
     background: var(--ink);
     color: var(--bg);
-    border-radius: 999px;
-    padding: 0.35rem 0.95rem;
-    font-size: 0.85rem;
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.9rem;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.18s;
+    transform: translateY(-25%);
   }
-  #scroll-pos.on { opacity: 0.92; }
-  @media print { #scroll-pos { display: none !important; } }
-
-  /* Fast-scroll scrubber (touch devices / small screens) */
-  #scrubber, #scrub-label { display: none; }
-  @media (max-width: 900px), (pointer: coarse) {
-    #scrubber {
-      display: block;
-      position: fixed;
-      right: 0;
-      top: 80px;
-      z-index: 22;
-      width: 1.1rem;
-      height: 3rem;
-      border: 1px solid var(--line);
-      border-right: 0;
-      border-radius: 8px 0 0 8px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      opacity: 0.6;
-      touch-action: none;
-      cursor: grab;
-    }
-    #scrubber::after {
-      content: "";
-      position: absolute;
-      inset: 0.6rem 0.4rem;
-      border-left: 2px solid var(--faint);
-      border-right: 2px solid var(--faint);
-    }
-    #scrubber.drag { opacity: 1; cursor: grabbing; }
-    #scrub-label {
-      position: fixed;
-      right: 1.6rem;
-      z-index: 22;
-      background: var(--ink);
-      color: var(--bg);
-      border-radius: 8px;
-      padding: 0.35rem 0.7rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      pointer-events: none;
-      transform: translateY(-25%);
-    }
-    #scrubber.drag ~ #scrub-label { display: block; }
-  }
+  #scrubber.drag ~ #scrub-label, #scrub-label.on { display: block; }
   @media print { #scrubber, #scrub-label { display: none !important; } }
 
   #top-btn {
@@ -694,7 +669,6 @@
     </div>
   </div>
 </div>
-<div id="scroll-pos" aria-hidden="true"></div>
 <div id="scrubber" role="slider" aria-label="Fast scroll" aria-orientation="vertical"></div>
 <div id="scrub-label"></div>
 <button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
@@ -1081,26 +1055,26 @@ scrub.addEventListener("pointermove", e => {
 function endScrub() {
   scrubbing = false;
   scrub.classList.remove("drag");
+  scrubLabel.classList.remove("on");
   scrubLabel.textContent = "";
 }
 scrub.addEventListener("pointerup", endScrub);
 scrub.addEventListener("pointercancel", endScrub);
 
-/* Transient position pill while scrolling; the scrubber's own bubble
-   takes over during scrubbing. Hidden while still in the intro. */
-const scrollPos = $("scroll-pos");
+/* While scrolling normally, show the position bubble beside the scrubber
+   handle; it fades once scrolling stops. Hidden while still in the intro. */
 let posTimer = null;
 addEventListener("scroll", () => {
   if (scrubbing) return;
   const label = labelAtY(window.scrollY + 90);
   if (!label) {
-    scrollPos.classList.remove("on");
+    scrubLabel.classList.remove("on");
     return;
   }
-  scrollPos.textContent = label;
-  scrollPos.classList.add("on");
+  scrubLabel.textContent = label;
+  scrubLabel.classList.add("on");
   clearTimeout(posTimer);
-  posTimer = setTimeout(() => scrollPos.classList.remove("on"), 800);
+  posTimer = setTimeout(() => scrubLabel.classList.remove("on"), 800);
 }, { passive: true });
 
 /* Back-to-top button appears once the intro is out of view */
