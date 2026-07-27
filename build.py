@@ -1,7 +1,7 @@
-# Injects subdivision_map_act.json into viewer_template.html -> index.html
+# Injects title7.json into viewer_template.html -> index.html
 import json
 
-with open("subdivision_map_act.json", encoding="utf-8") as f:
+with open("title7.json", encoding="utf-8") as f:
     data = json.load(f)
 
 payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
@@ -18,13 +18,15 @@ out = (
     '<!doctype html>\n<html lang="en">\n<head>\n'
     '<meta charset="utf-8"/>\n'
     '<meta name="viewport" content="width=device-width, initial-scale=1"/>\n'
-    '<meta name="description" content="Searchable full text of the California '
-    'Subdivision Map Act (Gov. Code §§ 66410-66499.41)"/>\n'
+    '<meta name="description" content="Searchable full text of California '
+    'Government Code Title 7, Planning and Land Use (§§ 65000-66499.58) - '
+    'the Planning and Zoning Law, Subdivision Map Act, and Official Maps"/>\n'
     + out[:head_end] + "\n</head>\n<body>"
     + out[head_end:] + "\n</body>\n</html>\n"
 )
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(out)
 
-total = sum(len(a["sections"]) for c in data["chapters"] for a in c["articles"])
+total = sum(len(a["sections"]) for d in data["divisions"]
+            for c in d["chapters"] for a in c["articles"])
 print(f"index.html written: {len(out)//1024} KB, {total} sections")

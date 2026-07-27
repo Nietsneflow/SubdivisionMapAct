@@ -1,5 +1,6 @@
-# Scrapes the California Subdivision Map Act (Gov. Code, Title 7, Division 2)
-# from leginfo.legislature.ca.gov into subdivision_map_act.json.
+# Scrapes California Government Code Title 7, "Planning and Land Use"
+# (Divisions 1-3, Sections 65000-66499.58) from leginfo.legislature.ca.gov
+# into title7.json.
 import datetime
 import html as htmllib
 import json
@@ -9,7 +10,7 @@ import urllib.request
 
 BASE = "https://leginfo.legislature.ca.gov/faces/"
 TOC_URL = (BASE + "codes_displayexpandedbranch.xhtml"
-           "?tocCode=GOV&division=2.&title=7.&part=&chapter=&article=")
+           "?tocCode=GOV&division=&title=7.&part=&chapter=&article=")
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
@@ -24,24 +25,29 @@ def strip_tags(fragment):
     fragment = re.sub(r"</p>", "\n", fragment)
     fragment = re.sub(r"<[^>]+>", "", fragment)
     text = htmllib.unescape(fragment)
-    text = text.replace(" ", " ")
+    text = text.replace("\xa0", " ")
     lines = [re.sub(r"[ \t]+", " ", ln).strip() for ln in text.split("\n")]
     return "\n".join(ln for ln in lines if ln)
 
 
 def parse_page(page_html):
-    """Return (chapter_heading, article_heading, [sections]) for one text page."""
+    """Return (division, chapter, article, [sections]) for one text page.
+
+    Heading tags vary between pages (a DIVISION heading may be h4 or h5,
+    depending on nesting), so headings are classified by their text.
+    """
     body = page_html[page_html.find('id="manylawsections"'):]
 
-    chap = None
-    m = re.search(r"<h[45][^>]*><b>(CHAPTER[^<]*)</b></h[45]>", body)
-    if m:
-        chap = htmllib.unescape(m.group(1)).strip()
-
-    art = None
-    m = re.search(r"<h5[^>]*><b>(ARTICLE[^<]*)</b></h5>", body)
-    if m:
-        art = htmllib.unescape(m.group(1)).strip()
+    div_h = chap_h = art_h = None
+    for m in re.finditer(r"<h[3-6][^>]*>\s*<b>\s*((?:DIVISION|CHAPTER|ARTICLE)[^<]*)</b>",
+                         body):
+        heading = htmllib.unescape(m.group(1)).strip()
+        if heading.startswith("DIVISION"):
+            div_h = heading
+        elif heading.startswith("CHAPTER"):
+            chap_h = heading
+        elif heading.startswith("ARTICLE"):
+            art_h = heading
 
     sections = []
     # Each section starts with an <h6> containing the section-number link.
@@ -65,48 +71,56 @@ def parse_page(page_html):
 
         text = strip_tags(content)
         sections.append({"num": num, "text": text, "history": hist})
-    return chap, art, sections
+    return div_h, chap_h, art_h, sections
 
 
 def main():
     toc = fetch(TOC_URL)
-    urls = []
+    pages = []
     for m in re.finditer(
-            r'codes_displayText\.xhtml\?lawCode=GOV&amp;division=2\.&amp;'
+            r'codes_displayText\.xhtml\?lawCode=GOV&amp;division=([0-9.]*)&amp;'
             r'title=7\.&amp;part=&amp;chapter=([0-9.]*)&amp;article=([0-9.]*)',
             toc):
-        pair = (m.group(1), m.group(2))
-        if pair not in urls:
-            urls.append(pair)
-    print(f"{len(urls)} text pages found")
+        triple = (m.group(1), m.group(2), m.group(3))
+        if triple[0] and triple not in pages:
+            pages.append(triple)
+    print(f"{len(pages)} text pages found")
 
-    chapters = []  # ordered: {heading, articles: [{heading, sections}]}
-    for chapter, article in urls:
-        url = (BASE + f"codes_displayText.xhtml?lawCode=GOV&division=2."
-               f"&title=7.&part=&chapter={chapter}&article={article}")
+    # ordered: divisions -> chapters -> articles -> sections; a level with no
+    # heading on the source page (e.g. Division 3 has no chapters) is kept as
+    # a single unnamed child so the shape stays uniform.
+    divisions = []
+    for division, chapter, article in pages:
+        url = (BASE + f"codes_displayText.xhtml?lawCode=GOV"
+               f"&division={division}&title=7.&part="
+               f"&chapter={chapter}&article={article}")
         page = fetch(url)
-        chap_h, art_h, secs = parse_page(page)
-        print(f"chapter={chapter} article={article or '-'} -> "
-              f"{len(secs)} sections  ({chap_h})")
-        if not chapters or chapters[-1]["heading"] != chap_h:
-            chapters.append({"heading": chap_h, "articles": []})
-        chapters[-1]["articles"].append(
-            {"heading": art_h, "sections": secs})
-        time.sleep(1)
+        div_h, chap_h, art_h, secs = parse_page(page)
+        print(f"division={division} chapter={chapter or '-'} "
+              f"article={article or '-'} -> {len(secs)} sections")
+        if not secs:
+            continue
+        if not divisions or divisions[-1]["heading"] != div_h:
+            divisions.append({"heading": div_h, "chapters": []})
+        chaps = divisions[-1]["chapters"]
+        if not chaps or chaps[-1]["heading"] != chap_h:
+            chaps.append({"heading": chap_h, "articles": []})
+        chaps[-1]["articles"].append({"heading": art_h, "sections": secs})
+        time.sleep(0.7)
 
-    total = sum(len(a["sections"])
-                for c in chapters for a in c["articles"])
+    all_secs = [s for d in divisions for c in d["chapters"]
+                for a in c["articles"] for s in a["sections"]]
     data = {
-        "title": "Subdivision Map Act",
-        "citation": "California Government Code, Title 7, Division 2 "
-                    "(Sections 66410-66499.41)",
+        "title": "Planning and Land Use",
+        "citation": ("California Government Code, Title 7, Divisions 1-3 "
+                     f"(Sections {all_secs[0]['num']}-{all_secs[-1]['num']})"),
         "source": TOC_URL,
         "scraped": datetime.date.today().isoformat(),
-        "chapters": chapters,
+        "divisions": divisions,
     }
-    with open("subdivision_map_act.json", "w", encoding="utf-8") as f:
+    with open("title7.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
-    print(f"TOTAL: {total} sections -> subdivision_map_act.json")
+    print(f"TOTAL: {len(all_secs)} sections -> title7.json")
 
 
 if __name__ == "__main__":
