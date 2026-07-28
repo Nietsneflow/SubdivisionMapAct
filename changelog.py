@@ -95,7 +95,7 @@ def main():
               (removed, "repealed"), (moved, "renumbered")) if lst]
     entry = {
         "date": datetime.date.today().isoformat(),
-        "title": "Legislative update — " + ", ".join(parts),
+        "title": "Legislative update: " + ", ".join(parts),
         "amended": [{"num": k, "words": first_words(n[k]),
                      "bill": bill(n[k]["history"])} for k in amended],
         "added": [{"num": k, "words": first_words(n[k]),
