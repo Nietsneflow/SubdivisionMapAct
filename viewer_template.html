@@ -307,9 +307,14 @@
   #reader {
     flex: 1;
     min-width: 0;
-    max-width: 46rem;
     margin: 0 auto;
-    padding: 1.6rem 1.6rem 5rem;
+    padding: 1.6rem 2rem 5rem;
+    /* Indent step for nested subdivisions ((a) -> (1) -> (A) -> (i));
+       tighter on small screens where horizontal space is scarce. */
+    --ind: 1.6em;
+  }
+  @media (max-width: 600px) {
+    #reader { --ind: 0.9em; padding: 1.6rem 1rem 5rem; }
   }
   .doc-intro {
     border-bottom: 1px solid var(--line);
@@ -704,7 +709,7 @@ const officialUrl = n =>
   "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=" + n + ".";
 
 function firstWords(text, max) {
-  let s = text.split("\n")[0];
+  let s = text.split("\n")[0].replace(/\t/g, "");
   if (s.length <= max) return s;
   s = s.slice(0, max);
   return s.slice(0, s.lastIndexOf(" ")) + "…";
@@ -738,7 +743,13 @@ function firstWords(text, max) {
           const id = "sec-" + sec.num;
           toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
                  '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
-          const paras = sec.text.split("\n").map(p => "<p>" + escHtml(p) + "</p>").join("");
+          const paras = sec.text.split("\n").map(p => {
+            const depth = /^\t*/.exec(p)[0].length;
+            const t = escHtml(p.replace(/^\t+/, ""));
+            return depth
+              ? '<p style="margin-left:calc(' + depth + '*var(--ind))">' + t + "</p>"
+              : "<p>" + t + "</p>";
+          }).join("");
           body +=
             '<article class="sec" id="' + id + '">' +
             '<div class="sec-head"><h4 class="sec-num"><a href="#' + id + '">&sect; ' + sec.num + "</a></h4>" +
@@ -815,7 +826,7 @@ function snippets(sec, tokens, maxSnips) {
     const start = Math.max(0, i - 70);
     const end = Math.min(sec.text.length, i + 120);
     lastEnd = end;
-    let frag = sec.text.slice(start, end).replace(/\n/g, " ");
+    let frag = sec.text.slice(start, end).replace(/[\n\t]+/g, " ");
     frag = (start > 0 ? "…" : "") + frag + (end < sec.text.length ? "…" : "");
     out.push(escHtml(frag).replace(tokensRegex(tokens), m => "<b><mark>" + m + "</mark></b>"));
   }

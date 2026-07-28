@@ -20,14 +20,35 @@ def fetch(url):
         return r.read().decode("utf-8", errors="replace")
 
 
+def para_break(m):
+    """Turn an opening <p> tag into a newline plus tabs encoding the
+    paragraph's indent depth. leginfo indents nested subdivisions
+    ((a) -> (1) -> (A) -> (i)) with margin-left: 1em, 2.5em, 4em, ..."""
+    ml = re.search(r"margin-left:\s*([\d.]+)em", m.group(1) or "")
+    if not ml:
+        return "\n"
+    level = max(0, round((float(ml.group(1)) - 1) / 1.5))
+    return "\n" + "\t" * level
+
+
 def strip_tags(fragment):
+    # Whitespace in the source HTML is line-wrapping, not structure; only
+    # <br>/<p> tags (below) become line breaks, and only the tabs injected
+    # by para_break carry indent depth.
+    fragment = re.sub(r"[\r\n\t]+", " ", fragment)
     fragment = re.sub(r"<br\s*/?>", "\n", fragment)
+    fragment = re.sub(r"<p([^>]*)>", para_break, fragment)
     fragment = re.sub(r"</p>", "\n", fragment)
     fragment = re.sub(r"<[^>]+>", "", fragment)
     text = htmllib.unescape(fragment)
     text = text.replace("\xa0", " ")
-    lines = [re.sub(r"[ \t]+", " ", ln).strip() for ln in text.split("\n")]
-    return "\n".join(ln for ln in lines if ln)
+    lines = []
+    for ln in text.split("\n"):
+        tabs = len(ln) - len(ln.lstrip("\t"))
+        core = re.sub(r"[ \t]+", " ", ln).strip()
+        if core:
+            lines.append("\t" * tabs + core)
+    return "\n".join(lines)
 
 
 def parse_page(page_html):
