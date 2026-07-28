@@ -31,11 +31,25 @@ def para_break(m):
     return "\n" + "\t" * level
 
 
+def table_lines(m):
+    """Turn a <table> into pipe-delimited lines, one per row: | a | b |
+    (the viewer renders runs of these as a real table)."""
+    rows = []
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", m.group(1), re.S):
+        cells = [re.sub(r"<[^>]+>", "", c).strip()
+                 for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S)]
+        if any(cells):
+            rows.append("| " + " | ".join(cells) + " |")
+    return "\n" + "\n".join(rows) + "\n"
+
+
 def strip_tags(fragment):
     # Whitespace in the source HTML is line-wrapping, not structure; only
     # <br>/<p> tags (below) become line breaks, and only the tabs injected
     # by para_break carry indent depth.
     fragment = re.sub(r"[\r\n\t]+", " ", fragment)
+    fragment = re.sub(r"<table[^>]*>(.*?)</table>", table_lines, fragment,
+                      flags=re.S)
     fragment = re.sub(r"<br\s*/?>", "\n", fragment)
     fragment = re.sub(r"<p([^>]*)>", para_break, fragment)
     fragment = re.sub(r"</p>", "\n", fragment)

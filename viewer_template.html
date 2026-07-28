@@ -86,7 +86,7 @@
   #theme-btn:hover { border-color: var(--accent); color: var(--accent); }
 
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; overflow-x: clip; }
   body {
     background: var(--bg);
     color: var(--ink);
@@ -413,8 +413,26 @@
   .sec-body {
     font: 1rem/1.62 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
     margin-top: 0.35rem;
+    overflow-wrap: break-word;
   }
   .sec-body p { margin: 0 0 0.55rem; }
+  /* Statute tables (e.g. density-bonus percentages). Wide ones scroll
+     inside their own wrapper instead of widening the page. */
+  .tblwrap { overflow-x: auto; margin: 0.3rem 0 0.8rem; }
+  .sec-body table {
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.95em;
+  }
+  .sec-body td {
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.8rem;
+    text-align: center;
+  }
+  .sec-body tr:first-child td {
+    font-weight: 600;
+    background: var(--accent-soft);
+  }
   .sec-hist {
     font-size: 0.76rem;
     color: var(--faint);
@@ -743,13 +761,26 @@ function firstWords(text, max) {
           const id = "sec-" + sec.num;
           toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
                  '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
-          const paras = sec.text.split("\n").map(p => {
-            const depth = /^\t*/.exec(p)[0].length;
-            const t = escHtml(p.replace(/^\t+/, ""));
-            return depth
+          const lines = sec.text.split("\n");
+          const isRow = ln => /^\| .* \|$/.test(ln);
+          let paras = "";
+          for (let li = 0; li < lines.length; li++) {
+            if (isRow(lines[li])) {
+              let rows = "";
+              for (; li < lines.length && isRow(lines[li]); li++) {
+                rows += "<tr>" + lines[li].slice(1, -1).split(" | ")
+                  .map(c => "<td>" + escHtml(c.trim()) + "</td>").join("") + "</tr>";
+              }
+              li--;
+              paras += '<div class="tblwrap"><table>' + rows + "</table></div>";
+              continue;
+            }
+            const depth = /^\t*/.exec(lines[li])[0].length;
+            const t = escHtml(lines[li].replace(/^\t+/, ""));
+            paras += depth
               ? '<p style="margin-left:calc(' + depth + '*var(--ind))">' + t + "</p>"
               : "<p>" + t + "</p>";
-          }).join("");
+          }
           body +=
             '<article class="sec" id="' + id + '">' +
             '<div class="sec-head"><h4 class="sec-num"><a href="#' + id + '">&sect; ' + sec.num + "</a></h4>" +
