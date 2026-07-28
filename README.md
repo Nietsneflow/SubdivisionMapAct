@@ -32,9 +32,10 @@ lookup work that the official site makes painful.
 ## Updating the text
 
 A GitHub Action (`.github/workflows/refresh.yml`) re-scrapes the official
-source on the 2nd of each month, logs any statute changes to the change-log
-page (`changes.html`), and commits the result; GitHub Pages then redeploys.
-Nothing to do by hand. To refresh manually anyway:
+source daily, logs any statute changes to the change-log page
+(`changes.html`), and commits when something changed (plus a monthly
+retrieval-date bump on the 2nd); GitHub Pages then redeploys. Nothing to do
+by hand. To refresh manually anyway:
 
 ```
 python scrape.py     # re-pulls all chapter/article pages -> title7.json

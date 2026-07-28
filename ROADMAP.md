@@ -152,7 +152,7 @@ Useful when the question is *what changed*. Needs a filter control, so it lives
 in the sidebar's existing tools row.
 
 ### 17. Version diff ✅ *(shipped as the change log + auto-refresh)*
-A monthly GitHub Action (`.github/workflows/refresh.yml`) rescrapes leginfo;
+A daily GitHub Action (`.github/workflows/refresh.yml`) rescrapes leginfo;
 `changelog.py` diffs against the last committed data and classifies each
 difference (amended / added / repealed / renumbered, with the enacting bill),
 and `changes.html` renders the feed patch-notes style. Remaining idea from

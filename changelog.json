@@ -19,6 +19,14 @@
  "app": [
   {
    "date": "2026-07-27",
+   "title": "Statute checks now run daily",
+   "notes": [
+    "The text is now re-checked against the official source every day instead of monthly, so urgency statutes (which take effect immediately) show up in the change log within a day.",
+    "Nothing changes on quiet days; the page and its history only update when the Legislature actually did something."
+   ]
+  },
+  {
+   "date": "2026-07-27",
    "title": "Cited-by lists and answers for vanished sections",
    "notes": [
     "Each section now ends with a faint \"Cited by\" line listing every Title 7 section that references it; knowing what points at a section is often more useful than what it points to. Long lists start collapsed.",

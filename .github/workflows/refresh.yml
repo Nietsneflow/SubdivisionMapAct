@@ -2,10 +2,10 @@ name: Refresh statute text
 
 on:
   schedule:
-    # 2nd of each month, 09:17 UTC (~1-2am Pacific). Amendments generally
-    # take effect Jan 1, so the Jan 2 run catches the yearly batch; monthly
-    # runs catch urgency statutes that take effect immediately.
-    - cron: "17 9 2 * *"
+    # Daily at 09:17 UTC (~1-2am Pacific). Most amendments take effect
+    # January 1, but urgency statutes land year-round; a daily check
+    # surfaces them in the change log within a day.
+    - cron: "17 9 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,19 +30,21 @@ jobs:
       - name: Rebuild pages
         run: python build.py
 
-      - name: Commit and push if anything changed
+      - name: Commit and push
+        # Commit when statute text actually changed (changelog.py touched
+        # changelog.json). Date-only runs commit just once a month, on the
+        # 2nd, so the retrieval date stays fresh without daily commit noise.
         run: |
-          if git diff --quiet; then
-            echo "No changes at all (not even the retrieval date?)"
+          if ! git diff --quiet -- changelog.json; then
+            msg="Refresh from leginfo: statute changes (see changes.html)"
+          elif [ "$(date -u +%d)" = "02" ]; then
+            msg="Refresh from leginfo: no statute changes, retrieval date updated"
+          else
+            echo "No statute changes; next date-only commit on the 2nd"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          if git diff --cached --stat | grep -q changelog.json; then
-            msg="Refresh from leginfo: statute changes (see changes.html)"
-          else
-            msg="Refresh from leginfo: no statute changes, retrieval date updated"
-          fi
           git commit -m "$msg"
           git push
