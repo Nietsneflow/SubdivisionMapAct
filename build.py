@@ -30,3 +30,17 @@ with open("index.html", "w", encoding="utf-8") as f:
 total = sum(len(a["sections"]) for d in data["divisions"]
             for c in d["chapters"] for a in c["articles"])
 print(f"index.html written: {len(out)//1024} KB, {total} sections")
+
+# Change-log page (Steam-patch-notes style feed of legislative changes).
+with open("changelog.json", encoding="utf-8") as f:
+    log = json.load(f)
+log_payload = json.dumps(log, ensure_ascii=False, separators=(",", ":"))
+log_payload = log_payload.replace("</", "<\\/")
+
+with open("changes_template.html", encoding="utf-8") as f:
+    changes = f.read()
+changes = (changes.replace("__CHANGELOG_JSON__", log_payload)
+                  .replace("__SCRAPED__", data["scraped"]))
+with open("changes.html", "w", encoding="utf-8") as f:
+    f.write(changes)
+print(f"changes.html written: {len(log['entries'])} entries")

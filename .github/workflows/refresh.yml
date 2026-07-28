@@ -1,0 +1,48 @@
+name: Refresh statute text
+
+on:
+  schedule:
+    # 2nd of each month, 09:17 UTC (~1-2am Pacific). Amendments generally
+    # take effect Jan 1, so the Jan 2 run catches the yearly batch; monthly
+    # runs catch urgency statutes that take effect immediately.
+    - cron: "17 9 2 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scrape current text from leginfo
+        run: python scrape.py
+
+      - name: Log statute changes vs previous data
+        run: python changelog.py
+
+      - name: Rebuild pages
+        run: python build.py
+
+      - name: Commit and push if anything changed
+        run: |
+          if git diff --quiet; then
+            echo "No changes at all (not even the retrieval date?)"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --stat | grep -q changelog.json; then
+            msg="Refresh from leginfo: statute changes (see changes.html)"
+          else
+            msg="Refresh from leginfo: no statute changes, retrieval date updated"
+          fi
+          git commit -m "$msg"
+          git push

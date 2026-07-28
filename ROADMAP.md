@@ -151,10 +151,12 @@ or a `?` -opened panel.
 Useful when the question is *what changed*. Needs a filter control, so it lives
 in the sidebar's existing tools row.
 
-### 17. Version diff
-Keep dated `title7.json` snapshots and offer "what changed on January 1" as a
-side-by-side or inline diff. The largest lift here, and the strongest answer to
-the staleness banner the page already shows.
+### 17. Version diff ✅ *(shipped as the change log + auto-refresh)*
+A monthly GitHub Action (`.github/workflows/refresh.yml`) rescrapes leginfo;
+`changelog.py` diffs against the last committed data and classifies each
+difference (amended / added / repealed / renumbered, with the enacting bill),
+and `changes.html` renders the feed patch-notes style. Remaining idea from
+this item: per-section inline text diffs on the change page.
 
 ### 18. Private notes per section
 A note icon in the hover tools; notes render as a small margin block.

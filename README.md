@@ -31,11 +31,15 @@ lookup work that the official site makes painful.
 
 ## Updating the text
 
-The Legislature amends this code; regenerate the page from the official source:
+A GitHub Action (`.github/workflows/refresh.yml`) re-scrapes the official
+source on the 2nd of each month, logs any statute changes to the change-log
+page (`changes.html`), and commits the result; GitHub Pages then redeploys.
+Nothing to do by hand. To refresh manually anyway:
 
 ```
-python scrape.py    # re-pulls all chapter/article pages -> title7.json
-python build.py     # injects the JSON into viewer_template.html -> index.html
+python scrape.py     # re-pulls all chapter/article pages -> title7.json
+python changelog.py  # diffs against the last committed data -> changelog.json
+python build.py      # builds index.html and changes.html
 ```
 
 Commit and push; GitHub Pages redeploys automatically.

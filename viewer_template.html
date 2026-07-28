@@ -897,7 +897,8 @@ function linkifyRefs(html) {
   document.getElementById("doc-src").innerHTML =
     'Text mirrored verbatim from the <a href="' + DATA.source +
     '" target="_blank" rel="noopener">official Legislative Information site</a>, retrieved ' +
-    DATA.scraped + '. Each section links to its official page.';
+    DATA.scraped + '. Each section links to its official page. ' +
+    '<a href="changes.html">Change log</a> &mdash; what the Legislature has changed, update by update.';
 
   let toc = "", body = "";
   DATA.divisions.forEach((dv, di) => {

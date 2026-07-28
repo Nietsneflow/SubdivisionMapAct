@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Change log for the Planning and Land Use reference - legislative amendments to California Gov. Code Title 7, logged at each refresh"/>
+<title>Change log &mdash; Planning and Land Use</title>
+<style>
+  :root {
+    --bg: #F4F5F3; --panel: #FBFBFA; --ink: #212B34; --muted: #67737E;
+    --faint: #8B959E; --accent: #2A5F97; --accent-soft: #2A5F9714;
+    --line: #DCE1E5; --shadow: 0 8px 28px rgba(24, 38, 52, 0.13);
+    --add: #2F7D46; --add-soft: #2F7D461C;
+    --amend: #8A6D1B; --amend-soft: #8A6D1B1C;
+    --rep: #A33B3B; --rep-soft: #A33B3B1A;
+    --move: #6B4FA0; --move-soft: #6B4FA01A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131920; --panel: #1A222B; --ink: #D8E0E7; --muted: #93A0AB;
+      --faint: #6E7B86; --accent: #82B2E0; --accent-soft: #82B2E01F;
+      --line: #2A3540; --shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+      --add: #85CE9C; --add-soft: #85CE9C21;
+      --amend: #E0C377; --amend-soft: #E0C37721;
+      --rep: #E09999; --rep-soft: #E0999921;
+      --move: #BCA6E8; --move-soft: #BCA6E821;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F5F3; --panel: #FBFBFA; --ink: #212B34; --muted: #67737E;
+    --faint: #8B959E; --accent: #2A5F97; --accent-soft: #2A5F9714;
+    --line: #DCE1E5; --shadow: 0 8px 28px rgba(24, 38, 52, 0.13);
+    --add: #2F7D46; --add-soft: #2F7D461C;
+    --amend: #8A6D1B; --amend-soft: #8A6D1B1C;
+    --rep: #A33B3B; --rep-soft: #A33B3B1A;
+    --move: #6B4FA0; --move-soft: #6B4FA01A;
+  }
+  :root[data-theme="dark"] {
+    --bg: #131920; --panel: #1A222B; --ink: #D8E0E7; --muted: #93A0AB;
+    --faint: #6E7B86; --accent: #82B2E0; --accent-soft: #82B2E01F;
+    --line: #2A3540; --shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+    --add: #85CE9C; --add-soft: #85CE9C21;
+    --amend: #E0C377; --amend-soft: #E0C37721;
+    --rep: #E09999; --rep-soft: #E0999921;
+    --move: #BCA6E8; --move-soft: #BCA6E821;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: clip; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 system-ui, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); }
+
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 1.6rem 1.2rem 4rem; }
+  .backlink {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 1.4rem;
+  }
+  .backlink:hover { text-decoration: underline; }
+  header h1 {
+    font: 700 1.9rem/1.2 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 0 0 0.4rem;
+  }
+  header p { color: var(--muted); font-size: 0.87rem; margin: 0.25rem 0; }
+  #feed { margin-top: 1.8rem; }
+
+  .entry {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.15rem 1.35rem 0.9rem;
+    margin: 0 0 1.2rem;
+  }
+  .edate {
+    font-size: 0.7rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 0.2rem;
+  }
+  .entry h2 {
+    font: 700 1.22rem/1.3 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 0 0 0.5rem;
+  }
+  .blurb {
+    font: 0.95rem/1.6 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 0.2rem 0 0.7rem;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 0.14rem 0.5rem;
+    margin: 0.5rem 0 0.15rem;
+  }
+  .tag.add { color: var(--add); background: var(--add-soft); }
+  .tag.amend { color: var(--amend); background: var(--amend-soft); }
+  .tag.rep { color: var(--rep); background: var(--rep-soft); }
+  .tag.move { color: var(--move); background: var(--move-soft); }
+  .entry ul { margin: 0.25rem 0 0.7rem; padding-left: 1.25rem; }
+  .entry li { margin: 0.3rem 0; font-size: 0.9rem; }
+  .entry li a { font-weight: 600; font-variant-numeric: tabular-nums; text-decoration: none; }
+  .entry li a:hover { text-decoration: underline; }
+  .repnum { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .words { color: var(--muted); }
+  .bill { color: var(--faint); font-size: 0.82em; white-space: nowrap; }
+  .empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 3rem 0;
+  }
+</style>
+<script>
+(function () {
+  try {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark" || saved === "light") {
+      document.documentElement.dataset.theme = saved;
+    }
+  } catch (e) { /* fall back to OS preference */ }
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Planning and Land Use &mdash; Gov. Code Title 7</a>
+  <header>
+    <h1>Change log</h1>
+    <p>What the Legislature has changed in Title 7, update by update. The text
+      is re-checked against the official source on a schedule; an entry appears
+      here whenever any section&rsquo;s text changed. Most amendments take
+      effect January&nbsp;1.</p>
+    <p>Text current as of <b>2026-07-27</b>.</p>
+  </header>
+  <div id="feed"></div>
+</div>
+
+<script>
+const LOG = {"entries":[{"date":"2026-07-27","title":"Initial release — full Title 7 coverage","blurb":"First complete snapshot of Government Code Title 7, Planning and Land Use: 1,076 sections across Division 1 (Planning and Zoning), Division 2 (Subdivisions), and Division 3 (Official Maps), mirrored from the official Legislative Information site. Legislative changes from this point forward are logged here automatically at each refresh. One recodification predating this snapshot worth knowing about: the accessory dwelling unit law formerly at § 65852.2 now lives at §§ 66310–66342.","amended":[],"added":[],"repealed":[],"moved":[]}]};
+
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const secLink = n => '<a href="index.html#sec-' + n + '">&sect; ' + n + "</a>";
+const fmtDate = iso => new Date(iso + "T00:00:00").toLocaleDateString("en-US",
+  { year: "numeric", month: "long", day: "numeric" });
+const billTag = b => b ? ' <span class="bill">' + esc(b) + "</span>" : "";
+
+const GROUPS = [
+  ["amended", "Amended", "amend",
+   it => secLink(it.num) + ' <span class="words">' + esc(it.words) + "</span>" + billTag(it.bill)],
+  ["added", "Added", "add",
+   it => secLink(it.num) + ' <span class="words">' + esc(it.words) + "</span>" + billTag(it.bill)],
+  ["repealed", "Repealed", "rep",
+   it => '<span class="repnum">&sect; ' + it.num + '</span> <span class="words">' + esc(it.words) + "</span>"],
+  ["moved", "Renumbered / moved", "move",
+   it => '<span class="repnum">&sect; ' + it.from + "</span> &rarr; " + secLink(it.to) +
+         ' <span class="words">' + esc(it.words) + "</span>"],
+];
+
+let html = "";
+for (const e of LOG.entries) {
+  html += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
+          "<h2>" + esc(e.title) + "</h2>";
+  if (e.blurb) html += '<p class="blurb">' + esc(e.blurb) + "</p>";
+  for (const [key, label, cls, render] of GROUPS) {
+    const items = e[key] || [];
+    if (items.length === 0) continue;
+    html += '<span class="tag ' + cls + '">' + label + " &middot; " + items.length + "</span><ul>" +
+            items.map(it => "<li>" + render(it) + "</li>").join("") + "</ul>";
+  }
+  html += "</article>";
+}
+document.getElementById("feed").innerHTML =
+  html || '<p class="empty">No changes logged yet.</p>';
+</script>
+</body>
+</html>
