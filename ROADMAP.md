@@ -187,6 +187,10 @@ printing the whole title or copy-pasting into Word.
 - **Mobile gestures** — swipe left/right to move between sections.
 - **Accessibility** — `aria-live` on the result count, audit focus order through
   the slide-over panels.
+- **CI link checker** — Title 7-range references that don't exist are already
+  left unlinked, but ~1,700 outbound links to *other* codes could still go
+  stale when those codes are amended. A CI pass could verify each distinct
+  target once (cached in a committed JSON) and unlink the dead ones.
 
 ---
 

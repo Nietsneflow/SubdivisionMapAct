@@ -18,6 +18,13 @@
  ],
  "app": [
   {
+   "date": "2026-07-28",
+   "title": "No more dead outbound links",
+   "notes": [
+    "Fixed: some cross-references linked out to empty pages on the official site. Statute text sometimes cites Title 7 sections that were repealed, renumbered, or never enacted; those numbers now stay as plain text instead of linking nowhere, and known renumberings jump to the successor section instead."
+   ]
+  },
+  {
    "date": "2026-07-27",
    "title": "Statute checks now run daily",
    "notes": [

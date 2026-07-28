@@ -914,6 +914,21 @@ function xrefWrap(n, lawCode) {
   if (lawCode === "GOV" && SEC_SET.has(n)) {
     return '<a class="xref" href="#sec-' + n + '">' + n + "</a>";
   }
+  /* A Title 7-range number we don't have doesn't exist on leginfo either
+     (repealed, renumbered, or never enacted), so an external link would
+     land on an empty page. Point known renumberings at their successor;
+     leave the rest as plain text. */
+  if (lawCode === "GOV") {
+    const f = parseFloat(n);
+    if (f >= 65000 && f < 66500) {
+      const g = GONE[n];
+      if (g && g.to) {
+        return '<a class="xref" href="#sec-' + g.to + '" title="&sect; ' + n +
+               ' was renumbered; now &sect; ' + g.to + '">' + n + "</a>";
+      }
+      return n;
+    }
+  }
   const nm = lawCode === "CCP" ? CCP_NAME
     : CODE_MAP[Object.keys(CODE_MAP).find(k => CODE_MAP[k][0] === lawCode)];
   const url = "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=" +
