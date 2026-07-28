@@ -77,13 +77,13 @@ Automatic, no interaction required: a **Recent** collapsible group in the
 sidebar, last ~10 sections. Same self-hiding pattern as Pinned. Cheap to build
 once section-visit tracking exists for #6.
 
-### 8. "Cited by" (reverse cross-references)
-Build the inverse of #1 at build time. Under each section, a single faint
-collapsed line: *Cited by §§ 66452.6, 66499.35*. Knowing what points *at* a
-section is often more useful than what it points to, and it's information that
-exists nowhere else in one place.
-
-Cost: one line of small text per section (collapsed by default).
+### 8. "Cited by" (reverse cross-references) ✅ *(shipped)*
+Built at render time by inverting the resolved in-page cross-reference links,
+so forward and reverse can never disagree. Each cited section ends with a
+faint *Cited by § …* line; lists longer than ten start collapsed behind a
+"+N more" toggle. Bonus shipped with it: searching a section number that no
+longer exists (e.g. 65852.2) shows where the law went, fed by the change
+log's moved/repealed records.
 
 ### 9. Smarter copy
 Today "Copy text" copies the whole section. Add, in the same hover row:

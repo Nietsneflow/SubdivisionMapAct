@@ -7,10 +7,24 @@
    "amended": [],
    "added": [],
    "repealed": [],
-   "moved": []
+   "moved": [
+    {
+     "from": "65852.2",
+     "to": "66310",
+     "words": "Accessory dwelling unit law, recodified to Chapter 13 (§§ 66310-66342) before this snapshot"
+    }
+   ]
   }
  ],
  "app": [
+  {
+   "date": "2026-07-27",
+   "title": "Cited-by lists and answers for vanished sections",
+   "notes": [
+    "Each section now ends with a faint \"Cited by\" line listing every Title 7 section that references it; knowing what points at a section is often more useful than what it points to. Long lists start collapsed.",
+    "Searching for a section number that no longer exists (like 65852.2) now explains what happened to it, with a link to where the law went and to the change log, instead of finding nothing."
+   ]
+  },
   {
    "date": "2026-07-27",
    "title": "Change log gets its own page, in two parts",

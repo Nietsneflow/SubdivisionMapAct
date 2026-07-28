@@ -7,10 +7,25 @@ with open("title7.json", encoding="utf-8") as f:
 payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 payload = payload.replace("</", "<\\/")  # keep the embedded JSON script-safe
 
+# Tombstones: sections that no longer exist, from the change log's moved and
+# repealed records (newest entry wins), so searching an old number explains
+# what happened to it.
+with open("changelog.json", encoding="utf-8") as f:
+    log = json.load(f)
+gone = {}
+for e in log["statute"]:
+    for it in e.get("moved", []):
+        gone.setdefault(it["from"], {"to": it["to"], "date": e["date"]})
+    for it in e.get("repealed", []):
+        gone.setdefault(it["num"], {"date": e["date"]})
+gone_payload = json.dumps(gone, ensure_ascii=False,
+                          separators=(",", ":")).replace("</", "<\\/")
+
 with open("viewer_template.html", encoding="utf-8") as f:
     template = f.read()
 
-out = template.replace("__DATA_JSON__", payload)
+out = (template.replace("__DATA_JSON__", payload)
+               .replace("__GONE_JSON__", gone_payload))
 
 # Wrap in a full document (the template's <title>/<style> belong in <head>).
 head_end = out.index("</style>") + len("</style>")

@@ -450,6 +450,37 @@
   .sec-body a.xref { color: var(--accent); text-decoration: none; }
   .sec-body a.xref:hover { text-decoration: underline; }
   @media print { .sec-body a.xref { color: inherit; } }
+  .sec-cited {
+    font-size: 0.76rem;
+    color: var(--faint);
+    margin: 0.3rem 0 0;
+    line-height: 1.6;
+  }
+  .sec-cited a.xref { color: var(--muted); text-decoration: none; }
+  .sec-cited a.xref:hover { color: var(--accent); text-decoration: underline; }
+  .cited-more {
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.4rem;
+    text-decoration: underline;
+  }
+  .cited-more:hover { color: var(--accent); }
+  @media print { .sec-cited { display: none !important; } }
+  .gone-note {
+    background: var(--warn-bg);
+    color: var(--warn-ink);
+    border: 1px solid var(--warn-line);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0.2rem 0 0.9rem;
+  }
+  .gone-note a { color: inherit; font-weight: 600; }
 
   /* Hover peek: a glance at the section a reference points to */
   #peek {
@@ -765,6 +796,9 @@
 
 <script>
 const DATA = __DATA_JSON__;
+/* Sections that no longer exist (renumbered or repealed), from the change
+   log: searching an old number explains where the law went. */
+const GONE = __GONE_JSON__;
 
 /* ---------- Build flat section list & render ---------- */
 const SECS = [];
@@ -909,6 +943,7 @@ function linkifyRefs(html) {
     '<a href="changes.html">Change log</a>: what the Legislature has changed, update by update.';
 
   let toc = "", body = "";
+  const idSeen = new Map();
   DATA.divisions.forEach((dv, di) => {
     toc += '<details class="div" open><summary><span class="tw">&#9654;</span><span>' +
            escHtml(dv.heading.replace(/\s*\[.*\]$/, "")) + "</span></summary>";
@@ -926,7 +961,13 @@ function linkifyRefs(html) {
           body += '<h4 class="art-h">' + escHtml(art.heading) + "</h4>";
         }
         art.sections.forEach(sec => {
-          const id = "sec-" + sec.num;
+          /* A few sections appear twice with the same number (leginfo prints
+             both versions when a conditional amendment makes one operative
+             later); suffix repeat ids so every anchor stays unique. */
+          let id = "sec-" + sec.num;
+          const dup = idSeen.get(sec.num) || 0;
+          if (dup > 0) id += "--v" + (dup + 1);
+          idSeen.set(sec.num, dup + 1);
           toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
                  '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
           const lines = sec.text.split("\n");
@@ -980,6 +1021,47 @@ function linkifyRefs(html) {
     "Title 7, Divisions 1&ndash;" + DATA.divisions.length + " &middot; &sect;&sect; " +
     SECS[0].num + "&ndash;" + SECS[SECS.length - 1].num;
 })();
+
+/* Reverse cross-references: scan the in-page links the linkifier resolved
+   and list, under each section, the sections that cite it. Long lists start
+   collapsed behind a "+N more" toggle. */
+(function citedBy() {
+  const map = new Map();
+  for (const sec of document.querySelectorAll("#doc-body .sec")) {
+    const from = sec.id.slice(4).replace(/--v\d+$/, "");
+    const targets = new Set();
+    for (const a of sec.querySelectorAll('a.xref[href^="#sec-"]')) {
+      const to = a.getAttribute("href").slice(5);
+      if (to !== from) targets.add(to);
+    }
+    for (const to of targets) {
+      if (!map.has(to)) map.set(to, new Set());
+      map.get(to).add(from);
+    }
+  }
+  const SHOW = 10;
+  for (const [to, fromSet] of map) {
+    const host = document.getElementById("sec-" + to);
+    if (!host) continue;
+    const links = [...fromSet].map(n =>
+      '<a class="xref" href="#sec-' + n + '">&sect;&nbsp;' + n + "</a>");
+    let html = "Cited by " + links.slice(0, SHOW).join(", ");
+    if (links.length > SHOW) {
+      html += '<span hidden>, ' + links.slice(SHOW).join(", ") + "</span>" +
+              '<button class="cited-more">+' + (links.length - SHOW) + " more</button>";
+    }
+    const p = document.createElement("p");
+    p.className = "sec-cited";
+    p.innerHTML = html;
+    host.appendChild(p);
+  }
+})();
+document.addEventListener("click", e => {
+  const b = e.target.closest(".cited-more");
+  if (!b) return;
+  b.previousElementSibling.hidden = false;
+  b.remove();
+});
 
 /* ---------- Query parsing & search ---------- */
 function parseQuery(q) {
@@ -1036,7 +1118,18 @@ function snippets(sec, tokens, maxSnips) {
 const $ = id => document.getElementById(id);
 const readerEl = $("reader"), resultsEl = $("results"),
       matchbar = $("matchbar"), qEl = $("q");
-let curTokens = [], marks = [], curMark = -1;
+let curTokens = [], marks = [], curMark = -1, goneNum = null;
+
+function goneNote() {
+  if (!goneNum) return "";
+  const g = GONE[goneNum];
+  return '<div class="gone-note">&#9888; &sect; ' + goneNum +
+    " no longer exists at that number: " +
+    (g.to ? 'the law was renumbered and now lives at <a href="#sec-' + g.to +
+            '">&sect; ' + g.to + "</a> and nearby sections"
+          : "it was repealed" + (g.date ? " (logged " + g.date + ")" : "")) +
+    '. Details in the <a href="changes.html">change log</a>.</div>';
+}
 
 function showResults(tokens) {
   clearMarks();
@@ -1071,7 +1164,7 @@ function showResults(tokens) {
               "</button>";
     }
   }
-  resultsEl.innerHTML = html;
+  resultsEl.innerHTML = goneNote() + html;
   document.body.classList.add("searching", "results-open");
 }
 
@@ -1192,10 +1285,14 @@ qEl.addEventListener("input", () => {
       return;
     }
     curTokens = parseQuery(q);
-    if (/^\d{5}(\.\d+)?$/.test(q) && $("sec-" + q)) {
-      closeSearch();
-      jumpToSection(q, false);
-      return;
+    goneNum = null;
+    if (/^\d{5}(\.\d+)?$/.test(q)) {
+      if ($("sec-" + q)) {
+        closeSearch();
+        jumpToSection(q, false);
+        return;
+      }
+      if (GONE[q]) goneNum = q;
     }
     showResults(curTokens);
   }, 160);
@@ -1368,6 +1465,12 @@ document.addEventListener("keydown", e => {
 });
 
 resultsEl.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#sec-"]');
+  if (a) {
+    e.preventDefault();
+    jumpToSection(a.getAttribute("href").slice(5), false);
+    return;
+  }
   const btn = e.target.closest(".res");
   if (btn) jumpToSection(btn.dataset.num, true);
 });
