@@ -67,7 +67,29 @@
     margin: 0 0 0.4rem;
   }
   header p { color: var(--muted); font-size: 0.87rem; margin: 0.25rem 0; }
-  #feed { margin-top: 1.8rem; }
+  .subnav {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1.1rem 0 0;
+  }
+  .subnav a {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+  .subnav a:hover { border-color: var(--accent); }
+  .sect-h {
+    font: 700 1.45rem/1.25 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 2.4rem 0 0.3rem;
+    padding-top: 1.2rem;
+    border-top: 2px solid var(--line);
+    scroll-margin-top: 1rem;
+  }
+  .sect-sub { color: var(--muted); font-size: 0.85rem; margin: 0 0 1.2rem; }
 
   .entry {
     background: var(--panel);
@@ -134,17 +156,32 @@
   <a class="backlink" href="index.html">&larr; Planning and Land Use &mdash; Gov. Code Title 7</a>
   <header>
     <h1>Change log</h1>
-    <p>What the Legislature has changed in Title 7, update by update. The text
-      is re-checked against the official source on a schedule; an entry appears
-      here whenever any section&rsquo;s text changed. Most amendments take
-      effect January&nbsp;1.</p>
+    <p>Two histories, kept separately: what the <b>Legislature</b> has changed
+      in Title 7, and what has changed about <b>this site</b> itself.</p>
+    <p>Missing a section you expected? Check the statute changes below &mdash;
+      repeals and renumberings are listed there, with where the law went.</p>
     <p>Text current as of <b>2026-07-28</b>.</p>
+    <nav class="subnav">
+      <a href="#statute">Statute changes</a>
+      <a href="#site">Site updates</a>
+    </nav>
   </header>
-  <div id="feed"></div>
+
+  <h2 class="sect-h" id="statute">Statute changes</h2>
+  <p class="sect-sub">Found automatically each time the text is re-checked
+    against the official source (monthly; most amendments take effect
+    January&nbsp;1). Each entry names the enacting bill where the source
+    records it.</p>
+  <div id="feed-statute"></div>
+
+  <h2 class="sect-h" id="site">Site updates</h2>
+  <p class="sect-sub">Changes to this tool &mdash; features, fixes, and
+    coverage.</p>
+  <div id="feed-app"></div>
 </div>
 
 <script>
-const LOG = {"entries":[{"date":"2026-07-27","title":"Initial release — full Title 7 coverage","blurb":"First complete snapshot of Government Code Title 7, Planning and Land Use: 1,076 sections across Division 1 (Planning and Zoning), Division 2 (Subdivisions), and Division 3 (Official Maps), mirrored from the official Legislative Information site. Legislative changes from this point forward are logged here automatically at each refresh. One recodification predating this snapshot worth knowing about: the accessory dwelling unit law formerly at § 65852.2 now lives at §§ 66310–66342.","amended":[],"added":[],"repealed":[],"moved":[]}]};
+const LOG = {"statute":[{"date":"2026-07-27","title":"Baseline — full Title 7 snapshot","blurb":"First complete snapshot of Government Code Title 7, Planning and Land Use: 1,076 sections across Division 1 (Planning and Zoning), Division 2 (Subdivisions), and Division 3 (Official Maps), mirrored from the official Legislative Information site. Legislative changes from this point forward are logged here automatically at each refresh. One recodification predating this snapshot worth knowing about: the accessory dwelling unit law formerly at § 65852.2 now lives at §§ 66310–66342.","amended":[],"added":[],"repealed":[],"moved":[]}],"app":[{"date":"2026-07-27","title":"Change log gets its own page, in two parts","notes":["The change log now separates statute changes (what the Legislature did, found at each refresh) from site updates (changes to this tool itself).","If a section you expected seems to be missing, check Statute changes — repeals and renumberings are listed there with where the law went.","Site history backfilled from the project's commit log, back to the first release.","Change log linked from the sidebar header so it is reachable from anywhere on the page."]},{"date":"2026-07-27","title":"Cross-references, previews, and a working Back button","notes":["Statutory cross-references in the text are now clickable: sections mirrored here jump in-page; references to other California codes and the Constitution open the official text. Ambiguous references (federal law, Statutes chapters, Code of Regulations) stay unlinked rather than risk a wrong target.","Hovering an in-page cross-reference or a TOC entry previews the target section, so you can decide whether to follow it without losing your place.","The browser's Back button now works after every jump — cross-references, TOC clicks, and search results all return you to where you were.","The text is now re-checked against the official source automatically each month; any legislative changes appear in this change log."]},{"date":"2026-07-27","title":"Better reading: full width, real indentation, real tables","notes":["The reader now uses the full window width instead of a fixed column.","Nested subdivisions — (a), (1), (A), (i) — are indented the way the official site shows them, with a tighter indent on phones. Copied text keeps the indentation.","Statute tables (like the § 65915 density-bonus percentages) render as actual tables instead of run-together text.","Fixed: on phones, the page could be panned past its right edge, and the side scrubber and back-to-top button could vanish.","Fixed: some paragraphs were split mid-sentence."]},{"date":"2026-07-27","title":"Coverage expanded to all of Title 7","notes":["The page now mirrors all of Government Code Title 7, Planning and Land Use — Divisions 1–3, §§ 65000–66499.58, 1,076 sections — not just the Subdivision Map Act.","The table of contents, search results, and the scroll position bubble all show which division you are in."]},{"date":"2026-07-26","title":"Initial release — Subdivision Map Act","notes":["Searchable single-page mirror of the Subdivision Map Act (§§ 66410–66499.41), hosted on GitHub Pages.","Instant search: multiple words (AND), quoted phrases, or type a section number to jump straight to it. Press / to focus search.","Results panel with highlighted snippets; clicking a result scrolls to the section with every match marked.","Collapsible table of contents that follows along as you navigate.","Every section links to its official leginfo page, with a copy-to-clipboard button that includes the citation.","Light/dark theme, mobile layout, fast-scroll scrubber with a position bubble, back-to-top button.","Staleness banner appears automatically once a January 1 passes after the retrieval date."]}]};
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const secLink = n => '<a href="index.html#sec-' + n + '">&sect; ' + n + "</a>";
@@ -164,21 +201,31 @@ const GROUPS = [
          ' <span class="words">' + esc(it.words) + "</span>"],
 ];
 
-let html = "";
-for (const e of LOG.entries) {
-  html += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
+let statuteHtml = "";
+for (const e of (LOG.statute || LOG.entries || [])) {
+  statuteHtml += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
           "<h2>" + esc(e.title) + "</h2>";
-  if (e.blurb) html += '<p class="blurb">' + esc(e.blurb) + "</p>";
+  if (e.blurb) statuteHtml += '<p class="blurb">' + esc(e.blurb) + "</p>";
   for (const [key, label, cls, render] of GROUPS) {
     const items = e[key] || [];
     if (items.length === 0) continue;
-    html += '<span class="tag ' + cls + '">' + label + " &middot; " + items.length + "</span><ul>" +
+    statuteHtml += '<span class="tag ' + cls + '">' + label + " &middot; " + items.length + "</span><ul>" +
             items.map(it => "<li>" + render(it) + "</li>").join("") + "</ul>";
   }
-  html += "</article>";
+  statuteHtml += "</article>";
 }
-document.getElementById("feed").innerHTML =
-  html || '<p class="empty">No changes logged yet.</p>';
+document.getElementById("feed-statute").innerHTML =
+  statuteHtml || '<p class="empty">No statute changes logged yet.</p>';
+
+let appHtml = "";
+for (const e of (LOG.app || [])) {
+  appHtml += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
+          "<h2>" + esc(e.title) + "</h2><ul>" +
+          (e.notes || []).map(nt => "<li>" + esc(nt) + "</li>").join("") +
+          "</ul></article>";
+}
+document.getElementById("feed-app").innerHTML =
+  appHtml || '<p class="empty">No site updates logged yet.</p>';
 </script>
 </body>
 </html>

@@ -44,6 +44,11 @@ python build.py      # builds index.html and changes.html
 
 Commit and push; GitHub Pages redeploys automatically.
 
+The change-log page has two feeds in `changelog.json`: `statute` (written by
+`changelog.py` from scrape diffs — never edit by hand) and `app` (site
+updates — when shipping a user-visible change, prepend an entry there and
+rebuild).
+
 ## Files
 
 | File | Purpose |

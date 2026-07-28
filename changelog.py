@@ -108,11 +108,15 @@ def main():
     try:
         log = json.load(open("changelog.json", encoding="utf-8"))
     except FileNotFoundError:
-        log = {"entries": []}
+        log = {}
+    if "entries" in log:  # migrate pre-split shape
+        log = {"statute": log.pop("entries"), "app": log.get("app", [])}
+    log.setdefault("statute", [])
+    log.setdefault("app", [])
     # Re-running on the same day replaces that day's entry (the diff is
     # always against the last committed data, so it stays complete).
-    log["entries"] = [e for e in log["entries"] if e["date"] != entry["date"]]
-    log["entries"].insert(0, entry)
+    log["statute"] = [e for e in log["statute"] if e["date"] != entry["date"]]
+    log["statute"].insert(0, entry)
     with open("changelog.json", "w", encoding="utf-8") as f:
         json.dump(log, f, ensure_ascii=False, indent=1)
     print("Logged:", entry["title"])

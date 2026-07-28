@@ -43,4 +43,5 @@ changes = (changes.replace("__CHANGELOG_JSON__", log_payload)
                   .replace("__SCRAPED__", data["scraped"]))
 with open("changes.html", "w", encoding="utf-8") as f:
     f.write(changes)
-print(f"changes.html written: {len(log['entries'])} entries")
+print(f"changes.html written: {len(log['statute'])} statute entries, "
+      f"{len(log['app'])} site entries")

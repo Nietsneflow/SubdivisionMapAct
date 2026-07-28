@@ -67,7 +67,29 @@
     margin: 0 0 0.4rem;
   }
   header p { color: var(--muted); font-size: 0.87rem; margin: 0.25rem 0; }
-  #feed { margin-top: 1.8rem; }
+  .subnav {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1.1rem 0 0;
+  }
+  .subnav a {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+  .subnav a:hover { border-color: var(--accent); }
+  .sect-h {
+    font: 700 1.45rem/1.25 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    margin: 2.4rem 0 0.3rem;
+    padding-top: 1.2rem;
+    border-top: 2px solid var(--line);
+    scroll-margin-top: 1rem;
+  }
+  .sect-sub { color: var(--muted); font-size: 0.85rem; margin: 0 0 1.2rem; }
 
   .entry {
     background: var(--panel);
@@ -134,13 +156,28 @@
   <a class="backlink" href="index.html">&larr; Planning and Land Use &mdash; Gov. Code Title 7</a>
   <header>
     <h1>Change log</h1>
-    <p>What the Legislature has changed in Title 7, update by update. The text
-      is re-checked against the official source on a schedule; an entry appears
-      here whenever any section&rsquo;s text changed. Most amendments take
-      effect January&nbsp;1.</p>
+    <p>Two histories, kept separately: what the <b>Legislature</b> has changed
+      in Title 7, and what has changed about <b>this site</b> itself.</p>
+    <p>Missing a section you expected? Check the statute changes below &mdash;
+      repeals and renumberings are listed there, with where the law went.</p>
     <p>Text current as of <b>__SCRAPED__</b>.</p>
+    <nav class="subnav">
+      <a href="#statute">Statute changes</a>
+      <a href="#site">Site updates</a>
+    </nav>
   </header>
-  <div id="feed"></div>
+
+  <h2 class="sect-h" id="statute">Statute changes</h2>
+  <p class="sect-sub">Found automatically each time the text is re-checked
+    against the official source (monthly; most amendments take effect
+    January&nbsp;1). Each entry names the enacting bill where the source
+    records it.</p>
+  <div id="feed-statute"></div>
+
+  <h2 class="sect-h" id="site">Site updates</h2>
+  <p class="sect-sub">Changes to this tool &mdash; features, fixes, and
+    coverage.</p>
+  <div id="feed-app"></div>
 </div>
 
 <script>
@@ -164,21 +201,31 @@ const GROUPS = [
          ' <span class="words">' + esc(it.words) + "</span>"],
 ];
 
-let html = "";
-for (const e of LOG.entries) {
-  html += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
+let statuteHtml = "";
+for (const e of (LOG.statute || LOG.entries || [])) {
+  statuteHtml += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
           "<h2>" + esc(e.title) + "</h2>";
-  if (e.blurb) html += '<p class="blurb">' + esc(e.blurb) + "</p>";
+  if (e.blurb) statuteHtml += '<p class="blurb">' + esc(e.blurb) + "</p>";
   for (const [key, label, cls, render] of GROUPS) {
     const items = e[key] || [];
     if (items.length === 0) continue;
-    html += '<span class="tag ' + cls + '">' + label + " &middot; " + items.length + "</span><ul>" +
+    statuteHtml += '<span class="tag ' + cls + '">' + label + " &middot; " + items.length + "</span><ul>" +
             items.map(it => "<li>" + render(it) + "</li>").join("") + "</ul>";
   }
-  html += "</article>";
+  statuteHtml += "</article>";
 }
-document.getElementById("feed").innerHTML =
-  html || '<p class="empty">No changes logged yet.</p>';
+document.getElementById("feed-statute").innerHTML =
+  statuteHtml || '<p class="empty">No statute changes logged yet.</p>';
+
+let appHtml = "";
+for (const e of (LOG.app || [])) {
+  appHtml += '<article class="entry"><p class="edate">' + fmtDate(e.date) + "</p>" +
+          "<h2>" + esc(e.title) + "</h2><ul>" +
+          (e.notes || []).map(nt => "<li>" + esc(nt) + "</li>").join("") +
+          "</ul></article>";
+}
+document.getElementById("feed-app").innerHTML =
+  appHtml || '<p class="empty">No site updates logged yet.</p>';
 </script>
 </body>
 </html>
