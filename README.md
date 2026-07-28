@@ -16,6 +16,15 @@ lookup work that the official site makes painful.
 - Collapsible division/chapter/article table of contents.
 - Every section links back to its official page on leginfo.legislature.ca.gov,
   plus a copy-to-clipboard citation button.
+- Cross-references in the text are clickable: "Section 66424" jumps in-page;
+  references to other California codes and the Constitution open the official
+  text. Ambiguous references (federal law, Statutes chapters, Code of
+  Regulations) are left unlinked rather than linked wrong.
+- Hovering an in-page cross-reference or a TOC entry previews the target
+  section in a small popover, so you can decide whether to follow it without
+  losing your place.
+- The browser's Back button works after every jump — cross-references, TOC
+  clicks, and search results all push history entries.
 - Automatic staleness banner once a January 1 passes after the retrieval date
   (California amendments generally take effect Jan 1).
 - Light/dark theme, mobile layout, print-friendly.

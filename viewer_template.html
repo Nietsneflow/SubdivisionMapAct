@@ -439,6 +439,43 @@
     font-style: italic;
     margin: 0.45rem 0 0;
   }
+  /* Cross-reference links inside statute text: quiet until hovered */
+  .sec-body a.xref { color: var(--accent); text-decoration: none; }
+  .sec-body a.xref:hover { text-decoration: underline; }
+  @media print { .sec-body a.xref { color: inherit; } }
+
+  /* Hover peek: a glance at the section a reference points to */
+  #peek {
+    display: none;
+    position: fixed;
+    z-index: 40;
+    max-width: min(26rem, calc(100vw - 16px));
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 0.6rem 0.8rem 0.7rem;
+    pointer-events: none;
+  }
+  #peek.on { display: block; }
+  #peek .pk-h {
+    display: flex;
+    gap: 0.55rem;
+    align-items: baseline;
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  #peek .pk-n {
+    font: 700 0.92rem/1.3 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  #peek .pk-t {
+    font: 0.86rem/1.5 Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    color: var(--ink);
+  }
+  @media print { #peek { display: none !important; } }
   mark {
     background: var(--mark);
     color: var(--mark-ink);
@@ -715,6 +752,7 @@
 <div id="scrubber" role="slider" aria-label="Fast scroll" aria-orientation="vertical"></div>
 <div id="scrub-label"></div>
 <button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
+<div id="peek" role="tooltip" aria-hidden="true"></div>
 <div id="toast" role="status"></div>
 
 <script>
@@ -731,6 +769,127 @@ function firstWords(text, max) {
   if (s.length <= max) return s;
   s = s.slice(0, max);
   return s.slice(0, s.lastIndexOf(" ")) + "…";
+}
+
+/* ---------- Cross-reference links ----------
+   Turn "Section 66424", "Sections 66473.5, 66474, and 66474.6 of the
+   Government Code", "(commencing with Section 21000) of the Public Resources
+   Code", "Section 4 of Article XIII A of the California Constitution", etc.
+   into links: in-page anchors for sections mirrored here, official leginfo
+   pages for everything else. References we cannot resolve safely (federal
+   acts, Statutes chapters, the Code of Regulations, "of that code") are
+   deliberately left unlinked rather than linked wrong. */
+const SEC_SET = new Set();
+DATA.divisions.forEach(dv => dv.chapters.forEach(ch =>
+  ch.articles.forEach(a => a.sections.forEach(s => SEC_SET.add(s.num)))));
+
+const CODE_MAP = {
+  "Business and Professions Code": ["BPC", "Bus. & Prof. Code"],
+  "Civil Code": ["CIV", "Civ. Code"],
+  "Commercial Code": ["COM", "Com. Code"],
+  "Corporations Code": ["CORP", "Corp. Code"],
+  "Education Code": ["EDC", "Ed. Code"],
+  "Elections Code": ["ELEC", "Elec. Code"],
+  "Evidence Code": ["EVID", "Evid. Code"],
+  "Family Code": ["FAM", "Fam. Code"],
+  "Financial Code": ["FIN", "Fin. Code"],
+  "Fish and Game Code": ["FGC", "Fish & G. Code"],
+  "Food and Agricultural Code": ["FAC", "Food & Agr. Code"],
+  "Government Code": ["GOV", "Gov. Code"],
+  "Harbors and Navigation Code": ["HNC", "Harb. & Nav. Code"],
+  "Health and Safety Code": ["HSC", "Health & Saf. Code"],
+  "Insurance Code": ["INS", "Ins. Code"],
+  "Labor Code": ["LAB", "Lab. Code"],
+  "Military and Veterans Code": ["MVC", "Mil. & Vet. Code"],
+  "Penal Code": ["PEN", "Pen. Code"],
+  "Probate Code": ["PROB", "Prob. Code"],
+  "Public Contract Code": ["PCC", "Pub. Cont. Code"],
+  "Public Resources Code": ["PRC", "Pub. Res. Code"],
+  "Public Utilities Code": ["PUC", "Pub. Util. Code"],
+  "Revenue and Taxation Code": ["RTC", "Rev. & Tax. Code"],
+  "Streets and Highways Code": ["SHC", "Sts. & Hy. Code"],
+  "Street and Highways Code": ["SHC", "Sts. & Hy. Code"], /* statute's own typo */
+  "Unemployment Insurance Code": ["UIC", "Unemp. Ins. Code"],
+  "Vehicle Code": ["VEH", "Veh. Code"],
+  "Water Code": ["WAT", "Wat. Code"],
+  "Welfare and Institutions Code": ["WIC", "Welf. & Inst. Code"],
+};
+
+const XR_NUM = "\\d+(?:\\.\\d+)*";
+const XR_CONNECT = "(?:,\\s*(?:and\\s+|or\\s+)?|\\s+(?:and|or|to|through)\\s+|\\s*[-–]\\s*)";
+const XR_LIST = "(" + XR_NUM + "(?:" + XR_CONNECT + XR_NUM + ")*)";
+const XR_CONST_RE = new RegExp(
+  "([Ss]ections?\\s+)" + XR_LIST +
+  "(\\s+of\\s+Article\\s+([IVXLC]+(?:\\s+[A-E])?)\\s+of\\s+the\\s+California\\s+Constitution)", "g");
+const XR_SEC_RE = new RegExp("([Ss]ections?\\s+)" + XR_LIST, "g");
+const XR_NUM_RE = new RegExp(XR_NUM, "g");
+
+/* Decide which code a "Section(s) <list>" reference belongs to by scanning
+   what follows it. Returns a lawCode string, or null to leave it unlinked. */
+function xrefResolve(tail) {
+  let t = tail, m, paren = false, hopped = false;
+  for (;;) {
+    if ((m = /^,?\s*(?:inclusive|et\s+seq\.?)/.exec(t))) { t = t.slice(m[0].length); continue; }
+    if ((m = /^\s*\)/.exec(t))) { paren = true; t = t.slice(m[0].length); continue; }
+    if ((m = /^\(\w{1,4}\)/.exec(t))) { t = t.slice(m[0].length); continue; } /* 501(c)(3) */
+    if ((m = /^,/.exec(t))) { t = t.slice(1); continue; }
+    if ((m = /^\s+of\s+(?:Part|Division|Title|Chapter|Article|Subpart|Subtitle)\s+[\w.]+/.exec(t))) {
+      hopped = true; t = t.slice(m[0].length); continue;
+    }
+    /* "Part 59 (commencing with Section 59.1) and Part 60 (commencing with
+       Section 60.1) of Title 44 …" — hop the sibling group to reach the
+       compilation name that governs both. */
+    if ((m = /^\s+(?:and|or)\s+(?:Part|Division|Title|Chapter|Article)\s+[\w.]+\s+\(commencing\s+with\s+Section\s+[\d.]+\)/.exec(t))) {
+      t = t.slice(m[0].length); continue;
+    }
+    break;
+  }
+  /* Exact lowercase "code": "of the Code of Federal Regulations" must not
+     match the statute's own "of this code" idiom. */
+  if (/^\s+of\s+th(?:is|e)\s+code\b/.test(t)) return "GOV";
+  if (/^\s+of\s+this\s+(?:title|division|part|chapter|article|act)\b/.test(t)) return "GOV";
+  if (/^\s+of\s+(?:that|those)\b/i.test(t)) return null;
+  if (/^\s+of\s+the\s+Code\s+of\s+Civil\s+Procedure/.test(t)) return "CCP";
+  if ((m = /^\s+of\s+the\s+([A-Z][A-Za-z]*(?:\s+(?:and\s+|of\s+)?[A-Z][A-Za-z]*)*\s+Code)\b/.exec(t))) {
+    return CODE_MAP[m[1]] ? CODE_MAP[m[1]][0] : null;
+  }
+  if (/^\s+of\s+(?:the\s+)?[A-Z]/.test(t)) return null; /* some Act, Statutes chapter, … */
+  /* No qualifier: Government Code — unless the list hung directly off a
+     Chapter/Title chain of an unnamed compilation, which we can't resolve. */
+  return hopped && !paren ? null : "GOV";
+}
+
+const CCP_NAME = ["CCP", "Code Civ. Proc."];
+function xrefWrap(n, lawCode) {
+  if (lawCode === "GOV" && SEC_SET.has(n)) {
+    return '<a class="xref" href="#sec-' + n + '">' + n + "</a>";
+  }
+  const nm = lawCode === "CCP" ? CCP_NAME
+    : CODE_MAP[Object.keys(CODE_MAP).find(k => CODE_MAP[k][0] === lawCode)];
+  const url = "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=" +
+    lawCode + "&sectionNum=" + n + ".";
+  return '<a class="xref ext" href="' + url + '" target="_blank" rel="noopener" title="' +
+    (nm ? nm[1] : lawCode) + ", § " + n + ' — official text">' + n + "</a>";
+}
+
+function linkifyRefs(html) {
+  /* Constitution references first, so the code pass can't claim them */
+  html = html.replace(XR_CONST_RE, (m0, kw, list, rest, art) => {
+    const url = "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CONS&article=" +
+      encodeURIComponent(art);
+    return kw + list.replace(XR_NUM_RE, n =>
+      '<a class="xref ext" href="' + url + '" target="_blank" rel="noopener" title="Cal. Const., art. ' +
+      art + ", § " + n + ' — official text">' + n + "</a>") + rest;
+  });
+  return html.replace(XR_SEC_RE, (m0, kw, list, offset, whole) => {
+    if (list.indexOf("<") !== -1) return m0; /* already linked by the pass above */
+    /* "Section 1.170A-9" (CFR-style): a letter or hyphen glued to the number
+       means our numeric match is a fragment of something else — leave it. */
+    if (/[A-Za-z-]/.test(whole.charAt(offset + m0.length))) return m0;
+    const lawCode = xrefResolve(whole.slice(offset + m0.length));
+    if (!lawCode) return m0;
+    return kw + list.replace(XR_NUM_RE, n => xrefWrap(n, lawCode));
+  });
 }
 
 (function render() {
@@ -776,7 +935,7 @@ function firstWords(text, max) {
               continue;
             }
             const depth = /^\t*/.exec(lines[li])[0].length;
-            const t = escHtml(lines[li].replace(/^\t+/, ""));
+            const t = linkifyRefs(escHtml(lines[li].replace(/^\t+/, "")));
             paras += depth
               ? '<p style="margin-left:calc(' + depth + '*var(--ind))">' + t + "</p>"
               : "<p>" + t + "</p>";
@@ -982,6 +1141,13 @@ function markTocCurrent(link) {
   link.classList.add("current");
 }
 
+/* Every in-page jump pushes a history entry (deduplicated), so the browser's
+   Back button always returns to the spot the reader came from. */
+function pushHash(id) {
+  if (location.hash === "#" + id) return;
+  history.pushState(null, "", "#" + id);
+}
+
 function jumpToSection(num, withHighlights) {
   document.body.classList.remove("results-open");
   syncToc(num);
@@ -992,7 +1158,7 @@ function jumpToSection(num, withHighlights) {
   if (withHighlights && curTokens.length > 0) highlightDoc(curTokens);
   const el = $("sec-" + num);
   if (!el) return;
-  history.replaceState(null, "", "#sec-" + num);
+  pushHash("sec-" + num);
   el.scrollIntoView({ block: "start" });
   el.classList.remove("flash");
   requestAnimationFrame(() => el.classList.add("flash"));
@@ -1065,16 +1231,17 @@ function quickScrollTo(el) {
 
 /* Position index: document offset + "D1 · Ch. 4 · Art. 2 · § 65850" label
    for every section. Built lazily, invalidated when layout can change. */
+const part = (re, prefix) => h => {
+  const m = re.exec(h || "");
+  return m ? prefix + m[1].replace(/\.$/, "") : "";
+};
+const dvS = part(/DIVISION\s+([\d.]+)/, "D");
+const chS = part(/CHAPTER\s+([\d.]+)/, "Ch. ");
+const arS = part(/ARTICLE\s+([\d.]+)/, "Art. ");
+
 let posIndex = null;
 function ensurePosIndex() {
   if (posIndex) return posIndex;
-  const part = (re, prefix) => h => {
-    const m = re.exec(h || "");
-    return m ? prefix + m[1].replace(/\.$/, "") : "";
-  };
-  const dvS = part(/DIVISION\s+([\d.]+)/, "D");
-  const chS = part(/CHAPTER\s+([\d.]+)/, "Ch. ");
-  const arS = part(/ARTICLE\s+([\d.]+)/, "Art. ");
   posIndex = Array.from(document.querySelectorAll("#doc-body .sec"), (el, i) => ({
     top: el.getBoundingClientRect().top + window.scrollY,
     label: [dvS(SECS[i].div), chS(SECS[i].chap), arS(SECS[i].art), "§ " + SECS[i].num]
@@ -1170,7 +1337,7 @@ $("toc").addEventListener("click", e => {
   const id = link.getAttribute("href").slice(1);
   const el = $(id);
   if (!el) return;
-  history.replaceState(null, "", "#" + id);
+  pushHash(id);
   markTocCurrent(link);
   quickScrollTo(el);
   el.classList.remove("flash");
@@ -1206,20 +1373,95 @@ $("m-clear").addEventListener("click", () => {
 });
 
 /* Clicking a section's § heading reveals its place in the TOC —
-   handy after finding a spot via the browser's own Ctrl+F */
+   handy after finding a spot via the browser's own Ctrl+F.
+   Clicking an in-page cross-reference jumps to that section, pushing a
+   history entry so the browser's Back button returns to the citing text. */
 $("doc-body").addEventListener("click", e => {
+  const x = e.target.closest("a.xref");
+  if (x && x.getAttribute("href").charAt(0) === "#") {
+    e.preventDefault();
+    const el = $(x.getAttribute("href").slice(1));
+    if (!el) return;
+    pushHash(x.getAttribute("href").slice(1));
+    syncToc(x.getAttribute("href").slice(5));
+    quickScrollTo(el);
+    el.classList.remove("flash");
+    requestAnimationFrame(() => el.classList.add("flash"));
+    return;
+  }
   const a = e.target.closest(".sec-num a");
   if (!a) return;
   e.preventDefault();
   const id = a.getAttribute("href").slice(1);
   const el = $(id);
   if (!el) return;
-  history.replaceState(null, "", "#" + id);
+  pushHash(id);
   syncToc(id.slice(4));
   quickScrollTo(el);
   el.classList.remove("flash");
   requestAnimationFrame(() => el.classList.add("flash"));
 });
+
+/* Back/Forward across cross-reference jumps: the browser restores the scroll
+   position itself; we just keep the TOC highlight in step. */
+addEventListener("popstate", () => {
+  if (location.hash.indexOf("#sec-") === 0) syncToc(location.hash.slice(5));
+});
+
+/* ---------- Hover peek ----------
+   Resting the pointer on an in-page cross-reference or a TOC entry shows a
+   small read-only preview of the target section, so "do I need to go there?"
+   is answered without losing your place. Hover-capable devices only. */
+const peekEl = $("peek");
+const SEC_BY_NUM = new Map(SECS.map(s => [s.num, s]));
+let peekAnchor = null, peekTimer = null;
+
+function peekExcerpt(s, max) {
+  const t = s.text.replace(/[\n\t]+/g, "  ");
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  return cut.slice(0, cut.lastIndexOf(" ")) + " …";
+}
+
+function showPeek(a) {
+  const num = a.getAttribute("href").slice(5);
+  const s = SEC_BY_NUM.get(num);
+  if (!s) return;
+  const ctx = [dvS(s.div), chS(s.chap), arS(s.art)].filter(Boolean).join(" · ");
+  peekEl.innerHTML =
+    '<div class="pk-h"><span class="pk-n">&sect; ' + num + "</span><span>" +
+    escHtml(ctx) + "</span></div>" +
+    '<div class="pk-t">' + escHtml(peekExcerpt(s, 300)) + "</div>";
+  const r = a.getBoundingClientRect();
+  peekEl.classList.add("on");
+  const pw = peekEl.offsetWidth, ph = peekEl.offsetHeight;
+  const x = Math.min(Math.max(8, r.left), innerWidth - pw - 8);
+  let y = r.bottom + 8;
+  if (y + ph > innerHeight - 8) y = r.top - ph - 8;
+  peekEl.style.left = x + "px";
+  peekEl.style.top = y + "px";
+}
+
+function hidePeek() {
+  clearTimeout(peekTimer);
+  peekAnchor = null;
+  peekEl.classList.remove("on");
+}
+
+if (matchMedia("(hover: hover)").matches) {
+  document.addEventListener("mouseover", e => {
+    const a = e.target.closest &&
+      e.target.closest('a.xref[href^="#sec-"], #toc a.toc-sec');
+    if (a === peekAnchor) return;
+    hidePeek();
+    if (!a) return;
+    peekAnchor = a;
+    peekTimer = setTimeout(() => showPeek(a), 240);
+  });
+  /* capture-phase: also catches the sidebar's own scrolling */
+  document.addEventListener("scroll", hidePeek, true);
+  document.addEventListener("click", hidePeek, true);
+}
 
 document.addEventListener("click", e => {
   const btn = e.target.closest("[data-copy]");
