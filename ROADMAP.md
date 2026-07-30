@@ -171,9 +171,10 @@ Crowding risk is real once many notes exist — collapse by default.
 (rendered only while non-empty) prints just those as one clean document with
 citations and a cover line. Shipped alongside it, at Kyle's request: clean
 whole-title exports built at refresh time — `print.html` (print / save as
-PDF), `title7.docx` (real Word file, navigable headings), and `title7.md`
-(NotebookLM-ready) — linked from the intro and the sidebar's
-"Print & downloads" link.
+PDF), `title7.pdf` (bookmark outline; browser print-to-PDF can't make
+bookmarks, so fpdf2 builds it directly), `title7.docx` (real Word file,
+navigable headings), and `title7.md` (NotebookLM-ready) — linked from the
+intro and the sidebar's "Print & downloads" link.
 
 ---
 

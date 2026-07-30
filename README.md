@@ -29,8 +29,10 @@ lookup work that the official site makes painful.
   (California amendments generally take effect Jan 1).
 - Light/dark theme, mobile layout, print-friendly.
 - Clean exports, rebuilt at every refresh: `print.html` (statute text only —
-  print it or save as PDF), `title7.docx` (real Word document with a navigable
-  heading structure), `title7.md` (Markdown, drops straight into NotebookLM).
+  print it or save as PDF), `title7.pdf` (bookmark outline of every
+  division/chapter/article/section), `title7.docx` (real Word document with a
+  navigable heading structure), `title7.md` (Markdown, drops straight into
+  NotebookLM).
 - Print packet: "+ Packet" in a section's hover tools collects sections, then
   the floating bar prints just those as one clean cited document.
 
@@ -43,6 +45,7 @@ retrieval-date bump on the 2nd); GitHub Pages then redeploys. Nothing to do
 by hand. To refresh manually anyway:
 
 ```
+pip install fpdf2    # one-time; build.py needs it for title7.pdf
 python scrape.py     # re-pulls all chapter/article pages -> title7.json
 python changelog.py  # diffs against the last committed data -> changelog.json
 python build.py      # builds index.html, changes.html, and the exports
@@ -63,7 +66,8 @@ rebuild).
 | `title7.json` | Extracted text (all sections, with history notes) |
 | `viewer_template.html` | The viewer app (search UI, TOC, reader) |
 | `build.py` | Embeds the JSON into the template, producing `index.html` |
-| `export.py` | Builds the clean exports: `print.html`, `title7.docx`, `title7.md` |
+| `export.py` | Builds the clean exports: `print.html`, `title7.pdf`, `title7.docx`, `title7.md` |
+| `fonts/` | DejaVu Serif faces embedded in `title7.pdf` (see `fonts/LICENSE`) |
 | `index.html` | The self-contained page served by GitHub Pages |
 
 The text is mirrored verbatim from the official source and is not legal advice;

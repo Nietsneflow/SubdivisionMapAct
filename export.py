@@ -4,12 +4,18 @@
 #   title7.md   - Markdown; drops straight into NotebookLM or a wiki
 #   title7.docx - real Word document (stdlib zip, no dependencies); the
 #                 navigation pane mirrors division/chapter/article/section
+#   title7.pdf  - PDF with a bookmark outline (division/chapter/article/
+#                 section); browser print-to-PDF cannot produce bookmarks,
+#                 so this is built directly (fpdf2 + the fonts/ DejaVu faces)
 # Called from build.py so every refresh keeps the downloads in step with
 # the page. Can also run standalone: python export.py
+import datetime
 import html
 import io
 import json
 import zipfile
+
+from fpdf import FPDF
 
 esc = lambda s: html.escape(s, quote=False)
 
@@ -127,6 +133,7 @@ def print_html(data):
         '<div id="toolbar">\n'
         '<a href="index.html">&larr; Back to the reader</a>\n'
         '<button onclick="window.print()">Print / Save as PDF</button>\n'
+        '<a href="title7.pdf" download>PDF with bookmarks</a>\n'
         '<a href="title7.docx" download>Word (.docx)</a>\n'
         '<a href="title7.md" download>Markdown (.md)</a>\n'
         '<span class="tip">Statute text only: no search, sidebar, or links. '
@@ -346,6 +353,94 @@ def docx_bytes(data):
     return buf.getvalue()
 
 
+# ---------------------------------------------------------------- title7.pdf
+GRAY = (85, 85, 85)
+INK = (0, 0, 0)
+
+
+class TitlePDF(FPDF):
+    def footer(self):
+        self.set_y(-40)
+        self.set_font("serif", "", 8)
+        self.set_text_color(*GRAY)
+        self.cell(0, 10, str(self.page_no()), align="C")
+
+
+def pdf_bytes(data):
+    pdf = TitlePDF(orientation="P", unit="pt", format="letter")
+    pdf.set_margins(72, 64, 72)
+    pdf.set_auto_page_break(True, margin=64)
+    for style, fname in (("", "DejaVuSerif.ttf"),
+                         ("B", "DejaVuSerif-Bold.ttf"),
+                         ("I", "DejaVuSerif-Italic.ttf")):
+        pdf.add_font("serif", style=style, fname="fonts/" + fname)
+    pdf.set_title("Planning and Land Use (Cal. Gov. Code Title 7)")
+    pdf.set_lang("en")
+    # Fixed metadata date: rebuilds with unchanged statute text stay
+    # byte-identical, so date-only refresh commits carry no pdf churn.
+    y, m, d = (int(p) for p in data["scraped"].split("-"))
+    pdf.set_creation_date(datetime.datetime(y, m, d,
+                                            tzinfo=datetime.timezone.utc))
+
+    def para(text, size, style="", color=INK, indent=0, before=0, lh=1.45):
+        if before:
+            pdf.ln(before)
+        pdf.set_font("serif", style, size)
+        pdf.set_text_color(*color)
+        pdf.set_x(pdf.l_margin + indent)
+        pdf.multi_cell(0, size * lh, text, new_x="LMARGIN", new_y="NEXT")
+
+    pdf.add_page()
+    para("Planning and Land Use", 26, "B")
+    para(data["citation"], 10, "I", GRAY, before=6)
+    para("California Government Code, Title 7: the Planning and Zoning Law "
+         "(Division 1), the Subdivision Map Act (Division 2), and Official "
+         "Maps (Division 3).", 10, "", GRAY, before=4)
+    para("Text retrieved from the official California Legislative "
+         "Information site on " + data["scraped"] + ". Not an official "
+         "publication; verify current law at leginfo.legislature.ca.gov.",
+         10, "", GRAY, before=4)
+
+    # Outline levels adapt to missing tiers (Division 3 has no chapters)
+    # because a bookmark nested more than one level below its parent would
+    # break the outline tree.
+    for dv in data["divisions"]:
+        pdf.add_page()
+        pdf.start_section(dv["heading"], level=0)
+        para(dv["heading"], 16, "B", before=6, lh=1.3)
+        for ch in dv["chapters"]:
+            lvl = 1
+            if ch["heading"]:
+                pdf.start_section(ch["heading"], level=1)
+                para(ch["heading"], 13, "B", before=18, lh=1.3)
+                lvl = 2
+            for art in ch["articles"]:
+                sec_lvl = lvl
+                if art["heading"]:
+                    pdf.start_section(art["heading"], level=lvl)
+                    para(art["heading"], 10.5, "B", GRAY, before=14, lh=1.3)
+                    sec_lvl = lvl + 1
+                for sec in art["sections"]:
+                    pdf.start_section("§ " + sec["num"], level=sec_lvl)
+                    para("§ " + sec["num"] + ".", 11, "B", before=10)
+                    for part in parse_lines(sec["text"]):
+                        if part[0] == "table":
+                            pdf.set_font("serif", "", 9)
+                            pdf.set_text_color(*INK)
+                            with pdf.table(line_height=13,
+                                           text_align="CENTER") as tbl:
+                                for row in part[1]:
+                                    r = tbl.row()
+                                    for c in row:
+                                        r.cell(c)
+                            pdf.ln(4)
+                        else:
+                            _, depth, ln = part
+                            para(ln, 10.5, indent=18 * depth)
+                    para("(" + sec["history"] + ")", 8.5, "I", GRAY)
+    return bytes(pdf.output())
+
+
 def build(data):
     with open("print.html", "w", encoding="utf-8") as f:
         f.write(print_html(data))
@@ -355,8 +450,12 @@ def build(data):
     docx = docx_bytes(data)
     with open("title7.docx", "wb") as f:
         f.write(docx)
-    print("exports written: print.html, title7.md (%d KB), title7.docx (%d KB)"
-          % (len(md) // 1024, len(docx) // 1024))
+    pdf = pdf_bytes(data)
+    with open("title7.pdf", "wb") as f:
+        f.write(pdf)
+    print("exports written: print.html, title7.md (%d KB), title7.docx "
+          "(%d KB), title7.pdf (%d KB)"
+          % (len(md) // 1024, len(docx) // 1024, len(pdf) // 1024))
 
 
 if __name__ == "__main__":
