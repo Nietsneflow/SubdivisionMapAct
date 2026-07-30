@@ -19,6 +19,15 @@
  "app": [
   {
    "date": "2026-07-30",
+   "title": "Print packet: pick whole divisions or chapters from the contents tree",
+   "notes": [
+    "\"Select for packet\" atop the contents sidebar turns on checkboxes for every division, chapter, article, and section; ticking a group selects everything under it, so a whole-chapter packet is one click instead of dozens. A partly selected group shows a half-filled box.",
+    "Everything currently in the packet is highlighted yellow in the contents tree (with a yellow edge on its parent division and chapter), so what you have collected is visible at a glance even after you leave selection mode.",
+    "The hover \"+ Packet\" button still works for grabbing single sections as you read."
+   ]
+  },
+  {
+   "date": "2026-07-30",
    "title": "Clean copies: print view, Word, Markdown, and a print packet",
    "notes": [
     "New printable version of the whole title (all three divisions): statute text with clean headings and none of the page chrome. Open it from the sidebar's \"Print & downloads\" link, then use the browser's Print for paper or Save as PDF.",

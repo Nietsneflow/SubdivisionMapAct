@@ -169,7 +169,10 @@ Crowding risk is real once many notes exist — collapse by default.
 ### 19. Print packet ✅ *(shipped)*
 "+ Packet" in each section's hover tools collects sections; a floating bar
 (rendered only while non-empty) prints just those as one clean document with
-citations and a cover line. Shipped alongside it, at Kyle's request: clean
+citations and a cover line. "Select for packet" in the TOC tools adds
+tri-state checkboxes to the contents tree (tick a division/chapter/article to
+take everything under it); packet members stay highlighted yellow in the tree
+even outside selection mode. Shipped alongside it, at Kyle's request: clean
 whole-title exports built at refresh time — `print.html` (print / save as
 PDF), `title7.pdf` (bookmark outline; browser print-to-PDF can't make
 bookmarks, so fpdf2 builds it directly), `title7.docx` (real Word file,

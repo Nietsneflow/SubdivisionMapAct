@@ -152,6 +152,27 @@
     cursor: pointer;
   }
   .toc-tools button:hover { border-color: var(--accent); color: var(--accent); }
+  body.packet-mode #pk-mode { border-color: var(--accent); color: var(--accent); }
+
+  /* TOC packet checkboxes: only exist while "Select for packet" is active.
+     Ticking a division/chapter/article row selects everything under it;
+     a partial selection shows as indeterminate. */
+  .pk-box {
+    display: none;
+    margin: 0;
+    flex: 0 0 auto;
+    align-self: center;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  body.packet-mode .pk-box { display: inline-block; }
+  /* Rows whose sections are in the packet stay visibly marked (soft yellow)
+     even outside selection mode, so the packet's contents are scannable. */
+  .toc-sec.in-pk { background: var(--warn-bg); }
+  .toc-sec.in-pk .t { color: var(--warn-ink); }
+  #toc summary.in-pk, .toc-sec.in-pk {
+    box-shadow: inset 3px 0 0 var(--mark-current);
+  }
   #toc { padding: 0.6rem 0.6rem 0; }
   #toc details { margin: 0 0 0.15rem; }
   #toc summary {
@@ -782,6 +803,7 @@
     <div class="toc-tools">
       <button id="expand-all">Expand all</button>
       <button id="collapse-all">Collapse all</button>
+      <button id="pk-mode">Select for packet</button>
     </div>
     <div id="toc"></div>
   </nav>
@@ -823,8 +845,10 @@
             every division, chapter, and section),
             <a href="title7.docx" download>Word</a>, or
             <a href="title7.md" download>Markdown</a> for NotebookLM and
-            similar tools. To print just a few sections, hover a section and
-            choose &ldquo;+&nbsp;Packet&rdquo;.</p>
+            similar tools. To print a custom packet, hover a section and
+            choose &ldquo;+&nbsp;Packet&rdquo;, or use &ldquo;Select for
+            packet&rdquo; atop the contents sidebar to tick whole divisions,
+            chapters, or articles at once.</p>
         </div>
         <div id="doc-body"></div>
       </main>
@@ -851,6 +875,9 @@ const GONE = __GONE_JSON__;
 
 /* ---------- Build flat section list & render ---------- */
 const SECS = [];
+/* TOC group key ("d0", "d0c2", "d0c2a1") -> section numbers beneath it,
+   for whole-division/chapter/article print-packet selection. */
+const GRP_SECS = {};
 const escHtml = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const officialUrl = n =>
   "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=" + n + ".";
@@ -1035,23 +1062,38 @@ function parasHtml(text, linkify) {
 
   let toc = "", body = "";
   const idSeen = new Map();
+  const pkBox = (attr, val, label) =>
+    '<input type="checkbox" class="pk-box" ' + attr + '="' + val +
+    '" aria-label="' + label + ' for print packet"/>';
   DATA.divisions.forEach((dv, di) => {
-    toc += '<details class="div" open><summary><span class="tw">&#9654;</span><span>' +
+    const dg = "d" + di;
+    GRP_SECS[dg] = [];
+    toc += '<details class="div" open><summary>' + pkBox("data-grp", dg, "Select division") +
+           '<span class="tw">&#9654;</span><span>' +
            escHtml(dv.heading.replace(/\s*\[.*\]$/, "")) + "</span></summary>";
     body += '<h2 class="div-h" id="dv' + di + '">' + escHtml(dv.heading) + "</h2>";
-    dv.chapters.forEach(ch => {
+    dv.chapters.forEach((ch, ci) => {
+      const cg = dg + "c" + ci;
       if (ch.heading) {
-        toc += '<details class="chap"><summary><span class="tw">&#9654;</span><span>' +
+        GRP_SECS[cg] = [];
+        toc += '<details class="chap"><summary>' + pkBox("data-grp", cg, "Select chapter") +
+               '<span class="tw">&#9654;</span><span>' +
                escHtml(ch.heading) + "</span></summary>";
         body += '<h3 class="chap-h">' + escHtml(ch.heading) + "</h3>";
       }
-      ch.articles.forEach(art => {
+      ch.articles.forEach((art, ai) => {
+        const ag = cg + "a" + ai;
         if (art.heading) {
-          toc += '<details class="art" open><summary><span class="tw">&#9654;</span><span>' +
+          GRP_SECS[ag] = [];
+          toc += '<details class="art" open><summary>' + pkBox("data-grp", ag, "Select article") +
+                 '<span class="tw">&#9654;</span><span>' +
                  escHtml(art.heading.replace(/\s*\[.*\]$/, "")) + "</span></summary>";
           body += '<h4 class="art-h">' + escHtml(art.heading) + "</h4>";
         }
         art.sections.forEach(sec => {
+          GRP_SECS[dg].push(sec.num);
+          if (ch.heading) GRP_SECS[cg].push(sec.num);
+          if (art.heading) GRP_SECS[ag].push(sec.num);
           /* A few sections appear twice with the same number (leginfo prints
              both versions when a conditional amendment makes one operative
              later); suffix repeat ids so every anchor stays unique. */
@@ -1059,7 +1101,9 @@ function parasHtml(text, linkify) {
           const dup = idSeen.get(sec.num) || 0;
           if (dup > 0) id += "--v" + (dup + 1);
           idSeen.set(sec.num, dup + 1);
-          toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
+          toc += '<a class="toc-sec" href="#' + id + '">' +
+                 pkBox("data-sec", sec.num, "Select section") +
+                 '<span class="n">' + sec.num +
                  '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
           const paras = parasHtml(sec.text, true);
           body +=
@@ -1511,6 +1555,7 @@ topBtn.addEventListener("click", () => animateScroll(0));
 
 /* Smooth scroll + flash for table-of-contents clicks */
 $("toc").addEventListener("click", e => {
+  if (e.target.closest(".pk-box")) return; /* packet selection, not navigation */
   const link = e.target.closest(".toc-sec");
   if (!link) return;
   e.preventDefault();
@@ -1675,8 +1720,24 @@ try {
 } catch (e) { packet = []; }
 
 function paintPacket() {
+  const inPk = new Set(packet);
   document.querySelectorAll("[data-pk]").forEach(b => {
-    b.textContent = packet.includes(b.dataset.pk) ? "✓ Packet" : "+ Packet";
+    b.textContent = inPk.has(b.dataset.pk) ? "✓ Packet" : "+ Packet";
+  });
+  /* TOC: tick section boxes, roll state up to group boxes, and mark
+     selected rows (and their parents) with the yellow packet highlight */
+  document.querySelectorAll(".pk-box[data-sec]").forEach(b => {
+    const on = inPk.has(b.dataset.sec);
+    b.checked = on;
+    b.closest(".toc-sec").classList.toggle("in-pk", on);
+  });
+  document.querySelectorAll(".pk-box[data-grp]").forEach(b => {
+    const secs = GRP_SECS[b.dataset.grp] || [];
+    let n = 0;
+    for (const s of secs) if (inPk.has(s)) n++;
+    b.checked = n > 0 && n === secs.length;
+    b.indeterminate = n > 0 && n < secs.length;
+    b.closest("summary").classList.toggle("in-pk", n > 0);
   });
   $("pk-count").textContent = "Print packet: " + packet.length +
     " section" + (packet.length === 1 ? "" : "s");
@@ -1684,16 +1745,46 @@ function paintPacket() {
   try { localStorage.setItem("packet", JSON.stringify(packet)); } catch (e) {}
 }
 
+function toggleSec(n) {
+  packet = packet.includes(n)
+    ? packet.filter(p => p !== n)
+    : packet.concat(n).sort((a, b) => SEC_ORDER.get(a) - SEC_ORDER.get(b));
+  paintPacket();
+}
+
+/* A group box selects everything beneath it; if everything beneath it is
+   already selected, it deselects it instead. */
+function toggleGroup(grp) {
+  const secs = GRP_SECS[grp] || [];
+  const inPk = new Set(packet);
+  const all = secs.every(n => inPk.has(n));
+  if (all) secs.forEach(n => inPk.delete(n));
+  else secs.forEach(n => inPk.add(n));
+  packet = [...inPk].sort((a, b) => SEC_ORDER.get(a) - SEC_ORDER.get(b));
+  paintPacket();
+}
+
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-pk]");
   if (!b) return;
-  const n = b.dataset.pk;
-  packet = packet.includes(n)
-    ? packet.filter(p => p !== n)
-    : packet.concat(n).sort((a, b2) => SEC_ORDER.get(a) - SEC_ORDER.get(b2));
-  paintPacket();
+  toggleSec(b.dataset.pk);
+});
+/* TOC checkboxes. No preventDefault: the checkbox itself is the click's
+   activation target, so the surrounding link/summary never fires — and
+   cancelling would make the browser revert the box's checked state after
+   paintPacket sets it. The packet is the source of truth; the paint just
+   confirms what the native toggle already did. */
+document.addEventListener("click", e => {
+  const box = e.target.closest(".pk-box");
+  if (!box) return;
+  if (box.dataset.sec) toggleSec(box.dataset.sec);
+  else toggleGroup(box.dataset.grp);
 });
 $("pk-clear").addEventListener("click", () => { packet = []; paintPacket(); });
+$("pk-mode").addEventListener("click", () => {
+  const on = document.body.classList.toggle("packet-mode");
+  $("pk-mode").textContent = on ? "Done selecting" : "Select for packet";
+});
 
 const PACKET_CSS =
   ":root{--ind:1.6em}" +
@@ -1798,6 +1889,7 @@ scrim.addEventListener("click", () => {
   scrim.classList.remove("on");
 });
 sidebar.addEventListener("click", e => {
+  if (e.target.closest(".pk-box")) return; /* keep the panel open while selecting */
   if (e.target.closest(".toc-sec")) {
     sidebar.classList.remove("open");
     scrim.classList.remove("on");
