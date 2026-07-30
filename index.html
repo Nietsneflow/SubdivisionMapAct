@@ -842,21 +842,10 @@
         <div id="stale-banner" role="alert"></div>
         <div class="doc-intro">
           <h1>Planning and Land Use</h1>
-          <p id="doc-scope">Title 7 of the Government Code &mdash; the Planning and
+          <p id="doc-scope">Title 7 of the Government Code: the Planning and
             Zoning Law (Division 1), the Subdivision Map Act (Division 2), and
-            Official Maps (Division 3).</p>
-          <p id="doc-cite"></p>
+            Official Maps (Division 3) &middot; &sect;&sect; 65000&ndash;66499.58.</p>
           <p id="doc-src"></p>
-          <p id="doc-dl">Clean copies with none of the page chrome:
-            <a href="print.html">printable version</a>,
-            <a href="title7.pdf" download>PDF</a> (with a bookmark outline of
-            every division, chapter, and section),
-            <a href="title7.docx" download>Word</a>, or
-            <a href="title7.md" download>Markdown</a> for NotebookLM and
-            similar tools. To print a custom packet, hover a section and
-            choose &ldquo;+&nbsp;Packet&rdquo;, or use &ldquo;Select for
-            packet&rdquo; atop the contents sidebar to tick whole divisions,
-            chapters, or articles at once.</p>
         </div>
         <div id="doc-body"></div>
       </main>
@@ -1064,12 +1053,12 @@ function parasHtml(text, linkify) {
 }
 
 (function render() {
-  document.getElementById("doc-cite").textContent = DATA.citation;
   document.getElementById("doc-src").innerHTML =
-    'Text mirrored verbatim from the <a href="' + DATA.source +
-    '" target="_blank" rel="noopener">official Legislative Information site</a>, retrieved ' +
-    DATA.scraped + '. Each section links to its official page. ' +
-    '<a href="changes.html">Change log</a>: what the Legislature has changed, update by update.';
+    'Mirrored verbatim from the <a href="' + DATA.source +
+    '" target="_blank" rel="noopener">official Legislative Information site</a> ' +
+    'and re-checked against it daily; what the Legislature changes lands in the ' +
+    '<a href="changes.html">change log</a>. Downloads and clean copies: ' +
+    '<a href="print.html">Print &amp; downloads</a>.';
 
   let toc = "", body = "";
   const idSeen = new Map();

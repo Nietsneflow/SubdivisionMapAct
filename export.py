@@ -137,7 +137,10 @@ def print_html(data):
         '<a href="title7.docx" download>Word (.docx)</a>\n'
         '<a href="title7.md" download>Markdown (.md)</a>\n'
         '<span class="tip">Statute text only: no search, sidebar, or links. '
-        "Good for printing or for NotebookLM.</span>\n</div>\n<main>\n"
+        "Good for printing or for NotebookLM. For just a few sections, use "
+        "the packet tools in the reader: hover a section for &ldquo;+ "
+        "Packet&rdquo;, or &ldquo;Select for packet&rdquo; in its "
+        "sidebar.</span>\n</div>\n<main>\n"
         "<h1>Planning and Land Use</h1>\n"
         '<p class="meta">' + esc(data["citation"]) + "</p>\n"
         '<p class="meta">California Government Code, Title 7: the Planning and '

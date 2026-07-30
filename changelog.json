@@ -19,6 +19,14 @@
  "app": [
   {
    "date": "2026-07-30",
+   "title": "A shorter front door",
+   "notes": [
+    "The intro above the statute text is back to two short lines, so the page opens straight into reading. Download links now live behind the sidebar's \"Print & downloads\" link, and feature news lives here in the change log.",
+    "The intro also no longer shows a retrieval date that could read as stale. The text is re-checked against the official site every morning, and the intro now says exactly that; the automatic staleness warning still appears if refreshes ever stop long enough to matter."
+   ]
+  },
+  {
+   "date": "2026-07-30",
    "title": "Packet fix: no more surprise print dialog, plus Word and Markdown",
    "notes": [
     "Fixed: opening the packet immediately fired the print dialog. The button is now \"Open / print\": the packet opens in its own tab showing exactly what you selected, and nothing prints until you choose Print / Save as PDF there.",
