@@ -1,6 +1,8 @@
 # Injects title7.json into viewer_template.html -> index.html
 import json
 
+import export
+
 with open("title7.json", encoding="utf-8") as f:
     data = json.load(f)
 
@@ -60,3 +62,6 @@ with open("changes.html", "w", encoding="utf-8") as f:
     f.write(changes)
 print(f"changes.html written: {len(log['statute'])} statute entries, "
       f"{len(log['app'])} site entries")
+
+# Clean downloads (print view, Word, Markdown) stay in step with the page.
+export.build(data)

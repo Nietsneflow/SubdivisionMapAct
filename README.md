@@ -28,6 +28,11 @@ lookup work that the official site makes painful.
 - Automatic staleness banner once a January 1 passes after the retrieval date
   (California amendments generally take effect Jan 1).
 - Light/dark theme, mobile layout, print-friendly.
+- Clean exports, rebuilt at every refresh: `print.html` (statute text only —
+  print it or save as PDF), `title7.docx` (real Word document with a navigable
+  heading structure), `title7.md` (Markdown, drops straight into NotebookLM).
+- Print packet: "+ Packet" in a section's hover tools collects sections, then
+  the floating bar prints just those as one clean cited document.
 
 ## Updating the text
 
@@ -40,7 +45,7 @@ by hand. To refresh manually anyway:
 ```
 python scrape.py     # re-pulls all chapter/article pages -> title7.json
 python changelog.py  # diffs against the last committed data -> changelog.json
-python build.py      # builds index.html and changes.html
+python build.py      # builds index.html, changes.html, and the exports
 ```
 
 Commit and push; GitHub Pages redeploys automatically.
@@ -58,6 +63,7 @@ rebuild).
 | `title7.json` | Extracted text (all sections, with history notes) |
 | `viewer_template.html` | The viewer app (search UI, TOC, reader) |
 | `build.py` | Embeds the JSON into the template, producing `index.html` |
+| `export.py` | Builds the clean exports: `print.html`, `title7.docx`, `title7.md` |
 | `index.html` | The self-contained page served by GitHub Pages |
 
 The text is mirrored verbatim from the official source and is not legal advice;

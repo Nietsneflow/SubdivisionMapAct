@@ -18,6 +18,16 @@
  ],
  "app": [
   {
+   "date": "2026-07-30",
+   "title": "Clean copies: print view, Word, Markdown, and a print packet",
+   "notes": [
+    "New printable version of the whole title (all three divisions): statute text with clean headings and none of the page chrome. Open it from the sidebar's \"Print & downloads\" link, then use the browser's Print for paper or Save as PDF.",
+    "Download the full text as a real Word document (title7.docx) or as Markdown (title7.md). Both are clean enough to drop straight into NotebookLM; the Word file's navigation pane mirrors the division, chapter, article, and section structure.",
+    "New print packet: hover any section and click \"+ Packet\" to collect sections, then print just those as one clean document with citations. Useful for handing someone exactly the sections that apply to their project. The selection is remembered until you clear it.",
+    "All downloads regenerate automatically whenever the statute text refreshes, so they always match the page."
+   ]
+  },
+  {
    "date": "2026-07-28",
    "title": "No more dead outbound links",
    "notes": [

@@ -133,6 +133,7 @@
     display: inline-block;
     font-size: 0.78rem;
     margin-top: 0.4rem;
+    margin-right: 0.9rem;
     text-decoration: none;
   }
   .side-head .side-log:hover { text-decoration: underline; }
@@ -673,6 +674,40 @@
   }
   #toast.on { opacity: 1; }
 
+  /* Print packet bar: exists only while sections are selected */
+  #packetbar {
+    display: none;
+    position: fixed;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 16;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    padding: 0.45rem 0.6rem 0.45rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: calc(100vw - 1rem);
+  }
+  #packetbar.on { display: flex; }
+  #packetbar button {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.83rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #packetbar button:hover { border-color: var(--accent); color: var(--accent); }
+  #pk-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media print { #packetbar { display: none !important; } }
+
   /* On narrower screens the results rail becomes a slide-over panel */
   #m-back { display: none; }
   @media (max-width: 1150px) {
@@ -742,6 +777,7 @@
       <h1>Planning and Land Use</h1>
       <div class="range" id="side-range"></div>
       <a class="side-log" href="changes.html">Change log &rarr;</a>
+      <a class="side-log" href="print.html">Print &amp; downloads &rarr;</a>
     </div>
     <div class="toc-tools">
       <button id="expand-all">Expand all</button>
@@ -781,6 +817,12 @@
             Official Maps (Division 3).</p>
           <p id="doc-cite"></p>
           <p id="doc-src"></p>
+          <p id="doc-dl">Clean copies with none of the page chrome:
+            <a href="print.html">printable version</a> (print it, or save as
+            PDF), <a href="title7.docx" download>Word</a>, or
+            <a href="title7.md" download>Markdown</a> for NotebookLM and
+            similar tools. To print just a few sections, hover a section and
+            choose &ldquo;+&nbsp;Packet&rdquo;.</p>
         </div>
         <div id="doc-body"></div>
       </main>
@@ -793,6 +835,11 @@
 <button id="top-btn" aria-label="Back to top" title="Back to top">&#8593;</button>
 <div id="peek" role="tooltip" aria-hidden="true"></div>
 <div id="toast" role="status"></div>
+<div id="packetbar" role="region" aria-label="Print packet">
+  <span id="pk-count"></span>
+  <button id="pk-print">Print / PDF</button>
+  <button id="pk-clear">Clear</button>
+</div>
 
 <script>
 const DATA = __DATA_JSON__;
@@ -949,6 +996,33 @@ function linkifyRefs(html) {
   });
 }
 
+/* Statute text -> paragraph/table HTML. Shared by the reader (with
+   cross-reference links) and the print packet (clean text, no links). */
+function parasHtml(text, linkify) {
+  const lines = text.split("\n");
+  const isRow = ln => /^\| .* \|$/.test(ln);
+  let paras = "";
+  for (let li = 0; li < lines.length; li++) {
+    if (isRow(lines[li])) {
+      let rows = "";
+      for (; li < lines.length && isRow(lines[li]); li++) {
+        rows += "<tr>" + lines[li].slice(1, -1).split(" | ")
+          .map(c => "<td>" + escHtml(c.trim()) + "</td>").join("") + "</tr>";
+      }
+      li--;
+      paras += '<div class="tblwrap"><table>' + rows + "</table></div>";
+      continue;
+    }
+    const depth = /^\t*/.exec(lines[li])[0].length;
+    let t = escHtml(lines[li].replace(/^\t+/, ""));
+    if (linkify) t = linkifyRefs(t);
+    paras += depth
+      ? '<p style="margin-left:calc(' + depth + '*var(--ind))">' + t + "</p>"
+      : "<p>" + t + "</p>";
+  }
+  return paras;
+}
+
 (function render() {
   document.getElementById("doc-cite").textContent = DATA.citation;
   document.getElementById("doc-src").innerHTML =
@@ -985,30 +1059,12 @@ function linkifyRefs(html) {
           idSeen.set(sec.num, dup + 1);
           toc += '<a class="toc-sec" href="#' + id + '"><span class="n">' + sec.num +
                  '</span><span class="t">' + escHtml(firstWords(sec.text, 60)) + "</span></a>";
-          const lines = sec.text.split("\n");
-          const isRow = ln => /^\| .* \|$/.test(ln);
-          let paras = "";
-          for (let li = 0; li < lines.length; li++) {
-            if (isRow(lines[li])) {
-              let rows = "";
-              for (; li < lines.length && isRow(lines[li]); li++) {
-                rows += "<tr>" + lines[li].slice(1, -1).split(" | ")
-                  .map(c => "<td>" + escHtml(c.trim()) + "</td>").join("") + "</tr>";
-              }
-              li--;
-              paras += '<div class="tblwrap"><table>' + rows + "</table></div>";
-              continue;
-            }
-            const depth = /^\t*/.exec(lines[li])[0].length;
-            const t = linkifyRefs(escHtml(lines[li].replace(/^\t+/, "")));
-            paras += depth
-              ? '<p style="margin-left:calc(' + depth + '*var(--ind))">' + t + "</p>"
-              : "<p>" + t + "</p>";
-          }
+          const paras = parasHtml(sec.text, true);
           body +=
             '<article class="sec" id="' + id + '">' +
             '<div class="sec-head"><h4 class="sec-num"><a href="#' + id + '">&sect; ' + sec.num + "</a></h4>" +
             '<div class="sec-tools">' +
+            '<button data-pk="' + sec.num + '">+ Packet</button>' +
             '<button data-copy="' + sec.num + '">Copy text</button>' +
             '<a href="' + officialUrl(sec.num) + '" target="_blank" rel="noopener">Official text &#8599;</a>' +
             "</div></div>" +
@@ -1018,6 +1074,7 @@ function linkifyRefs(html) {
           SECS.push({
             num: sec.num,
             text: sec.text,
+            hist: sec.history,
             lower: (sec.num + " " + sec.text).toLowerCase(),
             div: dv.heading,
             chap: ch.heading,
@@ -1602,6 +1659,102 @@ document.addEventListener("click", e => {
     setTimeout(() => t.classList.remove("on"), 1600);
   });
 });
+
+/* ---------- Print packet ----------
+   "+ Packet" in a section's hover tools collects sections; a floating bar
+   (rendered only while non-empty) prints just those as one clean document
+   with citations. The selection survives a reload via localStorage. */
+const packetBar = $("packetbar");
+const SEC_ORDER = new Map(SECS.map((s, i) => [s.num, i]));
+let packet = [];
+try {
+  packet = JSON.parse(localStorage.getItem("packet") || "[]")
+    .filter(n => SEC_BY_NUM.has(n));
+} catch (e) { packet = []; }
+
+function paintPacket() {
+  document.querySelectorAll("[data-pk]").forEach(b => {
+    b.textContent = packet.includes(b.dataset.pk) ? "✓ Packet" : "+ Packet";
+  });
+  $("pk-count").textContent = "Print packet: " + packet.length +
+    " section" + (packet.length === 1 ? "" : "s");
+  packetBar.classList.toggle("on", packet.length > 0);
+  try { localStorage.setItem("packet", JSON.stringify(packet)); } catch (e) {}
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-pk]");
+  if (!b) return;
+  const n = b.dataset.pk;
+  packet = packet.includes(n)
+    ? packet.filter(p => p !== n)
+    : packet.concat(n).sort((a, b2) => SEC_ORDER.get(a) - SEC_ORDER.get(b2));
+  paintPacket();
+});
+$("pk-clear").addEventListener("click", () => { packet = []; paintPacket(); });
+
+const PACKET_CSS =
+  ":root{--ind:1.6em}" +
+  "body{margin:0;background:#fff;color:#000;" +
+  'font:11pt/1.55 Charter,"Bitstream Charter",Cambria,Georgia,serif}' +
+  "main{max-width:7.5in;margin:0 auto;padding:1.6rem 1.2rem 3rem}" +
+  "h1{font-size:1.5rem;line-height:1.25;margin:0 0 .4rem}" +
+  ".meta{color:#444;font-size:.85rem;margin:.2rem 0}" +
+  ".ctx{font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;" +
+  "color:#555;margin:1.6rem 0 0;border-top:1px solid #bbb;padding-top:.9rem}" +
+  "h5{font-size:1rem;margin:.7rem 0 .25rem}" +
+  "p{margin:0 0 .5rem}" +
+  ".hist{font-size:.78rem;color:#555;font-style:italic;margin:.3rem 0 0}" +
+  ".tblwrap{overflow-x:auto;margin:.3rem 0 .7rem}" +
+  "table{border-collapse:collapse;font-size:.9em}" +
+  "td{border:1px solid #888;padding:.2rem .6rem;text-align:center}" +
+  "tr:first-child td{font-weight:700}" +
+  "#bar{position:sticky;top:0;background:#F4F5F3;border-bottom:1px solid #ccc;" +
+  'padding:.6rem 1rem;font:14px system-ui,"Segoe UI",sans-serif;' +
+  "display:flex;gap:1rem;align-items:center}" +
+  "#bar button{border:1px solid #2A5F97;background:#2A5F97;color:#fff;" +
+  "border-radius:6px;padding:.35rem .8rem;font:inherit;cursor:pointer}" +
+  "#bar span{color:#666;font-size:.82rem}" +
+  "@media print{#bar{display:none}h5{break-after:avoid}}";
+
+function packetDoc() {
+  let body = "", lastCtx = null;
+  for (const n of packet) {
+    const s = SEC_BY_NUM.get(n);
+    if (!s) continue;
+    const ctx = [s.div, s.chap, s.art].filter(Boolean)
+      .map(h => escHtml(h.replace(/\s*\[.*\]$/, ""))).join(" &middot; ");
+    if (ctx !== lastCtx) {
+      lastCtx = ctx;
+      body += '<p class="ctx">' + ctx + "</p>";
+    }
+    body += "<h5>&sect; " + n + ".</h5>" + parasHtml(s.text, false) +
+            '<p class="hist">(' + escHtml(s.hist) + ")</p>";
+  }
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"/>' +
+    "<title>Title 7 print packet</title>" +
+    "<style>" + PACKET_CSS + "</style></head><body>" +
+    '<div id="bar"><button onclick="print()">Print / Save as PDF</button>' +
+    "<span>This tab holds only your selected sections; close it when done." +
+    "</span></div><main>" +
+    "<h1>Planning and Land Use: selected sections</h1>" +
+    '<p class="meta">' + escHtml(DATA.citation) + "</p>" +
+    '<p class="meta">' + packet.length + " section" +
+    (packet.length === 1 ? "" : "s") +
+    " selected from California Government Code Title 7; text retrieved " +
+    escHtml(DATA.scraped) + " from leginfo.legislature.ca.gov.</p>" +
+    body + "</main>" +
+    '<script>addEventListener("load",function(){setTimeout(print,200)})' +
+    "<\/script></body></html>";
+}
+
+$("pk-print").addEventListener("click", () => {
+  const w = window.open("", "_blank");
+  if (!w) return;
+  w.document.write(packetDoc());
+  w.document.close();
+});
+paintPacket();
 
 /* Theme toggle: overrides the OS preference and persists the choice */
 const themeBtn = $("theme-btn");

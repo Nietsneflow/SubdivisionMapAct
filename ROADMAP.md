@@ -166,10 +166,14 @@ ordinance cross-references.
 
 Crowding risk is real once many notes exist — collapse by default.
 
-### 19. Print packet
-Check sections (or reuse the pinned set) and print just those, with citations
-and a cover line. Handing three sections to an applicant currently means
-printing the whole title or copy-pasting into Word.
+### 19. Print packet ✅ *(shipped)*
+"+ Packet" in each section's hover tools collects sections; a floating bar
+(rendered only while non-empty) prints just those as one clean document with
+citations and a cover line. Shipped alongside it, at Kyle's request: clean
+whole-title exports built at refresh time — `print.html` (print / save as
+PDF), `title7.docx` (real Word file, navigable headings), and `title7.md`
+(NotebookLM-ready) — linked from the intro and the sidebar's
+"Print & downloads" link.
 
 ---
 
