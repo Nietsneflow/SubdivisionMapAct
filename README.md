@@ -33,8 +33,11 @@ lookup work that the official site makes painful.
   division/chapter/article/section), `title7.docx` (real Word document with a
   navigable heading structure), `title7.md` (Markdown, drops straight into
   NotebookLM).
-- Print packet: "+ Packet" in a section's hover tools collects sections, then
-  the floating bar prints just those as one clean cited document.
+- Print packet: collect sections via "+ Packet" in the hover tools or tick
+  whole divisions/chapters in the contents tree ("Select for packet"); the
+  floating bar then opens the packet for printing or downloads it as a
+  bookmarked PDF, a Word document, or Markdown — all generated in the
+  browser, no server involved.
 
 ## Updating the text
 

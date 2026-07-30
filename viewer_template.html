@@ -864,6 +864,7 @@
 <div id="packetbar" role="region" aria-label="Print packet">
   <span id="pk-count"></span>
   <button id="pk-print" title="Open the packet in a new tab; print or save as PDF from there">Open / print</button>
+  <button id="pk-pdf" title="Download the packet as a PDF with a bookmark outline">PDF</button>
   <button id="pk-word" title="Download the packet as a Word document">Word</button>
   <button id="pk-md" title="Download the packet as Markdown, for NotebookLM and similar tools">Markdown</button>
   <button id="pk-clear">Clear</button>
@@ -1875,9 +1876,9 @@ function packetDoc() {
     (packet.length === 1 ? "" : "s") + ")</title>" +
     "<style>" + PACKET_CSS + "</style></head><body>" +
     '<div id="bar"><button onclick="print()">Print / Save as PDF</button>' +
-    "<span>Nothing prints until you choose. Word and Markdown downloads " +
-    "are on the packet bar in the reader. Close this tab when done." +
-    "</span></div><main>" +
+    "<span>Nothing prints until you choose. PDF, Word, and Markdown " +
+    "downloads are on the packet bar in the reader. Close this tab when " +
+    "done.</span></div><main>" +
     "<h1>Planning and Land Use: selected sections</h1>" +
     '<p class="meta">' + escHtml(DATA.citation) + "</p>" +
     '<p class="meta">' + escHtml(packetIntro()) + "</p>" +
@@ -2060,6 +2061,252 @@ function packetDocxBlob() {
   ]);
 }
 
+/* ---------- Packet .pdf with a bookmark outline ----------
+   A purpose-built miniature PDF writer, because browser print-to-PDF cannot
+   produce bookmarks. Times core fonts (WinAnsi encoding, so the statute's
+   curly quotes and § survive), word wrap from embedded AFM width tables,
+   simple grid tables, page numbers, and an outline tree mirroring the
+   packet's division/chapter/article/section structure. Content streams are
+   Flate-compressed via CompressionStream when the browser has it. */
+const PW_TIMES = [250,333,408,500,500,833,778,180,333,333,500,564,250,333,250,278,500,500,500,500,500,500,500,500,500,500,278,278,564,564,564,444,921,722,667,667,722,611,556,722,722,333,389,722,611,889,722,722,556,722,667,556,611,722,722,944,722,722,611,333,278,333,469,500,333,444,500,444,500,444,333,500,500,278,278,500,278,778,500,500,500,500,333,389,278,500,500,722,500,500,444,480,200,480,541,350,500,350,333,500,444,1000,500,500,333,1000,556,333,889,350,611,350,350,333,333,444,444,350,500,1000,333,980,389,333,722,350,444,722,250,333,500,500,500,500,200,500,333,760,276,500,564,333,760,333,400,564,300,300,333,500,453,250,333,300,310,500,750,750,750,444,722,722,722,722,722,722,889,667,611,611,611,611,333,333,333,333,722,722,722,722,722,722,722,564,722,722,722,722,722,722,556,500,444,444,444,444,444,444,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,564,500,500,500,500,500,500,500,500];
+const PW_TIMESB = [250,333,555,500,500,1000,833,278,333,333,500,570,250,333,250,278,500,500,500,500,500,500,500,500,500,500,333,333,570,570,570,500,930,722,667,722,722,667,611,778,778,389,500,778,667,944,722,778,611,778,722,556,667,722,722,1000,722,722,667,333,278,333,581,500,333,500,556,444,556,444,333,500,556,278,333,556,278,833,556,500,556,556,444,389,333,556,500,722,500,500,444,394,220,394,520,350,500,350,333,500,500,1000,500,500,333,1000,556,333,1000,350,667,350,350,333,333,500,500,350,500,1000,333,1000,389,333,722,350,444,722,250,333,500,500,500,500,220,500,333,747,300,500,570,333,747,333,400,570,300,300,333,556,540,250,333,300,330,500,750,750,750,500,722,722,722,722,722,722,1000,722,667,667,667,667,389,389,389,389,722,722,778,778,778,778,778,570,778,722,722,722,722,722,611,556,500,500,500,500,500,500,722,444,444,444,444,444,278,278,278,278,500,556,500,500,500,500,500,570,500,556,556,556,556,500,556,500];
+const PW_TIMESI = [250,333,420,500,500,833,778,214,333,333,500,675,250,333,250,278,500,500,500,500,500,500,500,500,500,500,333,333,675,675,675,500,920,611,611,667,722,611,611,722,722,333,444,667,556,833,667,722,611,722,611,500,556,722,611,833,611,556,556,389,278,389,422,500,333,500,500,444,500,444,278,500,500,278,278,444,278,722,500,500,500,500,389,389,278,500,444,667,444,444,389,400,275,400,541,350,500,350,333,500,556,889,500,500,333,1000,500,333,944,350,556,350,350,333,333,556,556,350,500,889,333,980,389,333,667,350,389,556,250,389,500,500,500,500,275,500,333,760,276,500,675,333,760,333,400,675,300,300,333,500,523,250,333,300,310,500,750,750,750,500,611,611,611,611,611,611,889,667,611,611,611,611,333,333,333,333,722,667,722,722,722,722,722,675,722,722,722,722,722,556,611,500,500,500,500,500,500,500,667,444,444,444,444,444,278,278,278,278,500,500,500,500,500,500,500,675,500,500,500,500,500,444,500,444];
+const PDF_W = { F1: PW_TIMES, F2: PW_TIMESB, F3: PW_TIMESI };
+
+/* char -> WinAnsi (cp1252) byte; unmappable characters degrade to "?" */
+const CP1252_HI = { "€":128,"‚":130,"ƒ":131,"„":132,
+  "…":133,"†":134,"‡":135,"ˆ":136,"‰":137,
+  "Š":138,"‹":139,"Œ":140,"Ž":142,"‘":145,
+  "’":146,"“":147,"”":148,"•":149,"–":150,
+  "—":151,"˜":152,"™":153,"š":154,"›":155,
+  "œ":156,"ž":158,"Ÿ":159 };
+function cpBytes(s) {
+  const out = [];
+  for (const ch of s) {
+    const c = ch.codePointAt(0);
+    if (c < 128 || (c >= 160 && c <= 255)) out.push(c);
+    else if (CP1252_HI[ch] !== undefined) out.push(CP1252_HI[ch]);
+    else out.push(63);
+  }
+  return out;
+}
+function pdfStr(bytes) {
+  let s = "";
+  for (const b of bytes) {
+    if (b === 40 || b === 41 || b === 92) s += "\\" + String.fromCharCode(b);
+    else if (b >= 32 && b < 127) s += String.fromCharCode(b);
+    else s += "\\" + b.toString(8).padStart(3, "0");
+  }
+  return s;
+}
+function pdfMeasure(bytes, font, size) {
+  const w = PDF_W[font];
+  let t = 0;
+  for (const b of bytes) t += b >= 32 ? w[b - 32] : 500;
+  return t * size / 1000;
+}
+
+function buildPacketPdf() {
+  const PAGE_H = 792, PAGE_W = 612, ML = 72, MB = 64, MT = 64;
+  const CW = PAGE_W - ML - 72;
+  const pages = [], marks = [];
+  let ops = null, y = 0;
+  function newPage() { ops = []; pages.push(ops); y = PAGE_H - MT; }
+  function ensure(h) { if (y - h < MB) newPage(); }
+  function wrap(text, font, size, width) {
+    const lines = [];
+    let cur = [], curW = 0;
+    const spaceW = pdfMeasure([32], font, size);
+    for (const word of text.split(" ")) {
+      const wb = cpBytes(word), ww = pdfMeasure(wb, font, size);
+      if (cur.length && curW + spaceW + ww > width) { lines.push(cur); cur = []; curW = 0; }
+      if (cur.length) { cur.push(32); curW += spaceW; }
+      cur = cur.concat(wb); curW += ww;
+    }
+    lines.push(cur);
+    return lines;
+  }
+  function paras(text, font, size, indent, opts) {
+    opts = opts || {};
+    const lead = size * 1.42;
+    const lines = wrap(text, font, size, CW - indent);
+    ensure((opts.before || 0) + lead * Math.min(lines.length, 2) + (opts.keep || 0));
+    y -= opts.before || 0;
+    if (opts.mark) {
+      marks.push({ title: opts.mark.title, level: opts.mark.level,
+                   page: pages.length - 1, y: Math.min(PAGE_H, y + 6) });
+    }
+    for (const ln of lines) {
+      ensure(lead);
+      y -= lead;
+      ops.push((opts.gray ? "0.33 0.33 0.33 rg " : "") + "BT /" + font + " " +
+        size + " Tf " + (ML + indent).toFixed(1) + " " + y.toFixed(1) +
+        " Td (" + pdfStr(ln) + ") Tj ET" + (opts.gray ? " 0 0 0 rg" : ""));
+    }
+    y -= opts.after || 0;
+  }
+  function table(rows) {
+    const size = 9, rh = 15, ncol = rows[0].length;
+    const colW = Math.min(CW, ncol * 170) / ncol, tw = colW * ncol;
+    rows.forEach((row, ri) => {
+      ensure(rh + 4);
+      const top = y, bot = y - rh;
+      let p = "0.6 w 0.53 G " +
+        ML + " " + top.toFixed(1) + " m " + (ML + tw).toFixed(1) + " " + top.toFixed(1) + " l S " +
+        ML + " " + bot.toFixed(1) + " m " + (ML + tw).toFixed(1) + " " + bot.toFixed(1) + " l S ";
+      for (let c = 0; c <= ncol; c++) {
+        const xx = (ML + c * colW).toFixed(1);
+        p += xx + " " + top.toFixed(1) + " m " + xx + " " + bot.toFixed(1) + " l S ";
+      }
+      ops.push(p);
+      const font = ri === 0 ? "F2" : "F1";
+      row.forEach((cell, c) => {
+        const cb = cpBytes(cell);
+        let sz = size, cwd = pdfMeasure(cb, font, sz);
+        while (cwd > colW - 6 && sz > 6) { sz -= 0.5; cwd = pdfMeasure(cb, font, sz); }
+        ops.push("BT /" + font + " " + sz + " Tf " +
+          (ML + c * colW + (colW - cwd) / 2).toFixed(1) + " " +
+          (bot + 4.5).toFixed(1) + " Td (" + pdfStr(cb) + ") Tj ET");
+      });
+      y = bot;
+    });
+    y -= 8;
+  }
+
+  newPage();
+  paras("Planning and Land Use: selected sections", "F2", 18, 0, { after: 4 });
+  paras(DATA.citation, "F3", 9.5, 0, { gray: true, after: 2 });
+  paras(packetIntro(), "F1", 9.5, 0, { gray: true });
+  let lastLvl = 0;
+  const HCONF = [["F2", 14, 20], ["F2", 12, 15], ["F2", 10, 12]];
+  walkPacket(
+    (lvl, h) => {
+      lastLvl = lvl;
+      const c = HCONF[lvl];
+      paras(h, c[0], c[1], 0, { before: c[2], keep: 40, after: 2,
+                                mark: { title: h, level: lvl } });
+    },
+    (n, s) => {
+      paras("§ " + n + ".", "F2", 10.5, 0, { before: 8, keep: 30,
+        mark: { title: "§ " + n, level: lastLvl + 1 } });
+      for (const part of parseLines(s.text)) {
+        if (part.table) table(part.table);
+        else paras(part.text, "F1", 10, 14 * part.depth, { after: 2 });
+      }
+      paras("(" + s.hist + ")", "F3", 8, 0, { gray: true, after: 4 });
+    });
+  pages.forEach((pageOps, i) => {
+    const t = cpBytes(String(i + 1));
+    pageOps.push("0.33 0.33 0.33 rg BT /F1 8 Tf " +
+      ((PAGE_W - pdfMeasure(t, "F1", 8)) / 2).toFixed(1) +
+      " 40 Td (" + pdfStr(t) + ") Tj ET 0 0 0 rg");
+  });
+  return { pages, marks };
+}
+
+async function packetPdfBlob() {
+  const { pages, marks } = buildPacketPdf();
+  const enc = new TextEncoder();
+  const P = pages.length;
+  const contents = [];
+  for (const pageOps of pages) {
+    const raw = enc.encode(pageOps.join("\n"));
+    let data = raw, filter = "";
+    if (typeof CompressionStream !== "undefined") {
+      try {
+        const cs = new CompressionStream("deflate");
+        const w = cs.writable.getWriter();
+        w.write(raw); w.close();
+        data = new Uint8Array(await new Response(cs.readable).arrayBuffer());
+        filter = "/Filter /FlateDecode ";
+      } catch (e) { data = raw; filter = ""; }
+    }
+    contents.push({ data, filter });
+  }
+  /* Outline tree: nest marks by level (levels can skip when a tier is
+     absent; the stack handles that) and count open descendants. */
+  const root = { kids: [], level: -1 };
+  const stack = [root];
+  for (const m of marks) {
+    m.kids = [];
+    while (stack[stack.length - 1].level >= m.level) stack.pop();
+    m.parent = stack[stack.length - 1];
+    m.parent.kids.push(m);
+    stack.push(m);
+  }
+  (function countDeep(nd) {
+    nd.count = nd.kids.length;
+    for (const k of nd.kids) nd.count += countDeep(k);
+    return nd.count;
+  })(root);
+  const pageObj = i => 6 + 2 * i, contObj = i => 7 + 2 * i;
+  const outlineRoot = 6 + 2 * P;
+  let nextObj = outlineRoot + 1;
+  const nodes = [];
+  (function assign(nd) {
+    for (const k of nd.kids) { k.obj = nextObj++; nodes.push(k); assign(k); }
+  })(root);
+  const objs = [
+    [1, "<< /Type /Catalog /Pages 2 0 R /Outlines " + outlineRoot +
+        " 0 R /PageMode /UseOutlines >>"],
+    [2, "<< /Type /Pages /Count " + P + " /Kids [" +
+        pages.map((_, i) => pageObj(i) + " 0 R").join(" ") + "] >>"],
+  ];
+  [["F1", "Times-Roman"], ["F2", "Times-Bold"], ["F3", "Times-Italic"]]
+    .forEach((f, i) => objs.push([3 + i,
+      "<< /Type /Font /Subtype /Type1 /BaseFont /" + f[1] +
+      " /Encoding /WinAnsiEncoding >>"]));
+  pages.forEach((_, i) => {
+    objs.push([pageObj(i),
+      "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources " +
+      "<< /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents " +
+      contObj(i) + " 0 R >>"]);
+    const c = contents[i];
+    objs.push([contObj(i),
+      "<< " + c.filter + "/Length " + c.data.length + " >>\nstream\n",
+      c.data, "\nendstream"]);
+  });
+  objs.push([outlineRoot, "<< /Type /Outlines" + (root.kids.length
+    ? " /First " + root.kids[0].obj + " 0 R /Last " +
+      root.kids[root.kids.length - 1].obj + " 0 R /Count " + root.count
+    : "") + " >>"]);
+  for (const nd of nodes) {
+    const sib = nd.parent.kids, i = sib.indexOf(nd);
+    let d = "<< /Title (" + pdfStr(cpBytes(nd.title)) + ") /Parent " +
+      (nd.parent.obj || outlineRoot) + " 0 R /Dest [" + pageObj(nd.page) +
+      " 0 R /XYZ null " + nd.y.toFixed(0) + " null]";
+    if (i > 0) d += " /Prev " + sib[i - 1].obj + " 0 R";
+    if (i < sib.length - 1) d += " /Next " + sib[i + 1].obj + " 0 R";
+    if (nd.kids.length) d += " /First " + nd.kids[0].obj + " 0 R /Last " +
+      nd.kids[nd.kids.length - 1].obj + " 0 R /Count " + nd.count;
+    objs.push([nd.obj, d + " >>"]);
+  }
+  const parts = [];
+  let offset = 0;
+  const push = x => {
+    const b = typeof x === "string" ? enc.encode(x) : x;
+    parts.push(b); offset += b.length;
+  };
+  push("%PDF-1.6\n");
+  push(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A]));
+  objs.sort((a, b) => a[0] - b[0]);
+  const offsets = {};
+  for (const o of objs) {
+    offsets[o[0]] = offset;
+    push(o[0] + " 0 obj\n");
+    for (let i = 1; i < o.length; i++) push(o[i]);
+    push("\nendobj\n");
+  }
+  const xrefStart = offset;
+  const maxObj = objs[objs.length - 1][0];
+  let xr = "xref\n0 " + (maxObj + 1) + "\n0000000000 65535 f \n";
+  for (let i = 1; i <= maxObj; i++)
+    xr += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+  push(xr + "trailer\n<< /Size " + (maxObj + 1) +
+       " /Root 1 0 R >>\nstartxref\n" + xrefStart + "\n%%EOF");
+  return new Blob(parts, { type: "application/pdf" });
+}
+
 /* Open the packet in its own tab. Nothing auto-prints: the tab carries its
    own Print / Save as PDF button. Downloads happen from this page (blob
    URLs used across documents break on file: pages), via a temporary link. */
@@ -2078,6 +2325,9 @@ $("pk-print").addEventListener("click", () => {
   packetUrl = URL.createObjectURL(
     new Blob([packetDoc()], { type: "text/html" }));
   window.open(packetUrl, "_blank");
+});
+$("pk-pdf").addEventListener("click", async () => {
+  dlBlob(await packetPdfBlob(), "title7-packet.pdf");
 });
 $("pk-word").addEventListener("click", () => {
   dlBlob(packetDocxBlob(), "title7-packet.docx");

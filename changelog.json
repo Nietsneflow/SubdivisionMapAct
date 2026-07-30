@@ -22,7 +22,7 @@
    "title": "Packet fix: no more surprise print dialog, plus Word and Markdown",
    "notes": [
     "Fixed: opening the packet immediately fired the print dialog. The button is now \"Open / print\": the packet opens in its own tab showing exactly what you selected, and nothing prints until you choose Print / Save as PDF there.",
-    "The packet bar now also offers Word and Markdown: a real Word document (title7-packet.docx, with navigable headings) and Markdown (title7-packet.md) for NotebookLM, both downloaded on the spot.",
+    "The packet bar now also offers PDF, Word, and Markdown downloads: a PDF with a bookmark outline of the packet's divisions, chapters, and sections (title7-packet.pdf), a real Word document with navigable headings (title7-packet.docx), and Markdown for NotebookLM (title7-packet.md).",
     "If the packet ever contains more than you expected, the yellow rows in the contents sidebar show everything currently in it; Clear empties it. The packet is remembered between visits, which can surprise you a week later."
    ]
   },
