@@ -863,7 +863,9 @@
 <div id="toast" role="status"></div>
 <div id="packetbar" role="region" aria-label="Print packet">
   <span id="pk-count"></span>
-  <button id="pk-print">Print / PDF</button>
+  <button id="pk-print" title="Open the packet in a new tab; print or save as PDF from there">Open / print</button>
+  <button id="pk-word" title="Download the packet as a Word document">Word</button>
+  <button id="pk-md" title="Download the packet as Markdown, for NotebookLM and similar tools">Markdown</button>
   <button id="pk-clear">Clear</button>
 </div>
 
@@ -1804,48 +1806,285 @@ const PACKET_CSS =
   "tr:first-child td{font-weight:700}" +
   "#bar{position:sticky;top:0;background:#F4F5F3;border-bottom:1px solid #ccc;" +
   'padding:.6rem 1rem;font:14px system-ui,"Segoe UI",sans-serif;' +
-  "display:flex;gap:1rem;align-items:center}" +
+  "display:flex;gap:1rem;align-items:center;flex-wrap:wrap}" +
   "#bar button{border:1px solid #2A5F97;background:#2A5F97;color:#fff;" +
   "border-radius:6px;padding:.35rem .8rem;font:inherit;cursor:pointer}" +
+  "#bar a{color:#2A5F97}" +
   "#bar span{color:#666;font-size:.82rem}" +
   "@media print{#bar{display:none}h5{break-after:avoid}}";
 
-function packetDoc() {
-  let body = "", lastCtx = null;
+/* Statute text -> [{table: rows} | {depth, text}], for the packet's Word
+   and Markdown builds (parasHtml covers the HTML side). */
+function parseLines(text) {
+  const out = [], lines = text.split("\n");
+  const isRow = ln => /^\| .* \|$/.test(ln);
+  for (let i = 0; i < lines.length; ) {
+    if (isRow(lines[i])) {
+      const rows = [];
+      for (; i < lines.length && isRow(lines[i]); i++)
+        rows.push(lines[i].slice(1, -1).split(" | ").map(c => c.trim()));
+      out.push({ table: rows });
+    } else {
+      out.push({ depth: /^\t*/.exec(lines[i])[0].length,
+                 text: lines[i].replace(/^\t+/, "") });
+      i++;
+    }
+  }
+  return out;
+}
+
+/* Walk the packet in statute order, telling the caller when the division /
+   chapter / article context changes and for each section. */
+function walkPacket(onCtx, onSec) {
+  let lastDiv, lastChap, lastArt;
   for (const n of packet) {
     const s = SEC_BY_NUM.get(n);
     if (!s) continue;
-    const ctx = [s.div, s.chap, s.art].filter(Boolean)
-      .map(h => escHtml(h.replace(/\s*\[.*\]$/, ""))).join(" &middot; ");
-    if (ctx !== lastCtx) {
-      lastCtx = ctx;
-      body += '<p class="ctx">' + ctx + "</p>";
+    if (s.div !== lastDiv) {
+      lastDiv = s.div; lastChap = lastArt = undefined;
+      onCtx(0, s.div);
     }
-    body += "<h5>&sect; " + n + ".</h5>" + parasHtml(s.text, false) +
-            '<p class="hist">(' + escHtml(s.hist) + ")</p>";
+    if (s.chap && s.chap !== lastChap) {
+      lastChap = s.chap; lastArt = undefined;
+      onCtx(1, s.chap);
+    }
+    if (s.art && s.art !== lastArt) {
+      lastArt = s.art;
+      onCtx(2, s.art);
+    }
+    onSec(n, s);
   }
+}
+
+function packetIntro() {
+  return packet.length + " section" + (packet.length === 1 ? "" : "s") +
+    " selected from California Government Code Title 7; text retrieved " +
+    DATA.scraped + " from leginfo.legislature.ca.gov.";
+}
+
+function packetDoc() {
+  let body = "";
+  walkPacket(
+    (lvl, h) => { body += '<p class="ctx">' + escHtml(h) + "</p>"; },
+    (n, s) => {
+      body += "<h5>&sect; " + n + ".</h5>" + parasHtml(s.text, false) +
+              '<p class="hist">(' + escHtml(s.hist) + ")</p>";
+    });
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"/>' +
-    "<title>Title 7 print packet</title>" +
+    "<title>Title 7 packet (" + packet.length + " section" +
+    (packet.length === 1 ? "" : "s") + ")</title>" +
     "<style>" + PACKET_CSS + "</style></head><body>" +
     '<div id="bar"><button onclick="print()">Print / Save as PDF</button>' +
-    "<span>This tab holds only your selected sections; close it when done." +
+    "<span>Nothing prints until you choose. Word and Markdown downloads " +
+    "are on the packet bar in the reader. Close this tab when done." +
     "</span></div><main>" +
     "<h1>Planning and Land Use: selected sections</h1>" +
     '<p class="meta">' + escHtml(DATA.citation) + "</p>" +
-    '<p class="meta">' + packet.length + " section" +
-    (packet.length === 1 ? "" : "s") +
-    " selected from California Government Code Title 7; text retrieved " +
-    escHtml(DATA.scraped) + " from leginfo.legislature.ca.gov.</p>" +
-    body + "</main>" +
-    '<script>addEventListener("load",function(){setTimeout(print,200)})' +
-    "<\/script></body></html>";
+    '<p class="meta">' + escHtml(packetIntro()) + "</p>" +
+    body + "</main></body></html>";
 }
 
+function packetMd() {
+  const out = ["# Planning and Land Use: selected sections", "",
+               DATA.citation, "", packetIntro(), ""];
+  walkPacket(
+    (lvl, h) => { out.push("#".repeat(lvl + 2) + " " + h, ""); },
+    (n, s) => {
+      out.push("##### § " + n + ".", "");
+      for (const part of parseLines(s.text)) {
+        if (part.table) {
+          out.push("| " + part.table[0].join(" | ") + " |");
+          out.push("|" + " --- |".repeat(part.table[0].length));
+          for (const r of part.table.slice(1)) out.push("| " + r.join(" | ") + " |");
+          out.push("");
+        } else {
+          out.push(part.text, "");
+        }
+      }
+      out.push("*(" + s.hist + ")*", "");
+    });
+  return out.join("\n");
+}
+
+/* ---------- Packet .docx (mirrors export.py's builders, in-browser) ---- */
+const wEsc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+                   .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+function wPara(text, o) {
+  o = o || {};
+  let ppr = "";
+  if (o.style) ppr += '<w:pStyle w:val="' + o.style + '"/>';
+  if (o.indent) ppr += '<w:ind w:left="' + o.indent + '"/>';
+  let rpr = "";
+  if (o.italic) rpr += "<w:i/>";
+  if (o.bold) rpr += "<w:b/>";
+  if (o.size) rpr += '<w:sz w:val="' + o.size + '"/><w:szCs w:val="' + o.size + '"/>';
+  if (o.color) rpr += '<w:color w:val="' + o.color + '"/>';
+  return "<w:p>" + (ppr ? "<w:pPr>" + ppr + "</w:pPr>" : "") +
+    "<w:r>" + (rpr ? "<w:rPr>" + rpr + "</w:rPr>" : "") +
+    '<w:t xml:space="preserve">' + wEsc(text) + "</w:t></w:r></w:p>";
+}
+
+function wTable(rows) {
+  const borders = ["top", "left", "bottom", "right", "insideH", "insideV"]
+    .map(s => '<w:' + s + ' w:val="single" w:sz="4" w:space="0" w:color="888888"/>')
+    .join("");
+  let out = '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/>' +
+            "<w:tblBorders>" + borders + "</w:tblBorders></w:tblPr>";
+  rows.forEach((row, ri) => {
+    out += "<w:tr>" + row.map(c =>
+      "<w:tc><w:tcPr/>" + wPara(c, { bold: ri === 0 }) + "</w:tc>").join("") +
+      "</w:tr>";
+  });
+  return out + "</w:tbl>";
+}
+
+const W_STYLES = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+'<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+'<w:docDefaults><w:rPrDefault><w:rPr>' +
+'<w:rFonts w:ascii="Cambria" w:hAnsi="Cambria" w:cs="Cambria"/>' +
+'<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr></w:rPrDefault>' +
+'<w:pPrDefault><w:pPr><w:spacing w:after="120"/></w:pPr></w:pPrDefault></w:docDefaults>' +
+'<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>' +
+'<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:qFormat/>' +
+'<w:pPr><w:spacing w:after="60"/></w:pPr><w:rPr><w:b/><w:sz w:val="40"/><w:szCs w:val="40"/></w:rPr></w:style>' +
+'<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:qFormat/>' +
+'<w:pPr><w:keepNext/><w:spacing w:before="480" w:after="120"/><w:outlineLvl w:val="0"/></w:pPr>' +
+'<w:rPr><w:b/><w:sz w:val="32"/><w:szCs w:val="32"/></w:rPr></w:style>' +
+'<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:qFormat/>' +
+'<w:pPr><w:keepNext/><w:spacing w:before="360" w:after="100"/><w:outlineLvl w:val="1"/></w:pPr>' +
+'<w:rPr><w:b/><w:sz w:val="28"/><w:szCs w:val="28"/></w:rPr></w:style>' +
+'<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:qFormat/>' +
+'<w:pPr><w:keepNext/><w:spacing w:before="280" w:after="80"/><w:outlineLvl w:val="2"/></w:pPr>' +
+'<w:rPr><w:b/><w:smallCaps/><w:sz w:val="24"/><w:szCs w:val="24"/></w:rPr></w:style>' +
+'<w:style w:type="paragraph" w:styleId="Heading4"><w:name w:val="heading 4"/><w:basedOn w:val="Normal"/><w:qFormat/>' +
+'<w:pPr><w:keepNext/><w:spacing w:before="220" w:after="40"/><w:outlineLvl w:val="3"/></w:pPr>' +
+'<w:rPr><w:b/></w:rPr></w:style></w:styles>';
+
+const W_TYPES = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+'<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+'<Default Extension="xml" ContentType="application/xml"/>' +
+'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+'<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>';
+
+const W_RELS = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+
+const W_DOCRELS = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+
+function packetDocxXml() {
+  const body = [
+    wPara("Planning and Land Use: selected sections", { style: "Title" }),
+    wPara(DATA.citation, { italic: true, size: 18, color: "555555" }),
+    wPara(packetIntro(), { size: 18, color: "555555" }),
+  ];
+  walkPacket(
+    (lvl, h) => { body.push(wPara(h, { style: "Heading" + (lvl + 1) })); },
+    (n, s) => {
+      body.push(wPara("§ " + n + ".", { style: "Heading4" }));
+      for (const part of parseLines(s.text)) {
+        if (part.table) { body.push(wTable(part.table), wPara("")); }
+        else body.push(wPara(part.text, { indent: 360 * part.depth }));
+      }
+      body.push(wPara("(" + s.hist + ")",
+                      { italic: true, size: 18, color: "555555" }));
+    });
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n' +
+    '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
+    "<w:body>" + body.join("") +
+    '<w:sectPr><w:pgSz w:w="12240" w:h="15840"/>' +
+    '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" ' +
+    'w:header="720" w:footer="720" w:gutter="0"/></w:sectPr></w:body></w:document>';
+}
+
+/* Minimal ZIP writer (stored, no compression): enough for a .docx. */
+const CRC_TBL = (() => {
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(u8) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < u8.length; i++) c = CRC_TBL[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function zipStore(files) {
+  const enc = new TextEncoder();
+  const u16 = v => new Uint8Array([v & 255, (v >> 8) & 255]);
+  const u32 = v => new Uint8Array([v & 255, (v >> 8) & 255,
+                                   (v >> 16) & 255, (v >>> 24) & 255]);
+  const parts = [], central = [];
+  let offset = 0;
+  for (const [name, text] of files) {
+    const nameB = enc.encode(name), data = enc.encode(text);
+    const crc = crc32(data);
+    const head = [u32(0x04034b50), u16(20), u16(0), u16(0),
+                  u16(0), u16(0x21), /* fixed DOS time/date: 1980-01-01 */
+                  u32(crc), u32(data.length), u32(data.length),
+                  u16(nameB.length), u16(0), nameB];
+    central.push([u32(0x02014b50), u16(20), u16(20), u16(0), u16(0),
+                  u16(0), u16(0x21), u32(crc), u32(data.length),
+                  u32(data.length), u16(nameB.length), u16(0), u16(0),
+                  u16(0), u16(0), u32(0), u32(offset), nameB]);
+    for (const p of head) { parts.push(p); }
+    parts.push(data);
+    offset += head.reduce((a, p) => a + p.length, 0) + data.length;
+  }
+  const cdStart = offset;
+  let cdLen = 0;
+  for (const entry of central) {
+    for (const p of entry) { parts.push(p); cdLen += p.length; }
+  }
+  parts.push(u32(0x06054b50), u16(0), u16(0), u16(central.length),
+             u16(central.length), u32(cdLen), u32(cdStart), u16(0));
+  return new Blob(parts, {
+    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  });
+}
+
+function packetDocxBlob() {
+  return zipStore([
+    ["[Content_Types].xml", W_TYPES],
+    ["_rels/.rels", W_RELS],
+    ["word/_rels/document.xml.rels", W_DOCRELS],
+    ["word/document.xml", packetDocxXml()],
+    ["word/styles.xml", W_STYLES],
+  ]);
+}
+
+/* Open the packet in its own tab. Nothing auto-prints: the tab carries its
+   own Print / Save as PDF button. Downloads happen from this page (blob
+   URLs used across documents break on file: pages), via a temporary link. */
+function dlBlob(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+}
+let packetUrl = null;
 $("pk-print").addEventListener("click", () => {
-  const w = window.open("", "_blank");
-  if (!w) return;
-  w.document.write(packetDoc());
-  w.document.close();
+  if (packetUrl) URL.revokeObjectURL(packetUrl);
+  packetUrl = URL.createObjectURL(
+    new Blob([packetDoc()], { type: "text/html" }));
+  window.open(packetUrl, "_blank");
+});
+$("pk-word").addEventListener("click", () => {
+  dlBlob(packetDocxBlob(), "title7-packet.docx");
+});
+$("pk-md").addEventListener("click", () => {
+  dlBlob(new Blob([packetMd()], { type: "text/markdown" }),
+         "title7-packet.md");
 });
 paintPacket();
 

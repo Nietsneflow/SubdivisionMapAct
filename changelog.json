@@ -19,6 +19,15 @@
  "app": [
   {
    "date": "2026-07-30",
+   "title": "Packet fix: no more surprise print dialog, plus Word and Markdown",
+   "notes": [
+    "Fixed: opening the packet immediately fired the print dialog. The button is now \"Open / print\": the packet opens in its own tab showing exactly what you selected, and nothing prints until you choose Print / Save as PDF there.",
+    "The packet bar now also offers Word and Markdown: a real Word document (title7-packet.docx, with navigable headings) and Markdown (title7-packet.md) for NotebookLM, both downloaded on the spot.",
+    "If the packet ever contains more than you expected, the yellow rows in the contents sidebar show everything currently in it; Clear empties it. The packet is remembered between visits, which can surprise you a week later."
+   ]
+  },
+  {
+   "date": "2026-07-30",
    "title": "Print packet: pick whole divisions or chapters from the contents tree",
    "notes": [
     "\"Select for packet\" atop the contents sidebar turns on checkboxes for every division, chapter, article, and section; ticking a group selects everything under it, so a whole-chapter packet is one click instead of dozens. A partly selected group shows a half-filled box.",
