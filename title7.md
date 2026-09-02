@@ -2,7 +2,7 @@
 
 California Government Code, Title 7, Divisions 1-3 (Sections 65000-66499.58)
 
-California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-08-02.
+California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-09-02.
 
 ## DIVISION 1. PLANNING AND ZONING [65000 - 66345.4]
 
