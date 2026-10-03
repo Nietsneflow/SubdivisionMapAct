@@ -3,9 +3,11 @@
 # into title7.json.
 import datetime
 import html as htmllib
+import http.client
 import json
 import re
 import time
+import urllib.error
 import urllib.request
 
 BASE = "https://leginfo.legislature.ca.gov/faces/"
@@ -14,10 +16,27 @@ TOC_URL = (BASE + "codes_displayexpandedbranch.xhtml"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
-def fetch(url):
+def fetch(url, attempts=4):
+    """GET a page, retrying transient failures. leginfo occasionally stalls
+    (read timeouts, dropped connections, 5xx) for a minute or two, which
+    otherwise kills the whole scheduled refresh on a single request."""
     req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("utf-8", errors="replace")
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return r.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as e:
+            if (e.code < 500 and e.code != 429) or attempt == attempts:
+                raise
+            err = e
+        except (OSError, http.client.HTTPException) as e:
+            if attempt == attempts:
+                raise
+            err = e
+        wait = 15 * 2 ** (attempt - 1)
+        print(f"  fetch failed ({err!r}); retry {attempt}/{attempts - 1} "
+              f"in {wait}s: {url}", flush=True)
+        time.sleep(wait)
 
 
 def para_break(m):
