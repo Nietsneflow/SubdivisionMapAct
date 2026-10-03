@@ -16,10 +16,11 @@ TOC_URL = (BASE + "codes_displayexpandedbranch.xhtml"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 
-def fetch(url, attempts=4):
-    """GET a page, retrying transient failures. leginfo occasionally stalls
-    (read timeouts, dropped connections, 5xx) for a minute or two, which
-    otherwise kills the whole scheduled refresh on a single request."""
+def fetch(url, attempts=7):
+    """GET a page, retrying transient failures. leginfo has stretches where
+    requests stall (read timeouts, dropped connections, 5xx); one lasted
+    over 5 minutes on Oct 3, 2026. Backoff 15s doubling to a 4-minute cap
+    rides out roughly 19 minutes of outage per page before giving up."""
     req = urllib.request.Request(url, headers=UA)
     for attempt in range(1, attempts + 1):
         try:
@@ -33,7 +34,7 @@ def fetch(url, attempts=4):
             if attempt == attempts:
                 raise
             err = e
-        wait = 15 * 2 ** (attempt - 1)
+        wait = min(15 * 2 ** (attempt - 1), 240)
         print(f"  fetch failed ({err!r}); retry {attempt}/{attempts - 1} "
               f"in {wait}s: {url}", flush=True)
         time.sleep(wait)

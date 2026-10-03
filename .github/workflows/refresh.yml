@@ -14,6 +14,11 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    # A clean run takes ~3.5 min; scrape.py's per-page retries can wait out
+    # leginfo outages for a while, but not hold a runner indefinitely.
+    timeout-minutes: 60
+    env:
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v7
 
