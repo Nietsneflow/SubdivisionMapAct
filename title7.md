@@ -2,7 +2,7 @@
 
 California Government Code, Title 7, Divisions 1-3 (Sections 65000-66499.58)
 
-California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-10-02.
+California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-10-04.
 
 ## DIVISION 1. PLANNING AND ZONING [65000 - 66345.4]
 
@@ -9520,7 +9520,7 @@ This section shall not be construed to limit the requirements of Article 2 (comm
 
 ##### § 65852.28.
 
-(a) A development proponent may submit an application for a housing development project on a lot that is subdivided pursuant to Section 66499.41 and that meets the requirements of this section.
+(a) Except as provided in subdivision (h), a development proponent may submit an application for a housing development project on a lot that is subdivided pursuant to Section 66499.41 and that meets the requirements of this section.
 
 (b) (1) For any housing development on a lot that is subdivided pursuant to Section 66499.41, a local agency may impose objective zoning standards, objective subdivision standards, or objective design standards that are related to the housing development or to the design or improvement of a parcel, and do not conflict with this section or Section 66499.41.
 
@@ -9556,7 +9556,237 @@ This section shall not be construed to limit the requirements of Article 2 (comm
 
 (g) The amendments made to this section by the act adding this subdivision shall become operative on July 1, 2025.
 
-*(Amended by Stats. 2024, Ch. 294, Sec. 2.   (SB 1123)   Effective January 1, 2025.   Operative July 1, 2025, by its own provisions.)*
+(h) (1) Notwithstanding subdivision (a), this section shall not apply to a housing development project that is located in ZIP Code 91001 or 91003 if the application is submitted on or after October 1, 2026.
+
+(2) This subdivision shall not apply to either of the following:
+
+(A) A proposed housing development for which a development application or preliminary application was submitted before October 1, 2026, if all of the following conditions are met:
+
+(i) The applicant submits an application for a development project that includes all of the information required to process the development application consistent with Sections 65940, 65941, and 65941.5 within 180 days after October 1, 2026.
+
+(ii) If the public agency determines that the application for the development project submitted pursuant to clause (i) is not complete, the development proponent shall submit the specific information needed to complete the application within 90 days of receiving the agency’s written identification of the necessary information. If the development proponent does not submit this information within the 90-day period, then the application shall expire and have no further force or effect.
+
+(iii) A public agency shall not take any action that would preclude or impair a development proponent that submitted an application before October 1, 2026, from submitting an application pursuant to this subparagraph. For the purposes of this subdivision, an application will be deemed to have been submitted if the applicant submitted the application in writing.
+
+(B) A proposed housing development that meets all of the following criteria:
+
+(i) One hundred percent of the units have an affordable housing cost, as defined in Section 50052.5 of the Health and Safety Code, or an affordable rent, as defined in Section 50053 of the Health and Safety Code.
+
+(ii) The units shall be subject to a recorded deed restriction for a period of at least 55 years for rental units and at least 45 years for owner-occupied units.
+
+(iii) The development proponent is an entity that is at least one of the following:
+
+(I) A community land trust, as defined in clause (ii) of subparagraph (C) of paragraph (11) of subdivision (a) of Section 402.1 of the Revenue and Taxation Code.
+
+(II) A qualified nonprofit corporation, as described in Section 214.15 of the Revenue and Taxation Code.
+
+(III) A nonprofit housing sponsor or nonprofit corporation, as described in Section 50091 of the Health and Safety Code, whose primary purpose is the development, ownership, or operation of affordable rental housing.
+
+(i) This section shall remain in effect only until January 1, 2030, and as of that date is repealed.
+
+*(Amended by Stats. 2026, Ch. 1006, Sec. 2.   (SB 1090)   Effective September 30, 2026.   Inoperative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Repealed as of January 1, 2030, by its own provisions.   See same-numbered section amended by Sec. 2.3 of Stats. 2026, Ch. 1006.)*
+
+##### § 65852.28.
+
+(a) Except as provided in subdivision (h), a development proponent may submit an application for a housing development project on a lot that is subdivided pursuant to Section 66499.41 and that meets the requirements of this section.
+
+(b) (1) For any housing development on a lot that is subdivided pursuant to Section 66499.41, a local agency may impose objective zoning standards, objective subdivision standards, or objective design standards that are related to the housing development or to the design or improvement of a parcel, and do not conflict with this section or Section 66499.41.
+
+(2) Notwithstanding paragraph (1), a local agency shall not impose on a housing development on a lot that is subdivided pursuant to Section 66499.41 an objective zoning standard, objective subdivision standard, or objective design standard that does or is any of the following:
+
+(A) (i) Physically precludes the development of a project that includes at least as many units as the maximum number of parcels that may be subdivided on the lot pursuant to paragraph (3) of subdivision (a) of Section 66499.41.
+
+(ii) Physically precludes a development pursuant to this section from including additional units or floor area where permitted by any objective zoning standards, objective subdivision standards, and objective design standards that uniformly apply to development within the underlying zone.
+
+(iii) This paragraph does not preclude a local agency from adopting an ordinance that allows developments at a density greater than the maximum density specified in this paragraph.
+
+(iv) Notwithstanding clause (i) or (ii), for a development located on a lot that meets the definition of clause (ii) of subparagraph (A) of paragraph (2) of subdivision (a) of Section 66499.41, a local agency may impose a height limit of no less than the height allowed pursuant to the existing zoning designation applicable to the lot. Height limits shall apply exclusively to the physical height of the building and shall not restrict the number of floors.
+
+(B) Imposes any requirement that applies to a project solely or partially on the basis that the subdivision or housing development receives approval pursuant to this section.
+
+(C) Requires a setback between the units, except as required in the California Building Code (Title 24 of the California Code of Regulations).
+
+(D) Requires that parking be enclosed or covered.
+
+(E) Imposes side and rear setbacks from the original lot line inconsistent with subparagraph (B) of paragraph (2) of subdivision (b) of Section 65852.21.
+
+(F) Imposes a front setback from the original lot line greater than 10 feet or internal setbacks between the newly created parcels, except as required in the California Building Standards Code (Title 24 of the California Code of Regulations).
+
+(G) Imposes parking requirements inconsistent with paragraph (1) of subdivision (c) of Section 65852.21.
+
+(H) Imposes a floor area ratio standard that is less than 1.25.
+
+(c) (1) A local agency shall ministerially consider, without discretionary review or a hearing, an application submitted to a local agency pursuant to this section.
+
+(2) A local agency shall approve or deny an application for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(3) (A) An application for a housing development project submitted pursuant to this section shall be eligible for concurrent processing with an application for a parcel map or a tentative and final map for a housing development project submitted pursuant to Section 66499.41.
+
+(B) (i) A local agency may condition the issuance of a building permit, grading permit, or certificate of occupancy upon the applicant first obtaining approval and recording a parcel map or a tentative and final map for a housing development project pursuant to Section 66499.41.
+
+(ii) A local agency may deem a building permit or other postentitlement permit application incomplete and require revisions to the building permit or other postentitlement permit in response to any comments from the local agency or other reviewing agencies regarding the parcel map’s or tentative and final map’s compliance with applicable state or local development and building standards.
+
+(d) A local agency may disapprove a housing development project that meets the requirements of this section if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(e) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(f) This section shall be interpreted liberally in favor of producing the maximum number of total housing units.
+
+(g) This section shall become operative on July 1, 2024.
+
+(h) (1) Notwithstanding subdivision (a), this section shall not apply to a housing development project that is located in ZIP Code 91001 or 91003 if the application is submitted on or after October 1, 2026.
+
+(2) This subdivision shall not apply to either of the following:
+
+(A) A proposed housing development for which a development application or preliminary application was submitted before October 1, 2026, if all of the following conditions are met:
+
+(i) The applicant submits an application for a development project that includes all of the information required to process the development application consistent with Sections 65940, 65941, and 65941.5 within 180 days after October 1, 2026.
+
+(ii) If the public agency determines that the application for the development project submitted pursuant to clause (i) is not complete, the development proponent shall submit the specific information needed to complete the application within 90 days of receiving the agency’s written identification of the necessary information. If the development proponent does not submit this information within the 90-day period, then the application shall expire and have no further force or effect.
+
+(iii) A public agency shall not take any action that would preclude or impair a development proponent that submitted an application before October 1, 2026, from submitting an application pursuant to this subparagraph. For the purposes of this subdivision, an application will be deemed to have been submitted if the applicant submitted the application in writing.
+
+(B) A proposed housing development that meets all of the following criteria:
+
+(i) One hundred percent of the units have an affordable housing cost, as defined in Section 50052.5 of the Health and Safety Code, or an affordable rent, as defined in Section 50053 of the Health and Safety Code.
+
+(ii) The units shall be subject to a recorded deed restriction for a period of at least 55 years for rental units and at least 45 years for owner-occupied units.
+
+(iii) The development proponent is an entity that is at least one of the following:
+
+(I) A community land trust, as defined in clause (ii) of subparagraph (C) of paragraph (11) of subdivision (a) of Section 402.1 of the Revenue and Taxation Code.
+
+(II) A qualified nonprofit corporation, as described in Section 214.15 of the Revenue and Taxation Code.
+
+(III) A nonprofit housing sponsor or nonprofit corporation, as described in Section 50091 of the Health and Safety Code, whose primary purpose is the development, ownership, or operation of affordable rental housing.
+
+(i) (1) The amendments made to this section by the act adding this paragraph shall become operative on July 1, 2025.
+
+(2) The amendments made to this section by the act adding this paragraph shall become operative on January 1, 2027, only with respect to applications received pursuant to this section by a local agency on or after January 1, 2027.
+
+(j) This section shall remain in effect only until January 1, 2030, and as of that date is repealed.
+
+*(Amended by Stats. 2026, Ch. 1006, Sec. 2.3.   (SB 1090)   Effective September 30, 2026.   Operative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Repealed as of January 1, 2030, by its own provisions.)*
+
+##### § 65852.28.
+
+(a) A development proponent may submit an application for a housing development project on a lot that is subdivided pursuant to Section 66499.41 and that meets the requirements of this section.
+
+(b) (1) For any housing development on a lot that is subdivided pursuant to Section 66499.41, a local agency may impose objective zoning standards, objective subdivision standards, or objective design standards that are related to the housing development or to the design or improvement of a parcel, and do not conflict with this section or Section 66499.41.
+
+(2) Notwithstanding paragraph (1), a local agency shall not impose on a housing development on a lot that is subdivided pursuant to Section 66499.41 an objective zoning standard, objective subdivision standard, or objective design standard that does or is any of the following:
+
+(A) (i) Physically precludes the development of a project built to densities as specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2. This paragraph does not preclude a local agency from adopting an ordinance that allows developments at a density greater than the maximum density specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2.
+
+(ii) Notwithstanding clause (i), for a development located on a lot that meets the definition of clause (ii) of subparagraph (A) of paragraph (2) of subdivision (a) of Section 66499.41, a local agency may impose a height limit of no less than the height allowed pursuant to the existing zoning designation applicable to the lot.
+
+(B) Imposes any requirement that applies to a project solely or partially on the basis that the subdivision or housing development receives approval pursuant to this section.
+
+(C) Requires a setback between the units, except as required in the California Building Code (Title 24 of the California Code of Regulations).
+
+(D) Requires that parking be enclosed or covered.
+
+(E) Imposes side and rear setbacks from the original lot line inconsistent with subparagraph (B) of paragraph (2) of subdivision (b) of Section 65852.21.
+
+(F) Imposes parking requirements inconsistent with paragraph (1) of subdivision (c) of Section 65852.21.
+
+(G) (i) For a housing development project consisting of three to seven units, inclusive, impose a floor area ratio standard that is less than 1.0.
+
+(ii) For a housing development project consisting of 8 to 10 units, inclusive, impose a floor area ratio standard that is less than 1.25.
+
+(c) (1) A local agency shall ministerially consider, without discretionary review or a hearing, an application submitted to a local agency pursuant to this section.
+
+(2) A local agency shall approve or deny an application for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(d) A local agency may disapprove a housing development project that meets the requirements of this section if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(e) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(f) This section shall become operative on January 1, 2030.
+
+*(Added by Stats. 2026, Ch. 1006, Sec. 3.   (SB 1090)   Effective September 30, 2026.   Operative January 1, 2030, by its own provisions.    Inoperative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   See same-numbered section added by Sec. 3.3 of Stats. 2026, Ch. 1006.)*
+
+##### § 65852.28.
+
+(a) A development proponent may submit an application for a housing development project on a lot that is subdivided pursuant to Section 66499.41 and that meets the requirements of this section.
+
+(b) (1) For any housing development on a lot that is subdivided pursuant to Section 66499.41, a local agency may impose objective zoning standards, objective subdivision standards, or objective design standards that are related to the housing development or to the design or improvement of a parcel, and do not conflict with this section or Section 66499.41.
+
+(2) Notwithstanding paragraph (1), a local agency shall not impose on a housing development on a lot that is subdivided pursuant to Section 66499.41 an objective zoning standard, objective subdivision standard, or objective design standard that does or is any of the following:
+
+(A) (i) Physically precludes the development of a project that includes at least as many units as the maximum number of parcels that may be subdivided on the lot pursuant to paragraph (3) of subdivision (a) of Section 66499.41.
+
+(ii) Physically precludes a development pursuant to this section from including additional units or floor area where permitted by any objective zoning standards, objective subdivision standards, and objective design standards that uniformly apply to development within the underlying zone.
+
+(iii) This paragraph does not preclude a local agency from adopting an ordinance that allows developments at a density greater than the maximum density specified in this paragraph.
+
+(iv) Notwithstanding clause (i) or (ii), for a development located on a lot that meets the definition of clause (ii) of subparagraph (A) of paragraph (2) of subdivision (a) of Section 66499.41, a local agency may impose a height limit of no less than the height allowed pursuant to the existing zoning designation applicable to the lot. Height limits shall apply exclusively to the physical height of the building and shall not restrict the number of floors.
+
+(B) Imposes any requirement that applies to a project solely or partially on the basis that the subdivision or housing development receives approval pursuant to this section.
+
+(C) Requires a setback between the units, except as required in the California Building Code (Title 24 of the California Code of Regulations).
+
+(D) Requires that parking be enclosed or covered.
+
+(E) Imposes side and rear setbacks from the original lot line inconsistent with subparagraph (B) of paragraph (2) of subdivision (b) of Section 65852.21.
+
+(F) Imposes a front setback from the original lot line greater than 10 feet or internal setbacks between the newly created parcels, except as required in the California Building Standards Code (Title 24 of the California Code of Regulations).
+
+(G) Imposes parking requirements inconsistent with paragraph (1) of subdivision (c) of Section 65852.21.
+
+(H) Imposes a floor area ratio standard that is less than 1.25.
+
+(c) (1) A local agency shall ministerially consider, without discretionary review or a hearing, an application submitted to a local agency pursuant to this section.
+
+(2) A local agency shall approve or deny an application for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(3) (A) An application for a housing development project submitted pursuant to this section shall be eligible for concurrent processing with an application for a parcel map or a tentative and final map for a housing development project submitted pursuant to Section 66499.41.
+
+(B) (i) A local agency may condition the issuance of a building permit, grading permit, or certificate of occupancy upon the applicant first obtaining approval and recording a parcel map or a tentative and final map for a housing development project pursuant to Section 66499.41.
+
+(ii) A local agency may deem a building permit or other postentitlement permit application incomplete and require revisions to the building permit or other postentitlement permit in response to any comments from the local agency or other reviewing agencies regarding the parcel map’s or tentative and final map’s compliance with applicable state or local development and building standards.
+
+(d) A local agency may disapprove a housing development project that meets the requirements of this section if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(e) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(f) This section shall be interpreted liberally in favor of producing the maximum number of total housing units.
+
+(g) This section shall become operative on July 1, 2024.
+
+(h) (1) Notwithstanding subdivision (a), this section shall not apply to a housing development project that is located in ZIP Code 91001 or 91003 if the application is submitted on or after October 1, 2026.
+
+(2) This subdivision shall not apply to either of the following:
+
+(A) A proposed housing development for which a development application or preliminary application was submitted before October 1, 2026, if all of the following conditions are met:
+
+(i) The applicant submits an application for a development project that includes all of the information required to process the development application consistent with Sections 65940, 65941, and 65941.5 within 180 days after October 1, 2026.
+
+(ii) If the public agency determines that the application for the development project submitted pursuant to clause (i) is not complete, the development proponent shall submit the specific information needed to complete the application within 90 days of receiving the agency’s written identification of the necessary information. If the development proponent does not submit this information within the 90-day period, then the application shall expire and have no further force or effect.
+
+(iii) A public agency shall not take any action that would preclude or impair a development proponent that submitted an application before October 1, 2026, from submitting an application pursuant to this subparagraph. For the purposes of this subdivision, an application will be deemed to have been submitted if the applicant submitted the application in writing.
+
+(B) A proposed housing development that meets all of the following criteria:
+
+(i) One hundred percent of the units have an affordable housing cost, as defined in Section 50052.5 of the Health and Safety Code, or an affordable rent, as defined in Section 50053 of the Health and Safety Code.
+
+(ii) The units shall be subject to a recorded deed restriction for a period of at least 55 years for rental units and at least 45 years for owner-occupied units.
+
+(iii) The development proponent is an entity that is at least one of the following:
+
+(I) A community land trust, as defined in clause (ii) of subparagraph (C) of paragraph (11) of subdivision (a) of Section 402.1 of the Revenue and Taxation Code.
+
+(II) A qualified nonprofit corporation, as described in Section 214.15 of the Revenue and Taxation Code.
+
+(III) A nonprofit housing sponsor or nonprofit corporation, as described in Section 50091 of the Health and Safety Code, whose primary purpose is the development, ownership, or operation of affordable rental housing.
+
+(i) (1) The amendments made to this section by the act adding this paragraph shall become operative on July 1, 2025.
+
+(2) The amendments made to this section by the act adding this paragraph shall become operative on January 1, 2027, only with respect to applications received pursuant to this section by a local agency on or after January 1, 2027.
+
+(j) This section shall become operative on January 1, 2030.
+
+*(Added by Stats. 2026, Ch. 1006, Sec. 3.3.   (SB 1090)   Effective September 30, 2026.   Effective January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Operative January 1, 2030, by its own provisions.)*
 
 ##### § 65852.3.
 
@@ -22562,7 +22792,7 @@ Any action brought in the superior court relating to this division may be subjec
 
 ##### § 66499.41.
 
-(a) A local agency shall ministerially consider, without discretionary review or a hearing, a parcel map or a tentative and final map for a housing development project that meets all of the following requirements:
+(a) Except as specified in subdivision (j), a local agency shall ministerially consider, without discretionary review or a hearing, a parcel map or a tentative and final map for a housing development project that meets all of the following requirements:
 
 (1) (A) The proposed subdivision will result in 10 or fewer parcels and the housing development project on the lot proposed to be subdivided will contain 10 or fewer residential units, except as provided in subdivision (g).
 
@@ -22604,7 +22834,7 @@ Any action brought in the superior court relating to this division may be subjec
 
 (II) “Urban cluster” means an urban cluster designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
 
-(D) The lot was not established pursuant to this section, including a designated remainder parcel described in subparagraph (B) of paragraph (1), or Section 66411.7.
+(D) The lot was not established pursuant to this section, including a designated remainder parcel described in subparagraph (B) of paragraph (1), or in Section 66411.7.
 
 (3) (A) Except as specified in subparagraphs (B) and (C), the newly created parcels are no smaller than 600 square feet.
 
@@ -22628,7 +22858,7 @@ Any action brought in the superior court relating to this division may be subjec
 
 (iii) The land owned by the nonprofit corporation, on which a dwelling or unit sold to a qualified owner is situated, is leased by the nonprofit corporation to the qualified owner for the convenient occupation and use of that dwelling or unit for a renewable term of 99 years.
 
-(E) Part of a tenancy in common, as described in Section 685 of the Civil Code.
+(E) Part of an interest in common, as described in Section 685 of the Civil Code.
 
 (5) The proposed housing development project will, pursuant to the requirements of this division, meet one of the following, as applicable:
 
@@ -22636,7 +22866,7 @@ Any action brought in the superior court relating to this division may be subjec
 
 (B) (i) If the parcel is not identified in the jurisdiction’s housing element for the current planning period that is in substantial compliance with Article 10.6 (commencing with Section 65580) of Chapter 3 of Division 1, the housing development project will result in at least 66 percent of the maximum allowable residential density as specified by local zoning or 66 percent of the applicable residential density specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2, whichever is greater.
 
-(ii) Where local zoning does not specify a maximum allowable residential density, the housing development project will result in at least 66 percent of the applicable residential density as specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2.
+(ii) Where local zoning does not specify a maximum allowable residential density, the housing development project will result in at least 66 percent of the applicable residential density specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2.
 
 (iii) The area of any designated remainder parcel described in subparagraph (B) of paragraph (1) shall be excluded from the calculation of residential density under this paragraph.
 
@@ -22666,7 +22896,7 @@ Any action brought in the superior court relating to this division may be subjec
 
 (i) The site is an underground storage tank site that received a uniform closure letter issued pursuant to subdivision (g) of Section 25296.10 of the Health and Safety Code based on closure criteria established by the State Water Resources Control Board for residential use or residential mixed uses. This section does not alter or change the conditions to remove a site from the list of hazardous waste sites listed pursuant to Section 65962.5.
 
-(ii) The State Department of Public Health, State Water Resources Control Board, Department of Toxic Substances Control, or a local agency making a determination pursuant to subdivision (c) of Section 25296.10 of the Health and Safety Code, has otherwise determined that the site is suitable for residential use or residential mixed uses.
+(ii) The State Department of Public Health, State Water Resources Control Board, Department of Toxic Substances Control, or a local agency making a determination pursuant to subdivision (c) of Section 25296.10 of the Health and Safety Code has otherwise determined that the site is suitable for residential use or residential mixed uses.
 
 (E) Within a delineated earthquake fault zone as determined by the State Geologist in any official maps published by the State Geologist, unless the housing development project complies with applicable seismic protection building code standards adopted by the California Building Standards Commission under the California Building Standards Law (Part 2.5 (commencing with Section 18901) of Division 13 of the Health and Safety Code), and by any local building department under Chapter 12.2 (commencing with Section 8875) of Division 1 of Title 2.
 
@@ -22734,7 +22964,603 @@ Any action brought in the superior court relating to this division may be subjec
 
 (i) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
 
-*(Amended (as amended by Stats. 2024, Ch. 294, Sec. 3) by Stats. 2025, Ch. 22, Sec. 28.   (AB 130)   Effective June 30, 2025.)*
+(j) (1) Notwithstanding subdivision (a), and except as specified in paragraph (2), this section shall not apply to a parcel map or a tentative and final map for a housing development project that is located in ZIP Code 91001 or 91003 if the application is submitted on or after October 1, 2026.
+
+(2) This subdivision shall not apply to either of the following:
+
+(A) A parcel map or tentative and final map for a housing development project for which a development application or preliminary application was submitted before October 1, 2026, if all of the following conditions are met:
+
+(i) The applicant submits an application for a development project that includes all of the information required to process the development application consistent with Sections 65940, 65941, and 65941.5 within 180 days after October 1, 2026.
+
+(ii) If the public agency determines that the application for the development project submitted pursuant to clause (i) is not complete, the development proponent shall submit the specific information needed to complete the application within 90 days of receiving the agency’s written identification of the necessary information. If the development proponent does not submit this information within the 90-day period, then the application shall expire and have no further force or effect.
+
+(iii) A public agency shall not take any action that would preclude or impair a development proponent that submitted an application before October 1, 2026, from submitting an application pursuant to this subparagraph. For the purposes of this subdivision, an application will be deemed to have been submitted if the applicant submitted the application in writing.
+
+(B) A parcel map or tentative and final map for a housing development project that meets all of the following criteria:
+
+(i) One hundred percent of the units have an affordable housing cost, as defined in Section 50052.5 of the Health and Safety Code, or an affordable rent, as defined in Section 50053 of the Health and Safety Code.
+
+(ii) The units shall be subject to a recorded deed restriction for a period of at least 55 years for rental units and at least 45 years for owner-occupied units.
+
+(iii) The development proponent is an entity that is at least one of the following:
+
+(I) A community land trust, as defined in clause (ii) of subparagraph (C) of paragraph (11) of subdivision (a) of Section 402.1 of the Revenue and Taxation Code.
+
+(II) A qualified nonprofit corporation, as described in Section 214.15 of the Revenue and Taxation Code.
+
+(III) A nonprofit housing sponsor or nonprofit corporation, as described in Section 50091 of the Health and Safety Code, whose primary purpose is the development, ownership, or operation of affordable rental housing.
+
+(k) This section shall remain in effect only until January 1, 2030, and as of that date is repealed.
+
+*(Amended by Stats. 2026, Ch. 1006, Sec. 4.   (SB 1090)   Effective September 30, 2026.   Inoperative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Repealed as of January 1, 2030, by its own provisions.   See same-numbered section amended by Sec. 4.3 of Stats. 2026, Ch. 1006.)*
+
+##### § 66499.41.
+
+(a) Except as specified in subdivision (k), a local agency shall ministerially consider, without discretionary review or a hearing, a parcel map or a tentative and final map for a housing development project that meets all of the following requirements:
+
+(1) (A) The proposed subdivision will result in 10 or fewer parcels and the housing development project on the lot proposed to be subdivided will contain 10 or fewer residential units, except as provided in subdivision (g).
+
+(B) The proposed subdivision may designate a remainder parcel, as defined under Section 66424.6, that retains existing land uses or structures, does not contain any new residential units, and is not exclusively dedicated to serving the housing development project. The remainder parcel shall not be counted against the 10-parcel maximum permitted under subparagraph (A).
+
+(2) The lot proposed to be subdivided meets all of the following sets of requirements:
+
+(A) The lot is one of the following:
+
+(i) Zoned to allow multifamily residential dwelling use.
+
+(ii) Vacant and zoned for single-family residential development. For purposes of this paragraph, “vacant” means having no permanent structure, unless the permanent structure is abandoned or does not meet the characteristics in paragraphs (1) to (5), inclusive, of, and paragraph (8) of, subdivision (a) of Section 1941.1 of the Civil Code. All of the following types of housing shall not be defined as “vacant:”
+
+(I) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent or sales price to levels affordable to persons and families of low, very low, or extremely low income.
+
+(II) Housing that is subject to any form of rent or sales price control through a local public entity’s valid exercise of its police power.
+
+(III) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(B) (i) A lot zoned to allow multifamily residential dwelling use that meets the requirements of paragraph (3) of subdivision (a) of Section 21080.66 of the Public Resources Code.
+
+(ii) A vacant lot zoned for single-family residential development is no larger than one and one-half acres and that meets the requirements of paragraph (3) of subdivision (a) of Section 21080.66 of the Public Resources Code.
+
+(C) The lot is a legal parcel located within one of the following:
+
+(i) An incorporated city, the boundaries of which include some portion of an urbanized area.
+
+(ii) An urbanized area or urban cluster in a county with a population greater than 600,000 based on the most recent United States Census Bureau data.
+
+(iii) For purposes of this subparagraph, the following definitions apply:
+
+(I) “Urbanized area” means an urbanized area designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(II) “Urban cluster” means an urban cluster designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(D) The lot was not established pursuant to this section, including a designated remainder parcel described in subparagraph (B) of paragraph (1), or Section 66411.7.
+
+(3) (A) Except as specified in subparagraphs (B), (C), and (D), the newly created parcels are no smaller than 600 square feet.
+
+(B) If the parcels are zoned for single-family residential use, the newly created parcels are no smaller than 1,200 square feet.
+
+(C) (i) Notwithstanding subparagraphs (A) and (B), a newly created parcel on a plot zoned for multifamily housing may be as small as 480 square feet, provided that the average size of the newly created parcels is 600 square feet or larger. If the parcels are zoned for single-family residential use, a newly created parcel may be as small as 960 square feet, provided that the average size of the newly created parcels is 1,200 square feet or larger.
+
+(ii) Where lot size averaging is used to create smaller parcels, none of the newly created residential parcels shall be more than 50 percent of the size of the original parcel, except as specified in subparagraph (B) of paragraph (1) of subdivision (a).
+
+(iii) The area of any designated remainder parcel described in subparagraph (B) of paragraph (1) shall be excluded from the calculation of residential density under this paragraph.
+
+(D) A local agency may, by ordinance, adopt a smaller minimum parcel size subject to ministerial approval under this subdivision.
+
+(4) The housing units on the lot proposed to be subdivided are one of the following:
+
+(A) Constructed on fee simple ownership lots.
+
+(B) Part of a common interest development.
+
+(C) Part of a housing cooperative, as defined in Section 817 of the Civil Code.
+
+(D) Constructed on land owned by a community land trust. For the purpose of this subparagraph, “community land trust” means a nonprofit corporation organized pursuant to Section 501(c)(3) of the Internal Revenue Code that satisfies all of the following:
+
+(i) Has as its primary purposes the creation and maintenance of permanently affordable single-family or multifamily residences.
+
+(ii) All dwellings and units located on the land owned by the nonprofit corporation are sold to qualified owners to be occupied as the qualified owner’s primary residence or rented to persons and families of low or moderate income. For the purpose of this subparagraph, “qualified owner” means a person or family of low or moderate income, including a person or family of low or moderate income who owns a dwelling or unit collectively as a member occupant or resident shareholder of a limited-equity housing cooperative.
+
+(iii) The land owned by the nonprofit corporation, on which a dwelling or unit sold to a qualified owner is situated, is leased by the nonprofit corporation to the qualified owner for the convenient occupation and use of that dwelling or unit for a renewable term of 99 years.
+
+(E) Part of an interest in common, as described in Section 685 of the Civil Code.
+
+(5) The site for the proposed housing development project meets one of the following, as applicable:
+
+(A) The base zoning for the project site, independent of any remainder parcel and notwithstanding any density bonuses, local zoning overlays, accessory dwelling unit allowances, or incentive programs, does not allow more than 15 units.
+
+(B) If the local zoning does not specify a maximum number of units, the zoning for the project site, independent of any remainder parcel and notwithstanding any density bonuses, local zoning overlays, accessory dwelling unit allowances, or incentive programs, does not allow for more than 26,250 square feet of residential floor area.
+
+(C) If the lot is identified to accommodate a portion of the jurisdiction’s share of the regional housing need for low-income or very low income households in the jurisdiction’s housing element for the current planning period that is in substantial compliance with Article 10.6 (commencing with Section 65580) of Chapter 3 of Division 1, the housing development will result in for a proportional amount of low-income or very low income units as projected in the housing element for the project site. These units shall be subject to a recorded affordability restriction of at least 45 years.
+
+(6) The average total area of floorspace for the proposed housing units on the lot proposed to be subdivided does not exceed 1,750 net habitable square feet. For purposes of this paragraph, “net habitable square feet” means the finished and heated floor area fully enclosed by the inside surface of walls, windows, doors, and partitions, and having a headroom of at least six and one-half feet, including working, living, eating, cooking, sleeping, stair hall, service, and storage areas, but excluding stairs, enclosed bicycle parking, garages, carports, parking spaces, cellars, half-stories, and unfinished attics and basements.
+
+(7) The housing development project on the lot proposed to be subdivided complies with any local inclusionary housing ordinances adopted by the local agency.
+
+(8) The development of a housing development project on the lot proposed to be subdivided does not require the demolition or alteration of any of the following types of housing:
+
+(A) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent to levels affordable to persons and families of low, very low, or extremely low income.
+
+(B) Housing that is subject to any form of rent or price control through a local public entity’s valid exercise of its police power.
+
+(C) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(D) A parcel on which an owner of residential real property has exercised the owner’s rights under Chapter 12.75 (commencing with Section 7060) of Division 7 of Title 1 to withdraw accommodations from rent or lease within 15 years before the date that the development proponent submits an application.
+
+(9) The lot proposed to be subdivided is not located on a site that is any of the following:
+
+(A) Either prime farmland or farmland of statewide importance, as defined pursuant to United States Department of Agriculture land inventory and monitoring criteria, as modified for California, and designated on the maps prepared by the Farmland Mapping and Monitoring Program of the Department of Conservation, or land zoned or designated for agricultural protection or preservation by a local ballot measure that was approved by the voters of that jurisdiction.
+
+(B) Wetlands, as defined in the United States Fish and Wildlife Service Manual, Part 660 FW 2 (June 21, 1993).
+
+(C) Within a very high fire hazard severity zone, as determined by the Department of Forestry and Fire Protection pursuant to Section 51178, or within a high or very high fire hazard severity zone as indicated on maps adopted by the Department of Forestry and Fire Protection pursuant to Section 4202 of the Public Resources Code.
+
+(D) A hazardous waste site that is listed pursuant to Section 65962.5 or a hazardous waste site designated by the Department of Toxic Substances Control pursuant to former Section 25356 of the Health and Safety Code, unless either of the following applies:
+
+(i) The site is an underground storage tank site that received a uniform closure letter issued pursuant to subdivision (g) of Section 25296.10 of the Health and Safety Code based on closure criteria established by the State Water Resources Control Board for residential use or residential mixed uses. This section does not alter or change the conditions to remove a site from the list of hazardous waste sites listed pursuant to Section 65962.5.
+
+(ii) The State Department of Public Health, State Water Resources Control Board, Department of Toxic Substances Control, or a local agency making a determination pursuant to subdivision (c) of Section 25296.10 of the Health and Safety Code, has otherwise determined that the site is suitable for residential use or residential mixed uses.
+
+(E) Within a delineated earthquake fault zone as determined by the State Geologist in any official maps published by the State Geologist, unless the housing development project complies with applicable seismic protection building code standards adopted by the California Building Standards Commission under the California Building Standards Law (Part 2.5 (commencing with Section 18901) of Division 13 of the Health and Safety Code), and by any local building department under Chapter 12.2 (commencing with Section 8875) of Division 1 of Title 2.
+
+(F) Within a special flood hazard area subject to inundation by the 1-percent annual chance flood (100-year flood) as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this paragraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site. A housing development project may be located on a site described in this subparagraph if either of the following is met:
+
+(i) The site has been subject to a Letter of Map Revision prepared by the Federal Emergency Management Agency and issued to the local jurisdiction.
+
+(ii) The site meets Federal Emergency Management Agency requirements necessary to meet minimum flood plain management criteria of the National Flood Insurance Program pursuant to Part 59 (commencing with Section 59.1) and Part 60 (commencing with Section 60.1) of Subchapter B of Chapter I of Title 44 of the Code of Federal Regulations.
+
+(G) Within a regulatory floodway as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency, unless the housing development project has received a no-rise certification in accordance with Section 60.3(d)(3) of Title 44 of the Code of Federal Regulations. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this subparagraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site.
+
+(H) Land identified for conservation in an adopted natural community conservation plan pursuant to the Natural Community Conservation Planning Act (Chapter 10 (commencing with Section 2800) of Division 3 of the Fish and Game Code), habitat conservation plan pursuant to the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), or another adopted natural resource protection plan.
+
+(I) Habitat for protected species identified as candidate, sensitive, or species of special status by state or federal agencies, fully protected species, or species protected by the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), the California Endangered Species Act (Chapter 1.5 (commencing with Section 2050) of Division 3 of the Fish and Game Code), or the Native Plant Protection Act (Chapter 10 (commencing with Section 1900) of Division 2 of the Fish and Game Code).
+
+(J) Land under conservation easement.
+
+(10) The proposed subdivision conforms to all applicable objective requirements of the Subdivision Map Act (Division 2 (commencing with Section 66410)), except as otherwise expressly provided in this section.
+
+(11) The proposed subdivision complies with all applicable standards established pursuant to Section 65852.28.
+
+(12) Any parcels proposed to be created pursuant to this section will be served by a public water system and a municipal sewer system.
+
+(13) The proposed subdivision will not result in any existing dwelling unit being alienable separate from the title to any other existing dwelling unit on the lot.
+
+(b) A housing development project on a proposed site to be subdivided pursuant to this section is not required to comply with either of the following requirements:
+
+(1) A minimum requirement on the size, width, depth, frontage, or dimensions of an individual parcel created by the housing development project beyond the minimum parcel size specified in, or established pursuant to, paragraph (3) of subdivision (a).
+
+(2) (A) The formation of a homeowners’ association, except as required by the Davis-Stirling Common Interest Development Act (Part 5 (commencing with Section 4000) of Division 4 of the Civil Code).
+
+(B) Subparagraph (A) shall not be construed to prohibit a local agency from requiring a mechanism for the maintenance of common space within the subdivision, including, but not limited to, a road maintenance agreement.
+
+(c) (1) A local agency shall approve or deny an application for a parcel map or a tentative map for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(2) An application for a parcel map or a tentative and final map for a housing development project submitted pursuant to this section shall be eligible for concurrent processing with an application for a housing development project or building permit submitted pursuant to Section 65852.28 or 65913.4.5.
+
+(d) Any housing development project constructed on the lot proposed to be subdivided pursuant to this section shall comply with all applicable objective zoning standards, objective subdivision standards, and objective design standards as established by the local agency that are not inconsistent with this section and paragraph (2) of subdivision (a) of Section 65852.28.
+
+(e) (1) (A) Except as provided in paragraph (2), no person shall sell, lease, or finance any parcel or parcels of real property resulting from a subdivision under this section separately from any other such parcel or parcels, unless each parcel that is sold, leased, or financed meets one of the following criteria:
+
+(i) The parcel contains a residential structure completed in compliance with all applicable provisions of the California Building Standards Code that includes at least one dwelling unit.
+
+(ii) The parcel already contains an existing legally permitted residential structure.
+
+(iii) The parcel is reserved for internal circulation, open space, or common area.
+
+(iv) The parcel is the only remaining parcel within the subdivision that is not developed with a residential structure that was completed in compliance with all applicable provisions of the California Building Standards Code.
+
+(B) For purposes of this subdivision, “parcel or parcels of real property resulting from a subdivision under this section” shall not include any designated remainder parcel described in subparagraph (B) of paragraph (1) of subdivision (a).
+
+(C) Violation of this paragraph shall constitute the sale of real property that has been divided in violation of the provisions of this division and shall be subject to the penalties and remedies set forth in Chapter 7 (commencing with Section 66499.30).
+
+(2) A local agency may, by ordinance or map condition, authorize the sale, lease, or finance of any parcel or parcels of real property resulting from a subdivision under this section without compliance with the provisions of paragraph (1).
+
+(f) A local agency shall approve or deny an application for a final map for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(g) A local agency may deny the issuance of a parcel map, a tentative map, or a final map if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(h) Notwithstanding Article 2 (commencing with Section 66314) or Article 3 (commencing with Section 66333) of Chapter 13 of Division 1, a local agency is not required to permit an accessory dwelling unit or a junior accessory dwelling unit on parcels created through the exercise of the authority contained within this section. If a local agency chooses to permit accessory dwelling units or junior accessory dwelling units, the units shall not count as residential units for the purposes of paragraph (1) of subdivision (a).
+
+(i) (1) Notwithstanding Section 66411.7, a local agency is not required to permit an urban lot split on a parcel created through the exercise of the authority contained within this section.
+
+(2) Notwithstanding Sections 65852.21 and 66411.7, those sections shall not apply to a site that meets both of the following requirements:
+
+(A) The site is located within a single-family residential horsekeeping zone designated in a master plan, adopted before January 1, 1994, that regulates land zoned single-family horsekeeping, commercial, commercial-recreational, and existing industrial within the plan area.
+
+(B) The applicable local government has an adopted housing element that is compliant with applicable law.
+
+(j) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(k) (1) Notwithstanding subdivision (a), and except as specified in paragraph (2), this section shall not apply to a parcel map or a tentative and final map for a housing development project that is located in ZIP Code 91001 or 91003 if the application is submitted on or after October 1, 2026.
+
+(2) This subdivision shall not apply to either of the following:
+
+(A) A parcel map or tentative and final map for a housing development project for which a development application or preliminary application was submitted before October 1, 2026, if all of the following conditions are met:
+
+(i) The applicant submits an application for a development project that includes all of the information required to process the development application consistent with Sections 65940, 65941, and 65941.5 within 180 days after October 1, 2026.
+
+(ii) If the public agency determines that the application for the development project submitted pursuant to clause (i) is not complete, the development proponent shall submit the specific information needed to complete the application within 90 days of receiving the agency’s written identification of the necessary information. If the development proponent does not submit this information within the 90-day period, then the application shall expire and have no further force or effect.
+
+(iii) A public agency shall not take any action that would preclude or impair a development proponent that submitted an application before October 1, 2026, from submitting an application pursuant to this subparagraph. For the purposes of this subdivision, an application will be deemed to have been submitted if the applicant submitted the application in writing.
+
+(B) A parcel map or tentative and final map for a housing development project that meets all of the following criteria:
+
+(i) One hundred percent of the units have an affordable housing cost, as defined in Section 50052.5 of the Health and Safety Code, or an affordable rent, as defined in Section 50053 of the Health and Safety Code.
+
+(ii) The units shall be subject to a recorded deed restriction for a period of at least 55 years for rental units and at least 45 years for owner-occupied units.
+
+(iii) The development proponent is an entity that is at least one of the following:
+
+(I) A community land trust, as defined in clause (ii) of subparagraph (C) of paragraph (11) of subdivision (a) of Section 402.1 of the Revenue and Taxation Code.
+
+(II) A qualified nonprofit corporation, as described in Section 214.15 of the Revenue and Taxation Code.
+
+(III) A nonprofit housing sponsor or nonprofit corporation, as described in Section 50091 of the Health and Safety Code, whose primary purpose is the development, ownership, or operation of affordable rental housing.
+
+(l) The amendments made to this section by the act adding this subdivision shall become operative on January 1, 2027, only with respect to applications received pursuant to this section by a local agency on or after January 1, 2027.
+
+(m) This section shall remain in effect only until January 1, 2030, and as of that date is repealed.
+
+*(Amended by Stats. 2026, Ch. 1006, Sec. 4.3.   (SB 1090)   Effective September 30, 2026.   Operative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Repealed as of January 1, 2030, by its own provisions.)*
+
+##### § 66499.41.
+
+(a) A local agency shall ministerially consider, without discretionary review or a hearing, a parcel map or a tentative and final map for a housing development project that meets all of the following requirements:
+
+(1) (A) The proposed subdivision will result in 10 or fewer parcels and the housing development project on the lot proposed to be subdivided will contain 10 or fewer residential units, except as provided in subdivision (g).
+
+(B) The proposed subdivision may designate a remainder parcel, as defined under Section 66424.6, that retains existing land uses or structures, does not contain any new residential units, and is not exclusively dedicated to serving the housing development project. The remainder parcel shall not be counted against the 10-parcel maximum permitted under subparagraph (A).
+
+(2) The lot proposed to be subdivided meets all of the following sets of requirements:
+
+(A) The lot is one of the following:
+
+(i) Zoned to allow multifamily residential dwelling use.
+
+(ii) Vacant and zoned for single-family residential development. For purposes of this paragraph, “vacant” means having no permanent structure, unless the permanent structure is abandoned and uninhabitable. All of the following types of housing shall not be defined as “vacant:”
+
+(I) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent or sales price to levels affordable to persons and families of low, very low, or extremely low income.
+
+(II) Housing that is subject to any form of rent or sales price control through a local public entity’s valid exercise of its police power.
+
+(III) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(B) (i) A lot zoned to allow multifamily residential dwelling use is no larger than five acres and is substantially surrounded by qualified urban uses.
+
+(ii) A vacant lot zoned for single-family residential development is no larger than one and one-half acres and is substantially surrounded by qualified urban uses.
+
+(iii) For purposes of this subparagraph, the following definitions apply:
+
+(I) “Qualified urban use” has the same meaning as defined in Section 21072 of the Public Resources Code.
+
+(II) “Substantially surrounded” has the same meaning as defined in paragraph (2) of subdivision (a) of Section 21159.25 of the Public Resources Code.
+
+(C) The lot is a legal parcel located within one of the following:
+
+(i) An incorporated city, the boundaries of which include some portion of an urbanized area.
+
+(ii) An urbanized area or urban cluster in a county with a population greater than 600,000 based on the most recent United States Census Bureau data.
+
+(iii) For purposes of this subparagraph, the following definitions apply:
+
+(I) “Urbanized area” means an urbanized area designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(II) “Urban cluster” means an urban cluster designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(D) The lot was not established pursuant to this section, including a designated remainder parcel described in subparagraph (B) of paragraph (1), or in Section 66411.7.
+
+(3) (A) Except as specified in subparagraphs (B) and (C), the newly created parcels are no smaller than 600 square feet.
+
+(B) If the parcels are zoned for single-family residential use, the newly created parcels are no smaller than 1,200 square feet.
+
+(C) A local agency may, by ordinance, adopt a smaller minimum parcel size subject to ministerial approval under this subdivision.
+
+(4) The housing units on the lot proposed to be subdivided are one of the following:
+
+(A) Constructed on fee simple ownership lots.
+
+(B) Part of a common interest development.
+
+(C) Part of a housing cooperative, as defined in Section 817 of the Civil Code.
+
+(D) Constructed on land owned by a community land trust. For the purpose of this subparagraph, “community land trust” means a nonprofit corporation organized pursuant to Section 501(c)(3) of the Internal Revenue Code that satisfies all of the following:
+
+(i) Has as its primary purposes the creation and maintenance of permanently affordable single-family or multifamily residences.
+
+(ii) All dwellings and units located on the land owned by the nonprofit corporation are sold to qualified owners to be occupied as the qualified owner’s primary residence or rented to persons and families of low or moderate income. For the purpose of this subparagraph, “qualified owner” means a person or family of low or moderate income, including a person or family of low or moderate income who owns a dwelling or unit collectively as a member occupant or resident shareholder of a limited-equity housing cooperative.
+
+(iii) The land owned by the nonprofit corporation, on which a dwelling or unit sold to a qualified owner is situated, is leased by the nonprofit corporation to the qualified owner for the convenient occupation and use of that dwelling or unit for a renewable term of 99 years.
+
+(E) Part of an interest in common, as described in Section 685 of the Civil Code.
+
+(5) The proposed housing development project will, pursuant to the requirements of this division, meet one of the following, as applicable:
+
+(A) If the parcel is identified in the jurisdiction’s housing element for the current planning period that is in substantial compliance with Article 10.6 (commencing with Section 65580) of Chapter 3 of Division 1, the housing development project will result in at least as many units as projected for that parcel in the housing element. If the parcel is identified to accommodate any portion of the jurisdiction’s share of the regional housing need for low-income or very low income households, the housing development project will result in at least as many low-income or very low income units as projected in the housing element. These units shall be subject to a recorded affordability restriction of at least 45 years.
+
+(B) (i) If the parcel is not identified in the jurisdiction’s housing element for the current planning period that is in substantial compliance with Article 10.6 (commencing with Section 65580) of Chapter 3 of Division 1, the housing development project will result in at least 66 percent of the maximum allowable residential density as specified by local zoning or 66 percent of the applicable residential density specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2, whichever is greater.
+
+(ii) Where local zoning does not specify a maximum allowable residential density, the housing development project will result in at least 66 percent of the applicable residential density specified in subparagraph (B) of paragraph (3) of subdivision (c) of Section 65583.2.
+
+(iii) The area of any designated remainder parcel described in subparagraph (B) of paragraph (1) shall be excluded from the calculation of residential density under this paragraph.
+
+(6) The average total area of floorspace for the proposed housing units on the lot proposed to be subdivided does not exceed 1,750 net habitable square feet. For purposes of this paragraph, “net habitable square feet” means the finished and heated floor area fully enclosed by the inside surface of walls, windows, doors, and partitions, and having a headroom of at least six and one-half feet, including working, living, eating, cooking, sleeping, stair, hall, service, and storage areas, but excluding garages, carports, parking spaces, cellars, half-stories, and unfinished attics and basements.
+
+(7) The housing development project on the lot proposed to be subdivided complies with any local inclusionary housing ordinances adopted by the local agency.
+
+(8) The development of a housing development project on the lot proposed to be subdivided does not require the demolition or alteration of any of the following types of housing:
+
+(A) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent to levels affordable to persons and families of low, very low, or extremely low income.
+
+(B) Housing that is subject to any form of rent or price control through a local public entity’s valid exercise of its police power.
+
+(C) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(D) A parcel on which an owner of residential real property has exercised the owner’s rights under Chapter 12.75 (commencing with Section 7060) of Division 7 of Title 1 to withdraw accommodations from rent or lease within 15 years before the date that the development proponent submits an application.
+
+(9) The lot proposed to be subdivided is not located on a site that is any of the following:
+
+(A) Either prime farmland or farmland of statewide importance, as defined pursuant to United States Department of Agriculture land inventory and monitoring criteria, as modified for California, and designated on the maps prepared by the Farmland Mapping and Monitoring Program of the Department of Conservation, or land zoned or designated for agricultural protection or preservation by a local ballot measure that was approved by the voters of that jurisdiction.
+
+(B) Wetlands, as defined in the United States Fish and Wildlife Service Manual, Part 660 FW 2 (June 21, 1993).
+
+(C) Within a very high fire hazard severity zone, as determined by the Department of Forestry and Fire Protection pursuant to Section 51178, or within a high or very high fire hazard severity zone as indicated on maps adopted by the Department of Forestry and Fire Protection pursuant to Section 4202 of the Public Resources Code.
+
+(D) A hazardous waste site that is listed pursuant to Section 65962.5 or a hazardous waste site designated by the Department of Toxic Substances Control pursuant to former Section 25356 of the Health and Safety Code, unless either of the following applies:
+
+(i) The site is an underground storage tank site that received a uniform closure letter issued pursuant to subdivision (g) of Section 25296.10 of the Health and Safety Code based on closure criteria established by the State Water Resources Control Board for residential use or residential mixed uses. This section does not alter or change the conditions to remove a site from the list of hazardous waste sites listed pursuant to Section 65962.5.
+
+(ii) The State Department of Public Health, State Water Resources Control Board, Department of Toxic Substances Control, or a local agency making a determination pursuant to subdivision (c) of Section 25296.10 of the Health and Safety Code has otherwise determined that the site is suitable for residential use or residential mixed uses.
+
+(E) Within a delineated earthquake fault zone as determined by the State Geologist in any official maps published by the State Geologist, unless the housing development project complies with applicable seismic protection building code standards adopted by the California Building Standards Commission under the California Building Standards Law (Part 2.5 (commencing with Section 18901) of Division 13 of the Health and Safety Code), and by any local building department under Chapter 12.2 (commencing with Section 8875) of Division 1 of Title 2.
+
+(F) Within a special flood hazard area subject to inundation by the 1-percent annual chance flood (100-year flood) as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this paragraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site. A housing development project may be located on a site described in this subparagraph if either of the following is met:
+
+(i) The site has been subject to a Letter of Map Revision prepared by the Federal Emergency Management Agency and issued to the local jurisdiction.
+
+(ii) The site meets Federal Emergency Management Agency requirements necessary to meet minimum flood plain management criteria of the National Flood Insurance Program pursuant to Part 59 (commencing with Section 59.1) and Part 60 (commencing with Section 60.1) of Subchapter B of Chapter I of Title 44 of the Code of Federal Regulations.
+
+(G) Within a regulatory floodway as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency, unless the housing development project has received a no-rise certification in accordance with Section 60.3(d)(3) of Title 44 of the Code of Federal Regulations. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this subparagraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site.
+
+(H) Land identified for conservation in an adopted natural community conservation plan pursuant to the Natural Community Conservation Planning Act (Chapter 10 (commencing with Section 2800) of Division 3 of the Fish and Game Code), habitat conservation plan pursuant to the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), or another adopted natural resource protection plan.
+
+(I) Habitat for protected species identified as candidate, sensitive, or species of special status by state or federal agencies, fully protected species, or species protected by the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), the California Endangered Species Act (Chapter 1.5 (commencing with Section 2050) of Division 3 of the Fish and Game Code), or the Native Plant Protection Act (Chapter 10 (commencing with Section 1900) of Division 2 of the Fish and Game Code).
+
+(J) Land under conservation easement.
+
+(10) The proposed subdivision conforms to all applicable objective requirements of the Subdivision Map Act (Division 2 (commencing with Section 66410)), except as otherwise expressly provided in this section.
+
+(11) The proposed subdivision complies with all applicable standards established pursuant to Section 65852.28.
+
+(12) Any parcels proposed to be created pursuant to this section will be served by a public water system and a municipal sewer system.
+
+(13) The proposed subdivision will not result in any existing dwelling unit being alienable separate from the title to any other existing dwelling unit on the lot.
+
+(b) A housing development project on a proposed site to be subdivided pursuant to this section is not required to comply with either of the following requirements:
+
+(1) A minimum requirement on the size, width, depth, frontage, or dimensions of an individual parcel created by the housing development project beyond the minimum parcel size specified in, or established pursuant to, paragraph (3) of subdivision (a).
+
+(2) (A) The formation of a homeowners’ association, except as required by the Davis-Stirling Common Interest Development Act (Part 5 (commencing with Section 4000) of Division 4 of the Civil Code).
+
+(B) Subparagraph (A) shall not be construed to prohibit a local agency from requiring a mechanism for the maintenance of common space within the subdivision, including, but not limited to, a road maintenance agreement.
+
+(c) A local agency shall approve or deny an application for a parcel map or a tentative map for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(d) Any housing development project constructed on the lot proposed to be subdivided pursuant to this section shall comply with all applicable objective zoning standards, objective subdivision standards, and objective design standards as established by the local agency that are not inconsistent with this section and paragraph (2) of subdivision (a) of Section 65852.28.
+
+(e) (1) (A) Except as provided in paragraph (2), no person shall sell, lease, or finance any parcel or parcels of real property resulting from a subdivision under this section separately from any other such parcel or parcels, unless each parcel that is sold, leased, or financed meets one of the following criteria:
+
+(i) The parcel contains a residential structure completed in compliance with all applicable provisions of the California Building Standards Code that includes at least one dwelling unit.
+
+(ii) The parcel already contains an existing legally permitted residential structure.
+
+(iii) The parcel is reserved for internal circulation, open space, or common area.
+
+(iv) The parcel is the only remaining parcel within the subdivision that is not developed with a residential structure that was completed in compliance with all applicable provisions of the California Building Standards Code.
+
+(B) For purposes of this subdivision, “parcel or parcels of real property resulting from a subdivision under this section” shall not include any designated remainder parcel described in subparagraph (B) of paragraph (1) of subdivision (a).
+
+(C) Violation of this paragraph shall constitute the sale of real property that has been divided in violation of the provisions of this division and shall be subject to the penalties and remedies set forth in Chapter 7 (commencing with Section 66499.30).
+
+(2) A local agency may, by ordinance or map condition, authorize the sale, lease, or finance of any parcel or parcels of real property resulting from a subdivision under this section without compliance with the provisions of paragraph (1).
+
+(f) A local agency may deny the issuance of a parcel map, a tentative map, or a final map if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(g) Notwithstanding Article 2 (commencing with Section 66314) or Article 3 (commencing with Section 66333) of Chapter 13 of Division 1, a local agency is not required to permit an accessory dwelling unit or a junior accessory dwelling unit on parcels created through the exercise of the authority contained within this section. If a local agency chooses to permit accessory dwelling units or junior accessory dwelling units, the units shall not count as residential units for the purposes of paragraph (1) of subdivision (a).
+
+(h) (1) Notwithstanding Section 66411.7, a local agency is not required to permit an urban lot split on a parcel created through the exercise of the authority contained within this section.
+
+(2) Notwithstanding Sections 65852.21 and 66411.7, those sections shall not apply to a site that meets both of the following requirements:
+
+(A) The site is located within a single-family residential horsekeeping zone designated in a master plan, adopted before January 1, 1994, that regulates land zoned single-family horsekeeping, commercial, commercial-recreational, and existing industrial within the plan area.
+
+(B) The applicable local government has an adopted housing element that is compliant with applicable law.
+
+(i) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(j) This section shall become operative on January 1, 2030.
+
+*(Added by Stats. 2026, Ch. 1006, Sec. 5.   (SB 1090)   Effective September 30, 2026.   Operative January 1, 2030, by its own provisions.    Inoperative January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   See same-numbered section added by Sec. 5.3 of Stats. 2026, Ch. 1006.)*
+
+##### § 66499.41.
+
+(a) A local agency shall ministerially consider, without discretionary review or a hearing, a parcel map or a tentative and final map for a housing development project that meets all of the following requirements:
+
+(1) (A) The proposed subdivision will result in 10 or fewer parcels and the housing development project on the lot proposed to be subdivided will contain 10 or fewer residential units, except as provided in subdivision (g).
+
+(B) The proposed subdivision may designate a remainder parcel, as defined under Section 66424.6, that retains existing land uses or structures, does not contain any new residential units, and is not exclusively dedicated to serving the housing development project. The remainder parcel shall not be counted against the 10-parcel maximum permitted under subparagraph (A).
+
+(2) The lot proposed to be subdivided meets all of the following sets of requirements:
+
+(A) The lot is one of the following:
+
+(i) Zoned to allow multifamily residential dwelling use.
+
+(ii) Vacant and zoned for single-family residential development. For purposes of this paragraph, “vacant” means having no permanent structure, unless the permanent structure is abandoned and or does not meet the characteristics in paragraphs (1) to (5), inclusive, of, and paragraph (8) of, subdivision (a) of Section 1941.1 of the Civil Code. All of the following types of housing shall not be defined as “vacant:”
+
+(I) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent or sales price to levels affordable to persons and families of low, very low, or extremely low income.
+
+(II) Housing that is subject to any form of rent or sales price control through a local public entity’s valid exercise of its police power.
+
+(III) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(B) (i) A lot zoned to allow multifamily residential dwelling use that meets the requirements of paragraph (3) of subdivision (a) of Section 21080.66 of the Public Resources Code.
+
+(ii) A vacant lot zoned for single-family residential development is no larger than one and one-half acres and that meets the requirements of paragraph (3) of subdivision (a) of Section 21080.66 of the Public Resources Code.
+
+(C) The lot is a legal parcel located within one of the following:
+
+(i) An incorporated city, the boundaries of which include some portion of an urbanized area.
+
+(ii) An urbanized area or urban cluster in a county with a population greater than 600,000 based on the most recent United States Census Bureau data.
+
+(iii) For purposes of this subparagraph, the following definitions apply:
+
+(I) “Urbanized area” means an urbanized area designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(II) “Urban cluster” means an urban cluster designated by the United States Census Bureau, as published in the Federal Register, Volume 77, Number 59, on March 27, 2012.
+
+(D) The lot was not established pursuant to this section, including a designated remainder parcel described in subparagraph (B) of paragraph (1), or in Section 66411.7.
+
+(3) (A) Except as specified in subparagraphs (B), (C), and (D), the newly created parcels are no smaller than 600 square feet.
+
+(B) If the parcels are zoned for single-family residential use, the newly created parcels are no smaller than 1,200 square feet.
+
+(C) (i) Notwithstanding subparagraphs (A) and (B), a newly created parcel on a plot zoned for multifamily housing may be as small as 480 square feet, provided that the average size of the newly created parcels is 600 square feet or larger. If the parcels are zoned for single-family residential use, a newly created parcel may be as small as 960 square feet, provided that the average size of the newly created parcels is 1,200 square feet or larger.
+
+(ii) Where lot size averaging is used to create smaller parcels, none of the newly created residential parcels shall be more than 50 percent of the size of the original parcel, except as specified in subparagraph (B) of paragraph (1) of subdivision (a).
+
+(iii) The area of any designated remainder parcel described in subparagraph (B) of paragraph (1) shall be excluded from the calculation of residential density under this paragraph.
+
+(D) A local agency may, by ordinance, adopt a smaller minimum parcel size subject to ministerial approval under this subdivision.
+
+(4) The housing units on the lot proposed to be subdivided are one of the following:
+
+(A) Constructed on fee simple ownership lots.
+
+(B) Part of a common interest development.
+
+(C) Part of a housing cooperative, as defined in Section 817 of the Civil Code.
+
+(D) Constructed on land owned by a community land trust. For the purpose of this subparagraph, “community land trust” means a nonprofit corporation organized pursuant to Section 501(c)(3) of the Internal Revenue Code that satisfies all of the following:
+
+(i) Has as its primary purposes the creation and maintenance of permanently affordable single-family or multifamily residences.
+
+(ii) All dwellings and units located on the land owned by the nonprofit corporation are sold to qualified owners to be occupied as the qualified owner’s primary residence or rented to persons and families of low or moderate income. For the purpose of this subparagraph, “qualified owner” means a person or family of low or moderate income, including a person or family of low or moderate income who owns a dwelling or unit collectively as a member occupant or resident shareholder of a limited-equity housing cooperative.
+
+(iii) The land owned by the nonprofit corporation, on which a dwelling or unit sold to a qualified owner is situated, is leased by the nonprofit corporation to the qualified owner for the convenient occupation and use of that dwelling or unit for a renewable term of 99 years.
+
+(E) Part of an interest in common, as described in Section 685 of the Civil Code.
+
+(5) The site for the proposed housing development project meets one of the following, as applicable:
+
+(A) The base zoning for the project site, independent of any remainder parcel and notwithstanding any density bonuses, local zoning overlays, accessory dwelling unit allowances, or incentive programs, does not allow more than 15 units.
+
+(B) If the local zoning does not specify a maximum number of units, the zoning for the project site, independent of any remainder parcel and notwithstanding any density bonuses, local zoning overlays, accessory dwelling unit allowances, or incentive programs, does not allow for more than 26,250 square feet of residential floor area.
+
+(C) If the lot is identified to accommodate a portion of the jurisdiction’s share of the regional housing need for low-income or very low income households in the jurisdiction’s housing element for the current planning period that is in substantial compliance with Article 10.6 (commencing with Section 65580) of Chapter 3 of Division 1, the housing development will result in for a proportional amount of low-income or very low income units as projected in the housing element for the project site. These units shall be subject to a recorded affordability restriction of at least 45 years.
+
+(6) The average total area of floorspace for the proposed housing units on the lot proposed to be subdivided does not exceed 1,750 net habitable square feet. For purposes of this paragraph, “net habitable square feet” means the finished and heated floor area fully enclosed by the inside surface of walls, windows, doors, and partitions, and having a headroom of at least six and one-half feet, including working, living, eating, cooking, sleeping, hall, service, and storage areas, but excluding stairs, enclosed bicycle parking, garages, carports, parking spaces, cellars, half-stories, and unfinished attics and basements.
+
+(7) The housing development project on the lot proposed to be subdivided complies with any local inclusionary housing ordinances adopted by the local agency.
+
+(8) The development of a housing development project on the lot proposed to be subdivided does not require the demolition or alteration of any of the following types of housing:
+
+(A) Housing that is subject to a recorded covenant, ordinance, or law that restricts rent to levels affordable to persons and families of low, very low, or extremely low income.
+
+(B) Housing that is subject to any form of rent or price control through a local public entity’s valid exercise of its police power.
+
+(C) Housing occupied by tenants within the five years preceding the date of the application, including housing that has been demolished or that tenants have vacated prior to the submission of the application for a development permit.
+
+(D) A parcel on which an owner of residential real property has exercised the owner’s rights under Chapter 12.75 (commencing with Section 7060) of Division 7 of Title 1 to withdraw accommodations from rent or lease within 15 years before the date that the development proponent submits an application.
+
+(9) The lot proposed to be subdivided is not located on a site that is any of the following:
+
+(A) Either prime farmland or farmland of statewide importance, as defined pursuant to United States Department of Agriculture land inventory and monitoring criteria, as modified for California, and designated on the maps prepared by the Farmland Mapping and Monitoring Program of the Department of Conservation, or land zoned or designated for agricultural protection or preservation by a local ballot measure that was approved by the voters of that jurisdiction.
+
+(B) Wetlands, as defined in the United States Fish and Wildlife Service Manual, Part 660 FW 2 (June 21, 1993).
+
+(C) Within a very high fire hazard severity zone, as determined by the Department of Forestry and Fire Protection pursuant to Section 51178, or within a high or very high fire hazard severity zone as indicated on maps adopted by the Department of Forestry and Fire Protection pursuant to Section 4202 of the Public Resources Code.
+
+(D) A hazardous waste site that is listed pursuant to Section 65962.5 or a hazardous waste site designated by the Department of Toxic Substances Control pursuant to former Section 25356 of the Health and Safety Code, unless either of the following applies:
+
+(i) The site is an underground storage tank site that received a uniform closure letter issued pursuant to subdivision (g) of Section 25296.10 of the Health and Safety Code based on closure criteria established by the State Water Resources Control Board for residential use or residential mixed uses. This section does not alter or change the conditions to remove a site from the list of hazardous waste sites listed pursuant to Section 65962.5.
+
+(ii) The State Department of Public Health, State Water Resources Control Board, Department of Toxic Substances Control, or a local agency making a determination pursuant to subdivision (c) of Section 25296.10 of the Health and Safety Code, has otherwise determined that the site is suitable for residential use or residential mixed uses.
+
+(E) Within a delineated earthquake fault zone as determined by the State Geologist in any official maps published by the State Geologist, unless the housing development project complies with applicable seismic protection building code standards adopted by the California Building Standards Commission under the California Building Standards Law (Part 2.5 (commencing with Section 18901) of Division 13 of the Health and Safety Code), and by any local building department under Chapter 12.2 (commencing with Section 8875) of Division 1 of Title 2.
+
+(F) Within a special flood hazard area subject to inundation by the 1-percent annual chance flood (100-year flood) as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this paragraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site. A housing development project may be located on a site described in this subparagraph if either of the following is met:
+
+(i) The site has been subject to a Letter of Map Revision prepared by the Federal Emergency Management Agency and issued to the local jurisdiction.
+
+(ii) The site meets Federal Emergency Management Agency requirements necessary to meet minimum flood plain management criteria of the National Flood Insurance Program pursuant to Part 59 (commencing with Section 59.1) and Part 60 (commencing with Section 60.1) of Subchapter B of Chapter I of Title 44 of the Code of Federal Regulations.
+
+(G) Within a regulatory floodway as determined by the Federal Emergency Management Agency in any official maps published by the Federal Emergency Management Agency, unless the housing development project has received a no-rise certification in accordance with Section 60.3(d)(3) of Title 44 of the Code of Federal Regulations. If a development proponent is able to satisfy all applicable federal qualifying criteria in order to provide that the site satisfies this subparagraph and is otherwise eligible for streamlined approval under this section, a local government shall not deny the application on the basis that the development proponent did not comply with any additional permit requirement, standard, or action adopted by that local government that is applicable to that site.
+
+(H) Land identified for conservation in an adopted natural community conservation plan pursuant to the Natural Community Conservation Planning Act (Chapter 10 (commencing with Section 2800) of Division 3 of the Fish and Game Code), habitat conservation plan pursuant to the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), or another adopted natural resource protection plan.
+
+(I) Habitat for protected species identified as candidate, sensitive, or species of special status by state or federal agencies, fully protected species, or species protected by the federal Endangered Species Act of 1973 (16 U.S.C. Sec. 1531 et seq.), the California Endangered Species Act (Chapter 1.5 (commencing with Section 2050) of Division 3 of the Fish and Game Code), or the Native Plant Protection Act (Chapter 10 (commencing with Section 1900) of Division 2 of the Fish and Game Code).
+
+(J) Land under conservation easement.
+
+(10) The proposed subdivision conforms to all applicable objective requirements of the Subdivision Map Act (Division 2 (commencing with Section 66410)), except as otherwise expressly provided in this section.
+
+(11) The proposed subdivision complies with all applicable standards established pursuant to Section 65852.28.
+
+(12) Any parcels proposed to be created pursuant to this section will be served by a public water system and a municipal sewer system.
+
+(13) The proposed subdivision will not result in any existing dwelling unit being alienable separate from the title to any other existing dwelling unit on the lot.
+
+(b) A housing development project on a proposed site to be subdivided pursuant to this section is not required to comply with either of the following requirements:
+
+(1) A minimum requirement on the size, width, depth, frontage, or dimensions of an individual parcel created by the housing development project beyond the minimum parcel size specified in, or established pursuant to, paragraph (3) of subdivision (a).
+
+(2) (A) The formation of a homeowners’ association, except as required by the Davis-Stirling Common Interest Development Act (Part 5 (commencing with Section 4000) of Division 4 of the Civil Code).
+
+(B) Subparagraph (A) shall not be construed to prohibit a local agency from requiring a mechanism for the maintenance of common space within the subdivision, including, but not limited to, a road maintenance agreement.
+
+(c) (1) A local agency shall approve or deny an application for a parcel map or a tentative map for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(2) An application for a parcel map or a tentative and final map for a housing development project submitted pursuant to this section shall be eligible for concurrent processing with an application for a housing development project or building permit submitted pursuant to Section 65852.28 or 65913.4.5.
+
+(d) Any housing development project constructed on the lot proposed to be subdivided pursuant to this section shall comply with all applicable objective zoning standards, objective subdivision standards, and objective design standards as established by the local agency that are not inconsistent with this section and paragraph (2) of subdivision (a) of Section 65852.28.
+
+(e) (1) (A) Except as provided in paragraph (2), no person shall sell, lease, or finance any parcel or parcels of real property resulting from a subdivision under this section separately from any other such parcel or parcels, unless each parcel that is sold, leased, or financed meets one of the following criteria:
+
+(i) The parcel contains a residential structure completed in compliance with all applicable provisions of the California Building Standards Code that includes at least one dwelling unit.
+
+(ii) The parcel already contains an existing legally permitted residential structure.
+
+(iii) The parcel is reserved for internal circulation, open space, or common area.
+
+(iv) The parcel is the only remaining parcel within the subdivision that is not developed with a residential structure that was completed in compliance with all applicable provisions of the California Building Standards Code.
+
+(B) For purposes of this subdivision, “parcel or parcels of real property resulting from a subdivision under this section” shall not include any designated remainder parcel described in subparagraph (B) of paragraph (1) of subdivision (a).
+
+(C) Violation of this paragraph shall constitute the sale of real property that has been divided in violation of the provisions of this division and shall be subject to the penalties and remedies set forth in Chapter 7 (commencing with Section 66499.30).
+
+(2) A local agency may, by ordinance or map condition, authorize the sale, lease, or finance of any parcel or parcels of real property resulting from a subdivision under this section without compliance with the provisions of paragraph (1).
+
+(f) A local agency shall approve or deny an application for a final map for a housing development project submitted to a local agency pursuant to this section within 60 days from the date the local agency receives a completed application. If the local agency does not approve or deny a completed application within 60 days, the application shall be deemed approved. If the local agency denies the application, the local agency shall, within 60 days from the date the local agency receives the completed application, return in writing a full set of comments to the applicant with a list of items that are defective or deficient and a description of how the applicant can remedy the application.
+
+(g) A local agency may deny the issuance of a parcel map, a tentative map, or a final map if it makes a written finding, based upon a preponderance of the evidence, that the proposed housing development project would have a specific, adverse impact, as defined and determined in paragraph (2) of subdivision (d) of Section 65589.5, upon public health and safety and for which there is no feasible method to satisfactorily mitigate or avoid the specific, adverse impact.
+
+(h) Notwithstanding Article 2 (commencing with Section 66314) or Article 3 (commencing with Section 66333) of Chapter 13 of Division 1, a local agency is not required to permit an accessory dwelling unit or a junior accessory dwelling unit on parcels created through the exercise of the authority contained within this section. If a local agency chooses to permit accessory dwelling units or junior accessory dwelling units, the units shall not count as residential units for the purposes of paragraph (1) of subdivision (a).
+
+(i) (1) Notwithstanding Section 66411.7, a local agency is not required to permit an urban lot split on a parcel created through the exercise of the authority contained within this section.
+
+(2) Notwithstanding Sections 65852.21 and 66411.7, those sections shall not apply to a site that meets both of the following requirements:
+
+(A) The site is located within a single-family residential horsekeeping zone designated in a master plan, adopted before January 1, 1994, that regulates land zoned single-family horsekeeping, commercial, commercial-recreational, and existing industrial within the plan area.
+
+(B) The applicable local government has an adopted housing element that is compliant with applicable law.
+
+(j) A local agency may adopt an ordinance to implement the provisions of this section. An ordinance adopted to implement this section shall not be considered a project under Division 13 (commencing with Section 21000) of the Public Resources Code.
+
+(k) The amendments made to this section by the act adding this subdivision shall become operative on January 1, 2027, only with respect to applications received pursuant to this section by a local agency on or after January 1, 2027.
+
+(l) This section shall become operative on January 1, 2030.
+
+*(Added by Stats. 2026, Ch. 1006, Sec. 5.3.   (SB 1090)   Effective September 30, 2026.   Effective January 1, 2027, pursuant to Sec. 7 of Stats. 2026, Ch. 1006.   Operative January 1, 2030, by its own provisions.)*
 
 ## DIVISION 3. OFFICIAL MAPS [66499.50 - 66499.58]
 

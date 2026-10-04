@@ -1,6 +1,25 @@
 {
  "statute": [
   {
+   "date": "2026-10-04",
+   "title": "Legislative update: 2 amended",
+   "amended": [
+    {
+     "num": "65852.28",
+     "words": "(a) A development proponent may submit an application for a housing development project on…",
+     "bill": "Stats. 2026, Ch. 1006 (SB 1090)"
+    },
+    {
+     "num": "66499.41",
+     "words": "(a) A local agency shall ministerially consider, without discretionary review or a hearing, a…",
+     "bill": "Stats. 2026, Ch. 1006 (SB 1090)"
+    }
+   ],
+   "added": [],
+   "repealed": [],
+   "moved": []
+  },
+  {
    "date": "2026-07-27",
    "title": "Baseline: full Title 7 snapshot",
    "blurb": "First complete snapshot of Government Code Title 7, Planning and Land Use: 1,076 sections across Division 1 (Planning and Zoning), Division 2 (Subdivisions), and Division 3 (Official Maps), mirrored from the official Legislative Information site. Legislative changes from this point forward are logged here automatically at each refresh. One recodification predating this snapshot worth knowing about: the accessory dwelling unit law formerly at § 65852.2 now lives at §§ 66310–66342.",
