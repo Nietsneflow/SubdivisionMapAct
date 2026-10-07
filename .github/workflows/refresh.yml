@@ -2,9 +2,10 @@ name: Refresh statute text
 
 on:
   schedule:
-    # Daily at 09:17 UTC (~1-2am Pacific). Most amendments take effect
-    # January 1, but urgency statutes land year-round; a daily check
-    # surfaces them in the change log within a day.
+    # Daily at 09:17 UTC (~1-2am Pacific). The text comes from the
+    # Legislature's bulk data export, which it rebuilds weekly (Sunday
+    # night); checking daily picks each new export up within a day, so
+    # statute changes reach the change log within about a week.
     - cron: "17 9 * * *"
   workflow_dispatch:
 
@@ -14,9 +15,9 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    # A clean run takes ~3.5 min; scrape.py's per-page retries can wait out
-    # leginfo outages for a while, but not hold a runner indefinitely.
-    timeout-minutes: 60
+    # A clean run takes ~1 min; scrape.py's retries can wait out an outage
+    # of the export server for a while, but not hold a runner indefinitely.
+    timeout-minutes: 30
     env:
       PYTHONUNBUFFERED: "1"
     steps:
@@ -29,7 +30,7 @@ jobs:
       - name: Install PDF builder (used by export.py for title7.pdf)
         run: pip install "fpdf2>=2.8,<3"
 
-      - name: Scrape current text from leginfo
+      - name: Fetch current text from the Legislature's data export
         run: python scrape.py
 
       - name: Log statute changes vs previous data

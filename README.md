@@ -41,15 +41,22 @@ lookup work that the official site makes painful.
 
 ## Updating the text
 
-A GitHub Action (`.github/workflows/refresh.yml`) re-scrapes the official
-source daily, logs any statute changes to the change-log page
-(`changes.html`), and commits when something changed (plus a monthly
-retrieval-date bump on the 2nd); GitHub Pages then redeploys. Nothing to do
-by hand. To refresh manually anyway:
+The text comes from the Legislature's official bulk data export
+(<https://downloads.leginfo.legislature.ca.gov/>, the "pubinfo" files),
+which it rebuilds weekly. leginfo.legislature.ca.gov itself refuses
+automated requests (a Cloudflare bot challenge since October 2026), so the
+pages are not scraped. `scrape.py` reads only the parts of the ~1.2 GB zip
+that Title 7 needs, using HTTP Range requests (about 15 requests, ~30 MB).
+
+A GitHub Action (`.github/workflows/refresh.yml`) checks the export daily,
+logs any statute changes to the change-log page (`changes.html`), and
+commits when something changed (plus a monthly retrieval-date bump on the
+2nd); GitHub Pages then redeploys. Nothing to do by hand. To refresh
+manually anyway:
 
 ```
 pip install fpdf2    # one-time; build.py needs it for title7.pdf
-python scrape.py     # re-pulls all chapter/article pages -> title7.json
+python scrape.py     # reads Title 7 from the weekly export -> title7.json
 python changelog.py  # diffs against the last committed data -> changelog.json
 python build.py      # builds index.html, changes.html, and the exports
 ```
@@ -65,7 +72,7 @@ rebuild).
 
 | File | Purpose |
 | --- | --- |
-| `scrape.py` | Scrapes Title 7 from the official Legislative Information site |
+| `scrape.py` | Builds `title7.json` from the Legislature's bulk data export |
 | `title7.json` | Extracted text (all sections, with history notes) |
 | `viewer_template.html` | The viewer app (search UI, TOC, reader) |
 | `build.py` | Embeds the JSON into the template, producing `index.html` |

@@ -37,6 +37,15 @@
  ],
  "app": [
   {
+   "date": "2026-10-07",
+   "title": "New data source after leginfo blocked automated access",
+   "notes": [
+    "In early October the official Legislative Information site started refusing automated requests, so the daily refresh could no longer read it. The text now comes from the Legislature's own bulk data download, the route it provides for programs like this one. The statute text is unchanged: it was compared section by section against the previous copy.",
+    "The Legislature publishes that data once a week, so statute changes now reach this change log within about a week rather than a day. The intro and the heading above the statute feed now say so.",
+    "Two clauses that leginfo's pages showed at the wrong indent, a clause (v) in each of sections 65589.5 and 65913.4, now sit at their proper depth. Seven headings that cover a single section lose a stray period, for example \"[65062 - 65062]\"."
+   ]
+  },
+  {
    "date": "2026-07-30",
    "title": "A shorter front door",
    "notes": [

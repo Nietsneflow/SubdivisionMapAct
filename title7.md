@@ -2,7 +2,7 @@
 
 California Government Code, Title 7, Divisions 1-3 (Sections 65000-66499.58)
 
-California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-10-04.
+California Government Code, Title 7: the Planning and Zoning Law (Division 1), the Subdivision Map Act (Division 2), and Official Maps (Division 3). Text retrieved from the official California Legislative Information site on 2026-10-05.
 
 ## DIVISION 1. PLANNING AND ZONING [65000 - 66345.4]
 
@@ -1112,7 +1112,7 @@ A district shall not transact any business or exercise any of its powers under t
 
 *(Added by Stats. 1963, Ch. 1811.)*
 
-#### ARTICLE 3. City Selection Committees [65062- 65062.]
+#### ARTICLE 3. City Selection Committees [65062 - 65062]
 
 ##### § 65062.
 
@@ -2954,7 +2954,7 @@ Any action brought in the superior court relating to this chapter may be subject
 
 *(Added by Stats. 2010, Ch. 699, Sec. 20.   (SB 894)   Effective January 1, 2011.)*
 
-#### ARTICLE 4. Long Range Planning Trust Fund [65250- 65250.]
+#### ARTICLE 4. Long Range Planning Trust Fund [65250 - 65250]
 
 ##### § 65250.
 
@@ -4508,7 +4508,7 @@ Any portion of a specific plan or redevelopment plan adopted prior to January 1,
 
 *(Added by Stats. 2005, Ch. 309, Sec. 2.   Effective January 1, 2006.)*
 
-#### ARTICLE 9. Transit Priority Project Program [65470- 65470.]
+#### ARTICLE 9. Transit Priority Project Program [65470 - 65470]
 
 ##### § 65470.
 
@@ -11894,7 +11894,7 @@ In addition to the requirements of Section 65912.130, a development of 50 or mor
 
 *(Amended by Stats. 2025, Ch. 774, Sec. 1.   (SB 597)   Effective January 1, 2026.   Repealed as of January 1, 2033, pursuant to Sec. 65912.105.)*
 
-#### ARTICLE 5. Severability [65912.140- 65912.140.]
+#### ARTICLE 5. Severability [65912.140 - 65912.140]
 
 ##### § 65912.140.
 
@@ -14022,7 +14022,7 @@ This chapter offers an optional streamlined, ministerial approval process. This 
 
 *(Added by Stats. 2025, Ch. 548, Sec. 3.   (SB 625)   Effective January 1, 2026.)*
 
-### CHAPTER 4.2.5. Other Development Approvals [65914.900- 65914.900.]
+### CHAPTER 4.2.5. Other Development Approvals [65914.900 - 65914.900]
 
 ##### § 65914.900.
 
@@ -17129,7 +17129,7 @@ No fee may be applied by a local agency to the reconstruction of any residential
 
 *(Amended by Stats. 2002, Ch. 963, Sec. 1.   Effective January 1, 2003.)*
 
-### CHAPTER 7.5. Fees for Solar Energy Systems [66015- 66015.]
+### CHAPTER 7.5. Fees for Solar Energy Systems [66015 - 66015]
 
 ##### § 66015.
 
@@ -17855,7 +17855,7 @@ If a city, county, or city and county reduces the density of sites within the di
 
 ### CHAPTER 12. Housing Crisis Act of 2019 [66300 - 66300.6.5]
 
-#### ARTICLE 1. Housing Crisis Act of 2019 [66300- 66300.]
+#### ARTICLE 1. Housing Crisis Act of 2019 [66300 - 66300]
 
 ##### § 66300.
 

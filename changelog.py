@@ -1,4 +1,4 @@
-# Compares the previous committed title7.json against a freshly scraped one
+# Compares the previous committed title7.json against a freshly fetched one
 # and prepends any statute differences to changelog.json (rendered by
 # build.py as the changes.html "patch notes" page).
 #
@@ -19,6 +19,12 @@ def flatten(data):
             for c in dv["chapters"]
             for a in c["articles"]
             for s in a["sections"]}
+
+
+def words(text):
+    # Leading tabs are display indent inferred from subdivision labels, not
+    # statute text; a change there alone is not an amendment.
+    return re.sub(r"^\t+", "", text, flags=re.M)
 
 
 def num_key(num):
@@ -66,7 +72,7 @@ def main():
     added = sorted((k for k in n if k not in o), key=num_key)
     removed = sorted((k for k in o if k not in n), key=num_key)
     amended = sorted((k for k in n if k in o and
-                      (n[k]["text"] != o[k]["text"] or
+                      (words(n[k]["text"]) != words(o[k]["text"]) or
                        n[k]["history"] != o[k]["history"])), key=num_key)
 
     # Pair removals with additions whose text matches closely: those are
